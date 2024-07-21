@@ -55,3 +55,6 @@
 3. グラフチャート機能（Chart.jsやD3.jsなどのJavaScriptライブラリを使用する予定）
 4. リマインダー機能（LINEと連携させて通知を行う）
 5. Google 認証（GoogleのOAuth 2.0 APIを使用）
+
+## 画面遷移図
+Figma: https://www.figma.com/design/TuKVMuL2793wNJ3DJq6PEg/%E7%84%A1%E9%A1%8C?node-id=0-1&t=CADNLXbv9eGlI86Q-1
