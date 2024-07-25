@@ -58,3 +58,6 @@
 
 ## 画面遷移図
 Figma: https://www.figma.com/design/TuKVMuL2793wNJ3DJq6PEg/%E7%84%A1%E9%A1%8C?node-id=0-1&t=CADNLXbv9eGlI86Q-1
+
+##　ER図
+https://lucid.app/lucidchart/43b74006-c252-4af5-bfde-252fed35f763/edit?viewport_loc=52%2C48%2C2395%2C1304%2C0_0&invitationId=inv_2f882ad6-9d86-4bff-8277-f74826cf004d
