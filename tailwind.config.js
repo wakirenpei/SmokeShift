@@ -8,7 +8,9 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        darkBackground: 'bg-zinc-700', // ここにカスタムカラーを追加
+        darkBackground: '#161616', // 適切な背景色を指定
+        borderColor: 'rgba(229, 231, 235, 0.2)', // ボーダー色
+        customGreen: '#78a22a'
       },
     },
   },
