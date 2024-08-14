@@ -1,22 +1,28 @@
 <div class="flex flex-col text-white h-screen justify-between border-r border-borderColor fixed top-0 left-0 mt-12 w-48 bg-darkBackground z-10">
   <div>
     <div class="pl-6 mt-8">
-      <a href="#" class="inline-flex items-center space-x-6">
-        <%= image_tag 'icons-smoking.svg', alt: '喫煙管理アイコン', class: 'w-6 h-12' %>
-        <span class="text-lg font-semibold">喫煙管理</span>
-      </a>
+      <%= link_to '#' do %>
+        <div class="inline-flex items-center space-x-6">
+          <%= image_tag 'icons-smoking.svg', alt: '喫煙管理アイコン', class: 'w-6 h-12' %>
+          <span class="text-lg font-semibold">喫煙管理</span>
+        </div>
+      <% end %>
     </div>
     <div class="pl-5 mt-2">
-      <a href="#" class="inline-flex items-center space-x-6">
-        <%= image_tag 'icons-cigarettes-pack.svg', alt: 'タバコ登録アイコン', class: 'w-6 h-12' %>
-        <span class="text-lg font-semibold">タバコ登録</span>
-      </a>
+      <%= link_to '#' do %>
+        <div class="inline-flex items-center space-x-6">
+          <%= image_tag 'icons-cigarettes-pack.svg', alt: 'タバコ登録アイコン', class: 'w-6 h-12' %>
+          <span class="text-lg font-semibold">タバコ登録</span>
+        </div>
+      <% end %>
     </div>
     <div class="pl-6 mt-2">
-      <a href="#" class="inline-flex items-center space-x-6">
-        <%= image_tag 'icons-chart.svg', alt: 'グラフアイコン', class: 'w-6 h-12' %>
-        <span class="text-lg font-semibold">グラフ</span>
-      </a>
+      <%= link_to '#' do %>
+        <div class="inline-flex items-center space-x-6">
+          <%= image_tag 'icons-chart.svg', alt: 'グラフアイコン', class: 'w-6 h-12' %>
+          <span class="text-lg font-semibold">グラフ</span>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>
