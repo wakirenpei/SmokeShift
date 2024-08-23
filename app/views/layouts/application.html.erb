@@ -10,17 +10,19 @@
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
   </head>
 
-<body class="bg-darkBackground min-h-screen flex flex-col">
-  <%= render 'shared/header' %>
-  <div class="flex flex-grow">
-    <!-- サイドバー -->
-    <div class="w-48 fixed top-16 left-0 h-full">
-      <%= render 'shared/smoker_sidebar' %>
+    <body class="bg-darkBackground min-h-screen flex flex-col">
+    <%= render 'shared/header' %>
+
+    <div class="flex flex-grow">
+      <!-- サイドバー -->
+      <div class="w-48 fixed top-16 left-0 h-full">
+        <%= render 'shared/smoker_sidebar' %>
+      </div>
+      <!-- メインコンテンツ -->
+      <div class="flex-grow p-8">
+        <%= render 'layouts/flash_messages' %>
+        <%= yield %>
+      </div>
     </div>
-    <!-- メインコンテンツ -->
-    <div class="flex-grow ml-48 p-8">
-      <%= yield %>
-    </div>
-  </div>
-</body>
+  </body>
 </html>
