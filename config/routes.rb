@@ -9,6 +9,10 @@ Rails.application.routes.draw do
   resources :tops, only: [:index]
   resources :users, only: [:new, :create]
 
+  get 'login', to: 'user_sessions#new', as: :login
+  post 'login', to: 'user_sessions#create'
+  delete 'logout', to: 'user_sessions#destroy', as: :logout
+
   # Defines the root path route ("/")
   # root "posts#index"
 end
