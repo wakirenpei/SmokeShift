@@ -11,7 +11,12 @@
   </head>
 
     <body class="bg-darkBackground min-h-screen flex flex-col">
-    <%= render 'shared/header' %>
+    <!-- ヘッダー -->
+    <% if current_user %>
+      <%= render 'shared/before_login_header' %>
+    <% else %>
+      <%= render 'shared/header' %>
+    <% end %>
 
     <div class="flex flex-grow">
       <!-- サイドバー -->

@@ -1,0 +1,13 @@
+<header class="text-white p-2 flex justify-between items-center border-b border-borderColor fixed top-0 left-0 w-full bg-darkBackground z-10">
+  <div class="flex items-center ml-4">
+    <%= link_to '#' do %>
+      <div class="inline-flex items-center rounded">
+        <%= image_tag 'logo-horizontal-light.svg', alt: 'ロゴ', class: 'w-10 h-auto' %>
+        <span class="ml-2 text-xl font-semibold">SmokeShift</span>
+      </div>
+    <% end %>
+  </div>
+  <div class="flex items-center mr-4">
+    <%= link_to "ログアウト", logout_path, data: { turbo_method: :delete }, class: 'text-sm bg-customGreen text-white px-4 py-2 rounded hover:text-darkBackground' %>
+  </div>
+</header>
