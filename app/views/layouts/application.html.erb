@@ -21,7 +21,11 @@
     <div class="flex flex-grow">
       <!-- サイドバー -->
       <div class="w-48 fixed top-16 left-0 h-full">
-        <%= render 'shared/smoker_sidebar' %>
+        <% if current_user&.non_smoker? %>
+          <%= render 'shared/non_smoker_sidebar' %>
+        <% else %>
+          <%= render 'shared/smoker_sidebar' %>
+        <% end %>
       </div>
       <!-- メインコンテンツ -->
       <div class="flex-grow p-8">
