@@ -1,6 +1,8 @@
 class User < ApplicationRecord
   authenticates_with_sorcery!
 
+  has_many :cigarettes, dependent: :destroy
+
   enum smoking_status: { smoker: 0, non_smoker: 1 }
 
   validates :password, length: { minimum: 8 }, if: -> { new_record? || changes[:crypted_password] }
