@@ -1,2 +1,61 @@
-<h1>Smoker::Cigarettes#index</h1>
-<p>Find me in app/views/smoker/cigarettes/index.html.erb</p>
+<div class="ml-48 pl-8 pt-24 bg-gradient-to-br from-[#161616] to-[#1a1a1a] min-h-screen">
+  <div class="container mx-auto px-4">
+    <h1 class="text-4xl font-light text-labelColor mb-8">タバコ管理</h1>
+    
+    <div class="bg-gradient-to-br from-customForm to-cardBackground rounded-lg shadow-xl p-8">
+      <div class="flex flex-col md:flex-row gap-8">
+        <!-- 登録済みタバコ -->
+        <div class="w-full">
+          <h2 class="text-2xl font-light text-labelColor mb-6">登録済みタバコ</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <% @cigarettes.each_with_index do |cigarette, index| %>
+              <div class="bg-gradient-to-br from-customForm to-itemBackground rounded-lg p-6 relative shadow-md transition duration-300 hover:shadow-lg hover:scale-105">
+                <div class="absolute top-4 right-4 text-3xl font-bold text-customGreen">
+                  <%= (index + 1).to_s %>
+                </div>
+                <div class="mb-4">
+                  <h3 class="text-2xl font-medium text-labelColor"><%= cigarette.brand %></h3>
+                </div>
+                <div class="space-y-2">
+                  <p class="flex items-center text-labelColor">
+                    <%= image_tag 'icon-price.svg', class: 'w-5 h-5 mr-2', alt: '価格' %>
+                    価格: ¥<%= cigarette.price_per_pack %> / <%= cigarette.quantity_per_pack %>本
+                  </p>
+                  <p class="flex items-center text-labelColor">
+                    <%= image_tag 'icon-price-cigaretees.svg', class: 'w-5 h-5 mr-2', alt: 'タバコ' %>
+                    1本あたり: ¥<%= cigarette.price_per_cigarette %>
+                  </p>
+                </div>
+                <div class="mt-6 flex justify-end space-x-3">
+                  <%= link_to '編集', edit_smoker_cigarette_path(cigarette), class: 'px-4 py-2 bg-secondaryButton text-white rounded-md hover:bg-secondaryButtonHover transition duration-300' %>
+                  <%= button_to '削除', smoker_cigarette_path(cigarette), method: :delete, data: { turbo_confirm: '本当に削除しますか？' }, class: 'px-4 py-2 bg-secondaryButton text-white rounded-md hover:bg-secondaryButtonHover transition duration-300' %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <!-- 新規登録 -->
+      <div class="mt-12">
+        <% if @can_add_cigarette %>
+          <label for="new-cigarette-modal" class="inline-block w-full px-8 py-3 bg-customGreen text-white text-center font-medium rounded-md hover:bg-customGreenHover transition duration-300 shadow-md cursor-pointer">新しいタバコを追加</label>
+        <% else %>
+          <p class="text-labelColor text-center bg-customForm rounded-md p-4">登録可能な上限に達しました（最大2種類）</p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 新規登録モーダル -->
+<input type="checkbox" id="new-cigarette-modal" class="modal-toggle" />
+<div class="modal">
+  <div class="modal-box bg-gradient-to-br from-customForm to-cardBackground text-labelColor">
+    <h3 class="font-light text-2xl mb-6">新しいタバコを登録</h3>
+    <%= render 'form', cigarette: @cigarette %>
+    <div class="modal-action mt-8">
+      <label for="new-cigarette-modal" class="btn btn-ghost bg-secondaryButton hover:bg-secondaryButtonHover text-white">閉じる</label>
+    </div>
+  </div>
+</div>

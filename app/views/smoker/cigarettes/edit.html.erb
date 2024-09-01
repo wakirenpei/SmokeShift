@@ -1,0 +1,10 @@
+<div class="ml-48 pl-8 pt-24 bg-gradient-to-br from-[#161616] to-[#1a1a1a] min-h-screen">
+  <div class="container mx-auto px-4">
+    <h1 class="text-4xl font-light text-labelColor mb-8">タバコ情報を編集</h1>
+    
+    <div class="bg-gradient-to-br from-customForm to-cardBackground rounded-lg shadow-xl p-8">
+      <%= render 'form', cigarette: @cigarette %>
+      <%= link_to 'キャンセル', smoker_cigarettes_path, class: "mt-4 inline-block px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition duration-200" %>
+    </div>
+  </div>
+</div>
