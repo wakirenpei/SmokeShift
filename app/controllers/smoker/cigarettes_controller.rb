@@ -3,7 +3,8 @@ class Smoker::CigarettesController < ApplicationController
 
   def index
     @cigarettes = current_user.cigarettes.order(created_at: :desc)
-    @new_cigarette = current_user.cigarettes.build
+    @cigarette = current_user.cigarettes.build
+    @can_add_cigarette = current_user.cigarettes.count < Cigarette::MAX_CIGARETTES_PER_USER
   end
 
   def create
@@ -11,9 +12,10 @@ class Smoker::CigarettesController < ApplicationController
     if @cigarette.save
       redirect_to smoker_cigarettes_path, notice: 'タバコが正常に登録されました。'
     else
-      @cigarettes = current_user.cigarettes.order(created_at: :desc)
-      flash.now[:alert] = 'タバコの登録に失敗しました。'
-      render :index
+      render turbo_stream: [
+        turbo_stream.replace('new_cigarette_form', partial: 'form', locals: { cigarette: @cigarette }),
+        turbo_stream.update('error_messages', partial: 'shared/error_messages', locals: { object: @cigarette })
+      ], status: :unprocessable_entity
     end
   end
 
@@ -24,8 +26,7 @@ class Smoker::CigarettesController < ApplicationController
     if @cigarette.update(cigarette_params)
       redirect_to smoker_cigarettes_path, notice: 'タバコ情報が更新されました。'
     else
-      flash.now[:alert] = 'タバコ情報の更新に失敗しました。'
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 
