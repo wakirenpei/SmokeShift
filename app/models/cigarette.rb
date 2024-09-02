@@ -1,4 +1,3 @@
-# app/models/cigarette.rb
 class Cigarette < ApplicationRecord
   belongs_to :user
 
