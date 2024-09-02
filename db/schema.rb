@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_26_130329) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_02_132328) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -25,6 +25,18 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_26_130329) do
     t.index ["user_id"], name: "index_cigarettes_on_user_id"
   end
 
+  create_table "smoking_records", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "cigarette_id", null: false
+    t.decimal "price_per_cigarette", precision: 4, scale: 2, null: false
+    t.datetime "smoked_at", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cigarette_id"], name: "index_smoking_records_on_cigarette_id"
+    t.index ["user_id", "smoked_at"], name: "index_smoking_records_on_user_id_and_smoked_at"
+    t.index ["user_id"], name: "index_smoking_records_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", null: false
     t.string "crypted_password"
@@ -37,4 +49,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_26_130329) do
   end
 
   add_foreign_key "cigarettes", "users"
+  add_foreign_key "smoking_records", "cigarettes"
+  add_foreign_key "smoking_records", "users"
 end
