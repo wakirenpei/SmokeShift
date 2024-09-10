@@ -10,7 +10,8 @@ Rails.application.routes.draw do
   resources :users, only: [:new, :create]
 
   namespace :smoker do
-    resources :cigarettes, only: [:index, :create, :edit, :update, :destroy]
+    resources :cigarettes, only: [:index, :create, :edit, :update]
+    resources :smoking_records, only: [:index, :create, :destroy]
   end
 
   get 'login', to: 'user_sessions#new', as: :login

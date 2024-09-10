@@ -2,13 +2,10 @@ class SmokingRecord < ApplicationRecord
   belongs_to :user
   belongs_to :cigarette
 
-  validates :user, presence: true
-  validates :cigarette, presence: true
-  validates :price_per_cigarette, presence: true, numericality: { greater_than: 0 }
   validates :smoked_at, presence: true
 
   before_validation :set_price_per_cigarette
-  before_create :set_smoked_at
+  before_validation :set_smoked_at
 
   scope :today, -> { where(smoked_at: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day) }
 
@@ -35,6 +32,6 @@ class SmokingRecord < ApplicationRecord
   end
 
   def set_smoked_at
-    self.smoked_at = Time.current
+    self.smoked_at ||= Time.current
   end
 end

@@ -1,5 +1,5 @@
 class Smoker::CigarettesController < ApplicationController
-  before_action :set_cigarette, only: [:edit, :update, :destroy]
+  before_action :set_cigarette, only: [:edit, :update]
 
   def index
     @cigarettes = current_user.cigarettes.order(created_at: :desc)
@@ -28,11 +28,6 @@ class Smoker::CigarettesController < ApplicationController
     else
       render :edit, status: :unprocessable_entity
     end
-  end
-
-  def destroy
-    @cigarette.destroy!
-    redirect_to smoker_cigarettes_path, notice: 'タバコ情報が削除されました。'
   end
 
   private
