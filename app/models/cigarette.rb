@@ -1,5 +1,6 @@
 class Cigarette < ApplicationRecord
   belongs_to :user
+  has_many :smoking_records, dependent: :destroy
 
   MAX_CIGARETTES_PER_USER = 2
 

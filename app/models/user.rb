@@ -2,6 +2,7 @@ class User < ApplicationRecord
   authenticates_with_sorcery!
 
   has_many :cigarettes, dependent: :destroy
+  has_many :smoking_records, dependent: :destroy
 
   enum smoking_status: { smoker: 0, non_smoker: 1 }
 

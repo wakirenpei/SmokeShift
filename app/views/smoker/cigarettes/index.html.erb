@@ -28,7 +28,6 @@
                 </div>
                 <div class="mt-6 flex justify-end space-x-3">
                   <%= link_to '編集', edit_smoker_cigarette_path(cigarette), class: 'px-4 py-2 bg-secondaryButton text-white rounded-md hover:bg-secondaryButtonHover transition duration-300' %>
-                  <%= button_to '削除', smoker_cigarette_path(cigarette), method: :delete, data: { turbo_confirm: '本当に削除しますか？' }, class: 'px-4 py-2 bg-secondaryButton text-white rounded-md hover:bg-secondaryButtonHover transition duration-300' %>
                 </div>
               </div>
             <% end %>

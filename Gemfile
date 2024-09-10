@@ -8,6 +8,12 @@ gem 'rails-i18n'
 # 認証
 gem 'sorcery'
 
+# svgファイルの操作
+gem 'inline_svg'
+
+# ページネーション
+gem 'kaminari'
+
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.1.3", ">= 7.1.3.4"
 
