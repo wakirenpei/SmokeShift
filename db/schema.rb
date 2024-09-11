@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_09_02_132328) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_11_121915) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -23,6 +23,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_02_132328) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_cigarettes_on_user_id"
+  end
+
+  create_table "quit_smoking_records", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.date "start_date", null: false
+    t.date "end_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_quit_smoking_records_on_user_id"
   end
 
   create_table "smoking_records", force: :cascade do |t|
@@ -49,6 +58,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_02_132328) do
   end
 
   add_foreign_key "cigarettes", "users"
+  add_foreign_key "quit_smoking_records", "users"
   add_foreign_key "smoking_records", "cigarettes"
   add_foreign_key "smoking_records", "users"
 end
