@@ -13,4 +13,24 @@ class User < ApplicationRecord
 
   validates :name, presence: true, length: { maximum: 10 }
   validates :email, presence: true, uniqueness: true
+
+  def calculate_daily_potential_savings
+    return 0 if smoking_records.empty?
+    total_spent = smoking_records.sum(:price_per_cigarette)
+    total_days = (smoking_records.maximum(:smoked_at).to_date - smoking_records.minimum(:smoked_at).to_date).to_i + 1
+    (total_spent / total_days).round(2)
+  end
+
+  def average_daily_cigarettes
+    return 0 if smoking_records.empty?
+    total_days = (smoking_records.maximum(:smoked_at).to_date - smoking_records.minimum(:smoked_at).to_date).to_i + 1
+    (smoking_records.count.to_f / total_days).round(2)
+  end
+
+  def analyze_danger_hours
+    records = smoking_records
+    hours = records.group_by { |r| r.smoked_at.hour }
+    danger_hours = hours.max_by(3) { |_, records| records.count }
+    danger_hours.map { |hour, _| hour }.sort
+  end
 end

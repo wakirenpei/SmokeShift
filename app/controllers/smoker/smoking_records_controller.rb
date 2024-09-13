@@ -1,13 +1,10 @@
 class Smoker::SmokingRecordsController < ApplicationController
   before_action :require_login
-  before_action :set_smoking_records, only: [:index, :create]
-  before_action :set_statistics, only: [:index, :create]
   before_action :set_smoking_record, only: [:destroy]
+  before_action :set_common_data, only: [:index, :create]
 
   def index
-    @new_smoking_record = SmokingRecord.build
-    @cigarettes = Cigarette.all
-    set_calendar_data
+    @new_smoking_record = SmokingRecord.new
     @smoking_records = current_user.smoking_records.today.order(smoked_at: :desc).page(params[:page]).per(10)
   end
 
@@ -16,10 +13,8 @@ class Smoker::SmokingRecordsController < ApplicationController
     if @smoking_record.save
       redirect_to smoker_smoking_records_path, notice: '喫煙記録が追加されました。'
     else
-      @smoking_records = current_user.smoking_records.today.order(smoked_at: :desc).page(params[:page]).per(10)
       @new_smoking_record = @smoking_record
-      @cigarettes = Cigarette.all
-      set_calendar_data
+      @smoking_records = current_user.smoking_records.today.order(smoked_at: :desc).page(params[:page]).per(10)
       render :index, status: :unprocessable_entity
     end
   end
@@ -34,8 +29,11 @@ class Smoker::SmokingRecordsController < ApplicationController
 
   private
 
-  def set_smoking_records
+  def set_common_data
     @smoking_records = current_user.smoking_records.order(smoked_at: :desc).limit(10)
+    @cigarettes = current_user.cigarettes
+    set_statistics
+    set_calendar_data
   end
 
   def set_statistics

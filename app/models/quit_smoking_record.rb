@@ -11,6 +11,10 @@ class QuitSmokingRecord < ApplicationRecord
     end_date.nil?
   end
 
+  def duration
+    (end_date || Date.today) - start_date
+  end
+
   private
 
   def end_date_after_start_date
