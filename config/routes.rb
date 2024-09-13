@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   namespace :smoker do
     resources :cigarettes, only: [:index, :create, :edit, :update]
     resources :smoking_records, only: [:index, :create, :destroy]
+    resources :quit_smoking_records, only: [:index, :create, :update]
   end
 
   get 'login', to: 'user_sessions#new', as: :login
