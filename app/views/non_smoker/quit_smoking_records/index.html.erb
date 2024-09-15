@@ -1,0 +1,81 @@
+<div class="ml-48 pt-16 bg-darkBackground">
+  <div class="container mx-auto px-4 py-8 max-w-6xl">
+    <h1 class="text-2xl font-bold mb-6 text-white flex items-center">
+      禁煙管理
+    </h1>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <!-- 現在の禁煙状況 -->
+      <div class="bg-cardBackground rounded-lg p-6 shadow-lg lg:col-span-2">
+        <h2 class="text-xl font-bold mb-4 text-white flex items-center">
+          <%= inline_svg_tag 'icons-lightning.svg', class: 'w-6 h-6 mr-2' %>
+          現在の禁煙状況
+        </h2>
+        <% if @current_quit_attempt %>
+          <p class="text-sm text-white mb-2">開始日時: <%= @current_quit_attempt.start_date.strftime('%Y年%m月%d日 %H:%M:%S') %></p>
+          <p class="text-sm text-white mb-2">禁煙期間: <%= format_duration(@current_quit_attempt.start_date) %></p>
+          <p class="text-sm text-white mb-4">今回の節約金額: <%= number_to_currency(@current_savings, unit: '¥', precision: 0) %></p>
+          <%= button_to '禁煙を終了', non_smoker_quit_smoking_record_path(@current_quit_attempt), method: :patch, class: 'bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-2 px-4 rounded text-sm', data: { confirm: '本当に禁煙を終了しますか？' } %>
+        <% else %>
+          <div class="bg-cardBackground rounded-lg p-6 shadow-lg mb-6">
+            <h2 class="text-xl font-bold mb-4 text-white">現在禁煙中ではありません</h2>
+            <%= button_to '禁煙を開始', non_smoker_quit_smoking_records_path, method: :post, class: 'bg-green-500 hover:bg-green-600 text-black font-bold py-2 px-4 rounded text-sm' %>
+          </div>
+        <% end %>
+      </div>
+
+      <!-- 禁煙統計 -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 lg:col-span-3 gap-6">
+        <div class="bg-cardBackground p-4 rounded-lg shadow-lg">
+          <h3 class="text-base font-semibold mb-2 text-white flex items-center">
+            <%= inline_svg_tag 'icons-clock.svg', class: 'w-5 h-5 mr-2' %>
+            総禁煙時間
+          </h3>
+          <p class="text-lg font-bold text-green-500">
+            <%= format_duration(Time.current - @total_quit_seconds.seconds) %>
+          </p>
+        </div>
+        <div class="bg-cardBackground p-4 rounded-lg shadow-lg">
+          <h3 class="text-base font-semibold mb-2 text-white flex items-center">
+            <%= inline_svg_tag 'icons-coin.svg', class: 'w-5 h-5 mr-2' %>
+            総節約金額
+          </h3>
+          <p class="text-lg font-bold text-green-500"><%= number_to_currency(@total_savings, unit: '¥', precision: 0) %></p>
+        </div>
+        <div class="bg-cardBackground p-4 rounded-lg shadow-lg">
+          <h3 class="text-base font-semibold mb-2 text-white flex items-center">
+            <%= inline_svg_tag 'icons-bar-chart.svg', class: 'w-5 h-5 mr-2' %>
+            1日の節約可能額
+          </h3>
+          <p class="text-lg font-bold text-green-500"><%= number_to_currency(@daily_potential_savings, unit: '¥', precision: 0) %></p>
+        </div>
+        <div class="bg-cardBackground p-4 rounded-lg shadow-lg">
+          <h3 class="text-base font-semibold mb-2 text-white flex items-center">
+            <%= inline_svg_tag 'icons-coin.svg', class: 'w-5 h-5 mr-2' %>
+            今回の禁煙の節約金額
+          </h3>
+          <p class="text-lg font-bold text-green-500"><%= number_to_currency(@current_savings, unit: '¥', precision: 0) %></p>
+        </div>
+      </div>
+
+      <!-- 喫煙が多い時間帯 -->
+      <div class="bg-cardBackground rounded-lg p-6 shadow-lg lg:col-span-3">
+        <h3 class="text-lg font-semibold mb-4 text-white flex items-center">
+          <%= inline_svg_tag 'icons-warning.svg', class: 'w-6 h-6 mr-2' %>
+          喫煙が多い時間帯
+        </h3>
+        <% danger_hours = current_user.analyze_danger_hours %>
+        <% if danger_hours.any? %>
+          <% danger_hours.each do |hour, count| %>
+            <p class="text-sm text-white mb-2">
+              <%= "#{hour}:00 - #{hour}:59 #{count}回" %>
+            </p>
+          <% end %>
+          <p class="text-xs text-gray-400 mt-4">※ これらの時間帯は特に注意が必要です。</p>
+        <% else %>
+          <p class="text-sm text-white">十分なデータがありません。</p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

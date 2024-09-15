@@ -8,4 +8,23 @@ module ApplicationHelper
     else 'bg-customForm'
     end
   end
+
+  def format_duration(from_time, to_time = Time.current)
+    duration = to_time - from_time
+    years, remaining = duration.divmod(1.year)
+    months, remaining = remaining.divmod(1.month)
+    days, remaining = remaining.divmod(1.day)
+    hours, remaining = remaining.divmod(1.hour)
+    minutes, seconds = remaining.divmod(1.minute)
+  
+    parts = []
+    parts << "#{years}年" if years > 0
+    parts << "#{months}ヶ月" if months > 0
+    parts << "#{days}日" if days > 0
+    parts << "#{hours}時間" if hours > 0
+    parts << "#{minutes}分" if minutes > 0
+    parts << "#{seconds.to_i}秒"
+  
+    parts.join(' ')
+  end
 end

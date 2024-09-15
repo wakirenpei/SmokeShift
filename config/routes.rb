@@ -12,6 +12,9 @@ Rails.application.routes.draw do
   namespace :smoker do
     resources :cigarettes, only: [:index, :create, :edit, :update]
     resources :smoking_records, only: [:index, :create, :destroy]
+  end
+
+  namespace :non_smoker do
     resources :quit_smoking_records, only: [:index, :create, :update]
   end
 
