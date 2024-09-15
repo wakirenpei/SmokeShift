@@ -7,12 +7,16 @@ class QuitSmokingRecord < ApplicationRecord
   scope :active, -> { where(end_date: nil) }
   scope :completed, -> { where.not(end_date: nil) }
 
+  def start_time
+    start_date.to_time
+  end
+
   def active?
     end_date.nil?
   end
 
   def duration
-    (end_date || Date.today) - start_date
+    end_date ? (end_date - start_date) : (Time.current - start_date)
   end
 
   private

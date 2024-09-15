@@ -62,7 +62,7 @@
     <% end %>
   </div>
 
-  <!-- 統計情報 -->
+<!-- 統計情報 -->
   <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
     <% [
       { icon: 'icons-coin.svg', title: "総合計金額", value: number_to_currency(@total_amount) },
@@ -73,7 +73,7 @@
       <div class="bg-cardBackground p-4 rounded-lg shadow-lg transition duration-300 hover:shadow-xl flex items-center h-24">
         <div class="flex items-center justify-between w-full">
           <div class="flex items-center">
-            <%= inline_svg_tag item[:icon], class: "w-6 h-6 mr-2 text-customGreen" %>
+            <%= inline_svg_tag item[:icon], class: "w-6 h-6 mr-2"%>
             <span class="text-labelColor"><%= item[:title] %></span>
           </div>
           <div class="text-2xl font-bold text-white flex items-center">
@@ -86,8 +86,6 @@
       </div>
     <% end %>
   </div>
-
-  <!-- 前半部分は変更なし -->
 
 <!-- 喫煙記録ログ -->
   <div class="bg-cardBackground rounded-lg p-6 shadow-lg">

@@ -31,6 +31,6 @@ class User < ApplicationRecord
     records = smoking_records
     hours = records.group_by { |r| r.smoked_at.hour }
     danger_hours = hours.max_by(3) { |_, records| records.count }
-    danger_hours.map { |hour, _| hour }.sort
+    danger_hours.map { |hour, records| [hour, records.count] }.sort
   end
 end
