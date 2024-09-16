@@ -28,7 +28,7 @@ class NonSmoker::QuitSmokingRecordsController < ApplicationController
   def update
     if @quit_smoking_record.update(end_date: Time.current)
       current_user.update(smoking_status: :smoker)
-      redirect_to non_smoker_quit_smoking_records_path, notice: '禁煙記録を更新しました。次の挑戦に向けて準備しましょう。'
+      redirect_to smoker_smoking_records_path, notice: '禁煙を終了します。お疲れ様でした！'
     else
       redirect_to non_smoker_quit_smoking_records_path, alert: '禁煙記録の更新に失敗しました。'
     end

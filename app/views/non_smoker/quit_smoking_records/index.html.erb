@@ -1,7 +1,7 @@
 <div class="ml-48 pt-16 bg-darkBackground">
   <div class="container mx-auto px-4 py-8 max-w-6xl">
     <h1 class="text-2xl font-bold mb-6 text-white flex items-center">
-      禁煙管理
+      禁煙記録
     </h1>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -44,7 +44,7 @@
         </div>
         <div class="bg-cardBackground p-4 rounded-lg shadow-lg">
           <h3 class="text-base font-semibold mb-2 text-white flex items-center">
-            <%= inline_svg_tag 'icons-bar-chart.svg', class: 'w-5 h-5 mr-2' %>
+            <%= inline_svg_tag 'icons-chart.svg', class: 'w-5 h-5 mr-2' %>
             1日の節約可能額
           </h3>
           <p class="text-lg font-bold text-green-500"><%= number_to_currency(@daily_potential_savings, unit: '¥', precision: 0) %></p>
