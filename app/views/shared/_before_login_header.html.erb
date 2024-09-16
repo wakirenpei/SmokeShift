@@ -7,7 +7,25 @@
       </div>
     <% end %>
   </div>
-  <div class="flex items-center mr-4">
-    <%= link_to "ログアウト", logout_path, data: { turbo_method: :delete }, class: 'text-sm bg-customGreen text-white px-4 py-2 rounded hover:text-darkBackground' %>
+  <div class="flex items-center mr-4 space-x-4">
+    <% if current_user.smoker? %>
+      <label for="quit-smoking-modal" class="btn btn-primary">禁煙する</label>
+    <% end %>
+    <%= link_to "ログアウト", logout_path, data: { turbo_method: :delete }, class: 'btn btn-ghost bg-customGreen' %>
   </div>
 </header>
+
+<!-- 禁煙開始モーダル -->
+<input type="checkbox" id="quit-smoking-modal" class="modal-toggle" />
+<div class="modal">
+  <div class="modal-box bg-gradient-to-br from-customForm to-cardBackground text-labelColor">
+    <h3 class="font-light text-2xl mb-6">禁煙を始めますか？</h3>
+    <p class="mb-6">禁煙を開始すると、あなたの健康と財布にとってプラスになります。今すぐ始めましょう！</p>
+    <%= form_with(url: non_smoker_quit_smoking_records_path, local: true, method: :post) do |f| %>
+      <div class="mt-6 flex justify-end space-x-3">
+        <label for="quit-smoking-modal" class="btn btn-ghost">キャンセル</label>
+        <%= f.submit '禁煙を開始', class: 'btn btn-primary' %>
+      </div>
+    <% end %>
+  </div>
+</div>
