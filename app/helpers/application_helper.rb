@@ -9,6 +9,7 @@ module ApplicationHelper
     end
   end
 
+  # 禁煙記録の期間をフォーマット
   def format_duration(from_time, to_time = Time.current)
     duration = to_time - from_time
     years, remaining = duration.divmod(1.year)
@@ -26,5 +27,28 @@ module ApplicationHelper
     parts << "#{seconds.to_i}秒"
   
     parts.join(' ')
+  end
+
+  # サイドバーのアクティブリンクを判定
+  def calculate_savings(seconds, daily_potential_savings)
+    (daily_potential_savings * seconds / 86400.0).round(0)
+  end
+
+  def total_savings
+    current_user.quit_smoking_records.sum { |record| record.duration * current_user.calculate_daily_potential_savings / 1.day }
+  rescue
+    0
+  end
+
+  def total_smoking_amount
+    current_user.smoking_records.sum(:price_per_cigarette)
+  rescue
+    0
+  end
+
+  def smoking_savings_difference
+    total_savings - total_smoking_amount
+  rescue
+    0
   end
 end

@@ -16,22 +16,37 @@ class NonSmoker::QuitSmokingRecordsController < ApplicationController
   end
 
   def create
-    @quit_smoking_record = current_user.quit_smoking_records.build(start_date: Time.current)
-    if @quit_smoking_record.save
-      current_user.update(smoking_status: :non_smoker)
-      redirect_to non_smoker_quit_smoking_records_path, notice: '禁煙を開始しました。頑張りましょう！'
+    if current_user.smoking_records.empty?
+      # 喫煙記録がない場合
+      redirect_to smoker_smoking_records_path, alert: '喫煙記録がないため、禁煙を開始できません。'
     else
-      redirect_to non_smoker_quit_smoking_records_path, alert: '禁煙の開始に失敗しました。'
+      @quit_smoking_record = current_user.quit_smoking_records.build(start_date: Time.current)
+      if @quit_smoking_record.save
+        current_user.update(smoking_status: :non_smoker)
+        redirect_to non_smoker_quit_smoking_records_path, notice: '禁煙を開始しました。頑張りましょう！'
+      else
+        redirect_to non_smoker_quit_smoking_records_path, alert: '禁煙の開始に失敗しました。'
+      end
     end
   end
 
   def update
     if @quit_smoking_record.update(end_date: Time.current)
+      duration = @quit_smoking_record.duration
+      final_savings = calculate_savings(duration)
+      
+      @quit_smoking_record.update(money_saved: final_savings)
       current_user.update(smoking_status: :smoker)
-      redirect_to smoker_smoking_records_path, notice: '禁煙を終了します。お疲れ様でした！'
+      
+      redirect_to smoker_smoking_records_path, notice: "禁煙を終了します。お疲れ様でした！"
     else
       redirect_to non_smoker_quit_smoking_records_path, alert: '禁煙記録の更新に失敗しました。'
     end
+  end
+
+  def logs
+    @quit_smoking_records = current_user.quit_smoking_records.order(start_date: :desc).page(params[:page]).per(10)
+    @completed_quit_attempts = @quit_smoking_records.completed
   end
 
   private
@@ -41,6 +56,7 @@ class NonSmoker::QuitSmokingRecordsController < ApplicationController
   end
 
   def calculate_savings(seconds)
+    return 0 if @daily_potential_savings.nil?
     (@daily_potential_savings * seconds / 86400.0).round(0)
   end
 

@@ -1,15 +1,15 @@
-<div class="ml-48 pl-8 pt-24 bg-gradient-to-br from-[#161616] to-[#1a1a1a] min-h-screen">
+<div class="ml-48 pl-8 pt-24 min-h-screen bg-darkBackground">
   <div class="container mx-auto px-4">
     <h1 class="text-4xl font-light text-labelColor mb-8">タバコ管理</h1>
     
-    <div class="bg-gradient-to-br from-customForm to-cardBackground rounded-lg shadow-xl p-8">
+    <div class="bg-cardBackground rounded-lg shadow-xl p-8">
       <div class="flex flex-col md:flex-row gap-8">
         <!-- 登録済みタバコ -->
         <div class="w-full">
           <h2 class="text-2xl font-light text-labelColor mb-6">登録済みタバコ</h2>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <% @cigarettes.each_with_index do |cigarette, index| %>
-              <div class="bg-gradient-to-br from-customForm to-itemBackground rounded-lg p-6 relative shadow-md transition duration-300 hover:shadow-lg hover:scale-105">
+              <div class="bg-itemBackground rounded-lg p-6 relative shadow-md transition duration-300 hover:shadow-lg hover:scale-105">
                 <div class="absolute top-4 right-4 text-3xl font-bold text-customGreen">
                   <%= (index + 1).to_s %>
                 </div>
@@ -50,7 +50,7 @@
 <!-- 新規登録モーダル -->
 <input type="checkbox" id="new-cigarette-modal" class="modal-toggle" />
 <div class="modal">
-  <div class="modal-box bg-gradient-to-br from-customForm to-cardBackground text-labelColor">
+  <div class="modal-box bg-cardBackground text-labelColor">
     <h3 class="font-light text-2xl mb-6">新しいタバコを登録</h3>
     <%= render 'form', cigarette: @cigarette %>
     <div class="modal-action mt-8">

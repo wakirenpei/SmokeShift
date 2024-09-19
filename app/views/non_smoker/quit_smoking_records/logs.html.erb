@@ -1,0 +1,60 @@
+<div class="min-h-screen bg-darkBackground text-gray-100 py-8 px-4 ml-48 pt-16">
+  <div class="max-w-7xl mx-auto">
+    <h1 class="text-3xl font-semibold mb-8 flex items-center">
+      禁煙履歴
+    </h1>
+    
+    <div class="bg-cardBackground rounded-lg shadow-xl p-6 mb-8">
+      <table class="w-full">
+        <thead>
+          <tr class="text-left border-b border-gray-700">
+            <th class="py-2 px-4 font-medium text-gray-400">開始日時</th>
+            <th class="py-2 px-4 font-medium text-gray-400">終了日時</th>
+            <th class="py-2 px-4 font-medium text-gray-400">期間</th>
+            <th class="py-2 px-4 font-medium text-gray-400">節約金額</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @quit_smoking_records.each do |record| %>
+            <tr class="border-b border-gray-700">
+              <td class="py-2 px-4">
+                <div class="flex items-center">
+                  <svg class="w-4 h-4 mr-2 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                  </svg>
+                  <%= record.start_date.strftime('%Y/%m/%d %H:%M:%S') %>
+                </div>
+              </td>
+              <td class="py-2 px-4">
+                <div class="flex items-center">
+                  <%= inline_svg_tag 'icons-clock.svg', class: 'w-4 h-4 mr-2' %>
+                  <%= record.end_date ? record.end_date.strftime('%Y/%m/%d %H:%M:%S') : '進行中' %>
+                </div>
+              </td>
+              <td class="py-2 px-4">
+                <div class="flex items-center">
+                  <%= inline_svg_tag 'icons-clock.svg', class: 'w-4 h-4 mr-2' %>
+                  <%= format_duration(record.start_date, record.end_date || Time.current) %>
+                </div>
+              </td>
+              <td class="py-2 px-4 text-green-400">
+                <div class="flex items-center">
+                  <%= inline_svg_tag 'icons-coin.svg', class: 'w-4 h-4 mr-2' %>
+                  <%= number_to_currency(calculate_savings(record.duration, current_user.calculate_daily_potential_savings), unit: '¥', precision: 0) %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    
+    <% if @quit_smoking_records.empty? %>
+      <p class="text-center mt-8">まだ禁煙記録がありません。</p>
+    <% else %>
+      <div class="mt-8">
+        <%= paginate @quit_smoking_records %>
+      </div>
+    <% end %>
+  </div>
+</div>
