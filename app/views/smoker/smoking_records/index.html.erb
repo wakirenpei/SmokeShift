@@ -1,5 +1,5 @@
-<div class="ml-48 pt-24 bg-darkBackground min-h-screen p-6">
-  <!-- 喫煙カレンダー -->
+<div class="ml-36 pt-24 bg-darkBackground min-h-screen p-6">
+  <!-- 喫煙カレンダー (変更なし) -->
   <div class="bg-cardBackground rounded-lg p-6 shadow-lg mb-6">
     <div class="flex justify-between items-center mb-4">
       <h2 class="text-2xl font-bold flex items-center text-white">
@@ -35,34 +35,40 @@
     </div>
   </div>
 
-  <!-- 喫煙記録フォーム -->
+  <!-- 喫煙記録フォーム（修正済み） -->
   <div class="bg-cardBackground rounded-lg p-6 mb-6 shadow-lg">
-    <%= form_with model: [:smoker, @new_smoking_record], url: smoker_smoking_records_path, local: true, class: "flex flex-col space-y-4" do |f| %>
-      <% if @new_smoking_record.errors.any? %>
-        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
-          <strong class="font-bold">エラー:</strong>
-          <ul class="mt-2 list-disc list-inside">
-            <% @new_smoking_record.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+    <% if @cigarettes.empty? %>
+      <p class="text-white mb-4">タバコが登録されていません。先にタバコを登録してください。</p>
+      <%= link_to "タバコを登録する", smoker_cigarettes_path, class: "btn btn-primary" %>
+    <% else %>
+      <%= form_with model: [:smoker, @new_smoking_record], url: smoker_smoking_records_path, local: true do |f| %>
+        <fieldset class="mb-4">
+          <legend class="sr-only">タバコの種類を選択</legend>
+          <div class="flex flex-col sm:flex-row gap-4" role="group">
+            <% @cigarettes.each_with_index do |cigarette, index| %>
+              <div class="flex-1 relative">
+                <%= f.radio_button :cigarette_id, cigarette.id, 
+                                   class: "peer absolute inset-0 opacity-0 w-full h-full cursor-pointer", 
+                                   id: "cigarette_#{cigarette.id}",
+                                   checked: index == 0 %>
+                <%= f.label "cigarette_#{cigarette.id}", class: "flex flex-col items-center justify-center p-4 text-gray-200 bg-gray-700 rounded-lg peer-checked:ring-2 peer-checked:ring-blue-500 peer-checked:bg-blue-600 peer-checked:text-white hover:bg-gray-600 transition-all duration-300" do %>
+                  <span class="text-lg font-semibold"><%= cigarette.brand %></span>
+                  <span class="text-sm opacity-70"><%= number_to_currency(cigarette.price_per_cigarette) %>/本</span>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        </fieldset>
 
-      <div class="flex flex-col md:flex-row items-center justify-between gap-4">
-        <%= f.collection_select :cigarette_id, @cigarettes, :id, :brand, 
-            { prompt: "タバコを選択" }, 
-            class: "w-full md:w-2/3 p-3 bg-itemBackground text-white rounded-lg transition duration-300 hover:bg-gray-700 focus:ring-2 focus:ring-customGreen #{'border-red-500' if @new_smoking_record.errors[:cigarette_id].any?}" %>
-        
-        <%= button_tag type: 'submit', class: "w-full md:w-1/3 bg-customGreen hover:bg-customGreenHover text-white py-3 px-6 rounded-lg flex items-center justify-center transition duration-300" do %>
+        <%= f.button type: 'submit', class: "w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg flex items-center justify-center transition duration-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50" do %>
           <%= inline_svg_tag 'icons-smoking.svg', class: 'w-6 h-6 mr-2' %>
           喫煙を記録
         <% end %>
-      </div>
+      <% end %>
     <% end %>
   </div>
 
-<!-- 統計情報 -->
+  <!-- 統計情報 (変更なし) -->
   <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
     <% [
       { icon: 'icons-coin.svg', title: "総合計金額", value: number_to_currency(@total_amount) },
@@ -87,30 +93,30 @@
     <% end %>
   </div>
 
-<!-- 喫煙記録ログ -->
+  <!-- 喫煙記録ログ (変更なし) -->
   <div class="bg-cardBackground rounded-lg p-6 shadow-lg">
-  <h2 class="text-2xl font-bold mb-4 flex items-center text-base-content">
-    <i class="fas fa-clipboard-list mr-2"></i>
-    今日の喫煙記録ログ
-  </h2>
-  <div class="max-h-[calc(100vh-400px)] overflow-y-auto">
-    <ul class="space-y-3">
-      <% @smoking_records.each do |log| %>
-        <li class="bg-itemBackground p-3 rounded-lg shadow transition duration-300 hover:bg-base-100">
-          <div class="flex justify-between items-center">
-            <span class="text-base-content opacity-70"><%= log.smoked_at.strftime("%Y/%m/%d %H:%M") %></span>
-            <span class="font-medium text-base-content"><%= log.cigarette.brand %></span>
-            <span class="text-accent"><%= number_to_currency(log.price_per_cigarette) %></span>
-            <%= button_to smoker_smoking_record_path(log), method: :delete, data: { turbo_confirm: "本当にこの記録を削除しますか？" }, class: "btn btn-ghost btn-xs" do %>
-              <i class="fas fa-trash-alt text-error"></i>
-            <% end %>
-          </div>
-        </li>
-      <% end %>
-    </ul>
+    <h2 class="text-2xl font-bold mb-4 flex items-center text-base-content">
+      <i class="fas fa-clipboard-list mr-2"></i>
+      今日の喫煙記録ログ
+    </h2>
+    <div class="max-h-[calc(100vh-400px)] overflow-y-auto">
+      <ul class="space-y-3">
+        <% @smoking_records.each do |log| %>
+          <li class="bg-itemBackground p-3 rounded-lg shadow transition duration-300 hover:bg-base-100">
+            <div class="flex justify-between items-center">
+              <span class="text-base-content opacity-70"><%= log.smoked_at.strftime("%Y/%m/%d %H:%M") %></span>
+              <span class="font-medium text-base-content"><%= log.cigarette.brand %></span>
+              <span class="text-accent"><%= number_to_currency(log.price_per_cigarette) %></span>
+              <%= button_to smoker_smoking_record_path(log), method: :delete, data: { turbo_confirm: "本当にこの記録を削除しますか？" }, class: "btn btn-ghost btn-xs" do %>
+                <i class="fas fa-trash-alt text-error"></i>
+              <% end %>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+    <div class="mt-4">
+      <%= paginate @smoking_records, window: 2 %>
+    </div>
   </div>
-  <div class="mt-4">
-    <%= paginate @smoking_records, window: 2 %>
-  </div>
-</div>
 </div>

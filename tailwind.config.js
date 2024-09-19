@@ -9,7 +9,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        darkBackground: '#161616', // 主な背景色
+        darkBackground: '#2e2e2e;', // 主な背景色
         borderColor: 'rgba(229, 231, 235, 0.2)', // ボーダー色
         borderColor2: 'rgba(229, 231, 235, 0.1)', // ボーダー色
         customGreen: '#78a22a', // カスタムグリーン
@@ -18,8 +18,8 @@ module.exports = {
         labelColor: '#D4D4D4', // ラベルの文字色
         secondaryButton: '#4A5568', // セカンダリボタンの背景色
         secondaryButtonHover: '#2D3748',
-        cardBackground: '#2a2a2a', // カードの背景色
-        itemBackground: '#333333', // アイテムの背景色
+        cardBackground: '#3a3a3a', // カードの背景色
+        itemBackground: '#454545', // アイテムの背景色
       },
     },
   },
