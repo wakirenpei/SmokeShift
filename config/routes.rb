@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   root "tops#index"
+  get 'privacy_policy', to: 'static_pages#privacy_policy'
+  get 'terms_of_service', to: 'static_pages#terms_of_service'
   resources :tops, only: [:index]
   resources :users, only: [:new, :create]
 
