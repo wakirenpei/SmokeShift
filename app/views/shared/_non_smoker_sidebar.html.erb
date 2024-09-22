@@ -1,56 +1,67 @@
 <div class="flex flex-col text-white h-screen justify-between border-r border-borderColor fixed top-0 left-0 mt-12 bg-darkBackground z-10">
-  <div class="pt-8">
-    <!-- 金額サマリー -->
-    <div class="px-4 mt-4">
-      <div class="stats stats-vertical w-full bg-cardBackground text-white shadow">
-        <div class="stat px-3 py-2">
-          <div class="stat-title text-xs text-gray-400">総喫煙金額</div>
-          <div class="stat-value text-error text-base">
-            <%= number_to_currency(total_smoking_amount, unit: '¥', precision: 0) %>
+  <div class="flex flex-col h-full overflow-hidden">
+    <div class="pt-4 flex-shrink-0">
+      <!-- 金額サマリー -->
+      <div class="px-4 mt-12">
+        <div class="stats stats-vertical w-full bg-cardBackground text-white shadow">
+          <div class="stat px-3 py-1">
+            <div class="stat-title text-xs text-gray-400">総喫煙金額</div>
+            <div class="stat-value text-error text-sm">
+              <%= number_to_currency(total_smoking_amount, unit: '¥', precision: 0) %>
+            </div>
           </div>
-        </div>
-        
-        <div class="stat px-3 py-2">
-          <div class="stat-title text-xs text-gray-400">総節約金額</div>
-          <div class="stat-value text-success text-base">
-            <%= number_to_currency(total_savings, unit: '¥', precision: 0) %>
+          
+          <div class="stat px-3 py-1">
+            <div class="stat-title text-xs text-gray-400">総節約金額</div>
+            <div class="stat-value text-success text-sm">
+              <%= number_to_currency(total_savings, unit: '¥', precision: 0) %>
+            </div>
           </div>
-        </div>
-        
-        <% difference = smoking_savings_difference %>
-        <div class="stat px-3 py-2">
-          <div class="stat-title text-xs text-gray-400">差額</div>
-          <div class="stat-value text-base <%= difference >= 0 ? 'text-success' : 'text-error' %>">
-            <%= number_to_currency(difference.abs, unit: '¥', precision: 0) %> 
+          
+          <% difference = smoking_savings_difference %>
+          <div class="stat px-3 py-1">
+            <div class="stat-title text-xs text-gray-400">差額</div>
+            <div class="stat-value text-sm <%= difference >= 0 ? 'text-success' : 'text-error' %>">
+              <%= number_to_currency(difference.abs, unit: '¥', precision: 0) %> 
+            </div>
+            <div class="stat-desc text-xs text-gray-300"><%= difference >= 0 ? '節約' : '損失' %></div>
           </div>
-          <div class="stat-desc text-xs text-gray-300"><%= difference >= 0 ? '節約' : '損失' %></div>
         </div>
       </div>
     </div>
 
-    <div class="px-4 mt-8">
-      <%= link_to non_smoker_quit_smoking_records_path, class: "hover:bg-gray-700 py-2 block" do %>
+    <!-- ナビゲーション -->
+    <nav class="px-4 mt-2 flex-shrink-0 ml-2">
+      <%= link_to non_smoker_quit_smoking_records_path, class: "hover:bg-gray-700 py-1.5 block" do %>
         <div class="flex items-center space-x-2">
           <%= image_tag 'icons-non-smoker.svg', alt: '禁煙管理アイコン', class: 'w-5 h-5' %>
-          <span class="text-base font-medium">禁煙管理</span>
+          <span class="text-sm font-medium">禁煙管理</span>
         </div>
       <% end %>
-    </div>
-    <div class="px-4 mt-2">
-      <%= link_to logs_non_smoker_quit_smoking_records_path, class: "hover:bg-gray-700 py-2 block" do %>
+      <%= link_to logs_non_smoker_quit_smoking_records_path, class: "hover:bg-gray-700 py-1.5 block mt-1" do %>
         <div class="flex items-center space-x-2">
           <%= image_tag 'icons-log.svg', alt: '禁煙ログアイコン', class: 'w-5 h-5' %>
-          <span class="text-base font-medium">禁煙ログ</span>
+          <span class="text-sm font-medium">禁煙ログ</span>
         </div>
       <% end %>
-    </div>
-    <div class="px-4 mt-2">
-      <%= link_to '#', class: "hover:bg-gray-700 py-2 block" do %>
+      <%= link_to '#', class: "hover:bg-gray-700 py-1.5 block mt-1" do %>
         <div class="flex items-center space-x-2">
           <%= image_tag 'icons-coin.svg', alt: '目標金額アイコン', class: 'w-5 h-5' %>
-          <span class="text-base font-medium">目標金額</span>
+          <span class="text-sm font-medium">目標金額</span>
         </div>
       <% end %>
+    </nav>
+
+    <!-- 空のスペーサー div -->
+    <div class="flex-grow"></div>
+
+    <!-- フッターリンク -->
+    <div class="px-4 py-2 text-xs text-gray-400 flex-shrink-0 mb-16 mt-auto">
+      <div class="flex flex-col space-y-2">
+        <%= link_to "プライバシー<br>ポリシー".html_safe, privacy_policy_path, class: "hover:text-white" %>
+        <%= link_to "利用規約", "#", class: "hover:text-white" %>
+        <%= link_to "お問い合わせ", "https://docs.google.com/forms/d/e/1FAIpQLSeENQt250jrU_NooubSloxIX3aoY3rYd5TQROtyloqFJ6G7Sw/viewform", class: "hover:text-white truncate", target: :_blank, rel: "noopener noreferrer" %>
+      </div>
     </div>
   </div>
 </div>
