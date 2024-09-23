@@ -1,9 +1,3 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@layer components {
-    .btn-outline {
-      @apply border border-customGreen text-customGreen hover:bg-customGreen hover:text-white transition-colors duration-300;
-    }
-  }
