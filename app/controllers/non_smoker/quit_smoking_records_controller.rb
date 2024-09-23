@@ -12,12 +12,11 @@ class NonSmoker::QuitSmokingRecordsController < ApplicationController
     end
     
     @total_quit_seconds = calculate_total_quit_seconds
-    @total_savings = calculate_savings(@total_quit_seconds)
+    @total_savings = calculate_total_savings
   end
 
   def create
     if current_user.smoking_records.empty?
-      # 喫煙記録がない場合
       redirect_to smoker_smoking_records_path, alert: '喫煙記録がないため、禁煙を開始できません。'
     else
       @quit_smoking_record = current_user.quit_smoking_records.build(start_date: Time.current)
@@ -32,12 +31,12 @@ class NonSmoker::QuitSmokingRecordsController < ApplicationController
 
   def update
     if @quit_smoking_record.update(end_date: Time.current)
+      daily_savings = current_user.calculate_daily_potential_savings
       duration = @quit_smoking_record.duration
-      final_savings = calculate_savings(duration)
+      final_savings = (daily_savings * duration / 1.day).round(0)
       
       @quit_smoking_record.update(money_saved: final_savings)
       current_user.update(smoking_status: :smoker)
-      
       redirect_to smoker_smoking_records_path, notice: "禁煙を終了します。お疲れ様でした！"
     else
       redirect_to non_smoker_quit_smoking_records_path, alert: '禁煙記録の更新に失敗しました。'
@@ -57,10 +56,16 @@ class NonSmoker::QuitSmokingRecordsController < ApplicationController
 
   def calculate_savings(seconds)
     return 0 if @daily_potential_savings.nil?
-    (@daily_potential_savings * seconds / 86400.0).round(0)
+    (@daily_potential_savings * seconds / 1.day).round(0)
   end
 
   def calculate_total_quit_seconds
     current_user.quit_smoking_records.sum(&:duration)
+  end
+
+  def calculate_total_savings
+    completed_savings = current_user.quit_smoking_records.completed.sum(:money_saved)
+    current_savings = @current_quit_attempt ? calculate_savings(@current_duration) : 0
+    completed_savings + current_savings
   end
 end
