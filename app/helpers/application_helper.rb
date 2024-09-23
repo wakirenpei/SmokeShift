@@ -31,11 +31,19 @@ module ApplicationHelper
 
   # サイドバーのアクティブリンクを判定
   def calculate_savings(seconds, daily_potential_savings)
-    (daily_potential_savings * seconds / 86400.0).round(0)
+    (daily_potential_savings * seconds / 1.day).round(0)
   end
 
   def total_savings
-    current_user.quit_smoking_records.sum { |record| record.duration * current_user.calculate_daily_potential_savings / 1.day }
+    completed_savings = current_user.quit_smoking_records.completed.sum(:money_saved)
+    current_quit_attempt = current_user.quit_smoking_records.active.first
+    current_savings = if current_quit_attempt
+                        daily_savings = current_user.calculate_daily_potential_savings
+                        calculate_savings(current_quit_attempt.duration, daily_savings)
+                      else
+                        0
+                      end
+    completed_savings + current_savings
   rescue
     0
   end
