@@ -19,6 +19,12 @@ class QuitSmokingRecord < ApplicationRecord
     end_date ? (end_date - start_date) : (Time.current - start_date)
   end
 
+  # 新しく追加されたメソッド
+  def calculate_savings
+    daily_savings = user.calculate_daily_potential_savings
+    (daily_savings * duration / 1.day).round(0)
+  end
+
   private
 
   def end_date_after_start_date

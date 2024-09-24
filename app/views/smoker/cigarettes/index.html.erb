@@ -10,9 +10,6 @@
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <% @cigarettes.each_with_index do |cigarette, index| %>
               <div class="bg-itemBackground rounded-lg p-6 relative shadow-md transition duration-300 hover:shadow-lg hover:scale-105">
-                <div class="absolute top-4 right-4 text-3xl font-bold text-customGreen">
-                  <%= (index + 1).to_s %>
-                </div>
                 <div class="mb-4">
                   <h3 class="text-2xl font-medium text-labelColor"><%= cigarette.brand %></h3>
                 </div>
@@ -40,7 +37,7 @@
         <% if @can_add_cigarette %>
           <label for="new-cigarette-modal" class="inline-block w-full px-8 py-3 bg-customGreen text-white text-center font-medium rounded-md hover:bg-customGreenHover transition duration-300 shadow-md cursor-pointer">新しいタバコを追加</label>
         <% else %>
-          <p class="text-labelColor text-center bg-customForm rounded-md p-4">登録可能な上限に達しました（最大2種類）</p>
+          <p class="text-labelColor text-center bg-itemBackground rounded-md p-4">登録可能な上限に達しました（最大2種類）</p>
         <% end %>
       </div>
     </div>

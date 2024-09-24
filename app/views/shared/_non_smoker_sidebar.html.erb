@@ -31,35 +31,32 @@
     </div>
 
     <!-- ナビゲーション -->
-    <nav class="px-4 mt-2 flex-shrink-0 ml-2">
-      <%= link_to non_smoker_quit_smoking_records_path, class: "hover:bg-gray-700 py-1.5 block" do %>
-        <div class="flex items-center space-x-2">
-          <%= image_tag 'icons-non-smoker.svg', alt: '禁煙管理アイコン', class: 'w-5 h-5' %>
-          <span class="text-sm font-medium">禁煙管理</span>
+    <nav class="px-4 mt-8 flex-shrink-0 ml-2">
+      <%= link_to non_smoker_quit_smoking_records_path, class: "block py-1.5 relative group" do %>
+        <div class="flex items-center space-x-2 transition-transform duration-200 ease-in-out group-hover:translate-x-1">
+          <%= inline_svg_tag 'icons-non-smoker.svg', class: 'w-5 h-5 text-gray-300 transition-colors duration-200 ease-in-out group-hover:text-white' %>
+          <span class="text-sm font-medium text-gray-300 transition-colors duration-200 ease-in-out group-hover:text-white">禁煙管理</span>
         </div>
       <% end %>
-      <%= link_to logs_non_smoker_quit_smoking_records_path, class: "hover:bg-gray-700 py-1.5 block mt-1" do %>
-        <div class="flex items-center space-x-2">
-          <%= image_tag 'icons-log.svg', alt: '禁煙ログアイコン', class: 'w-5 h-5' %>
-          <span class="text-sm font-medium">禁煙ログ</span>
+      <%= link_to logs_non_smoker_quit_smoking_records_path, class: "block py-1.5 mt-2 relative group" do %>
+        <div class="flex items-center space-x-2 transition-transform duration-200 ease-in-out group-hover:translate-x-1">
+          <%= inline_svg_tag 'icons-log.svg', class: 'w-5 h-5 text-gray-300 transition-colors duration-200 ease-in-out group-hover:text-white' %>
+          <span class="text-sm font-medium text-gray-300 transition-colors duration-200 ease-in-out group-hover:text-white">禁煙ログ</span>
         </div>
       <% end %>
-      <%= link_to '#', class: "hover:bg-gray-700 py-1.5 block mt-1" do %>
-        <div class="flex items-center space-x-2">
-          <%= image_tag 'icons-coin.svg', alt: '目標金額アイコン', class: 'w-5 h-5' %>
-          <span class="text-sm font-medium">目標金額</span>
+      <%= link_to '#', class: "block py-1.5 mt-2 relative group" do %>
+        <div class="flex items-center space-x-2 transition-transform duration-200 ease-in-out group-hover:translate-x-1">
+          <%= inline_svg_tag 'icons-coin.svg', class: 'w-5 h-5 text-gray-300 transition-colors duration-200 ease-in-out group-hover:text-white' %>
+          <span class="text-sm font-medium text-gray-300 transition-colors duration-200 ease-in-out group-hover:text-white">目標金額</span>
         </div>
       <% end %>
     </nav>
 
-    <!-- 空のスペーサー div -->
-    <div class="flex-grow"></div>
-
     <!-- フッターリンク -->
-    <div class="px-4 py-2 text-xs text-gray-400 flex-shrink-0 mb-16 mt-auto">
+    <div class="px-4 py-2 text-sm text-gray-400 flex-shrink-0 mb-16 mt-auto">
       <div class="flex flex-col space-y-2">
         <%= link_to "プライバシー<br>ポリシー".html_safe, privacy_policy_path, class: "hover:text-white" %>
-        <%= link_to "利用規約", "#", class: "hover:text-white" %>
+        <%= link_to "利用規約", terms_of_service_path, class: "hover:text-white" %>
         <%= link_to "お問い合わせ", "https://docs.google.com/forms/d/e/1FAIpQLSeENQt250jrU_NooubSloxIX3aoY3rYd5TQROtyloqFJ6G7Sw/viewform", class: "hover:text-white truncate", target: :_blank, rel: "noopener noreferrer" %>
       </div>
     </div>
