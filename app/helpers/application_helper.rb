@@ -1,5 +1,5 @@
 module ApplicationHelper
-  # フラッシュメッセー時の色を指定
+  # フラッシュメッセージの色を指定（変更なし）
   def flash_background_color(type)
     case type.to_sym
     when :notice then 'bg-customForm'
@@ -9,7 +9,7 @@ module ApplicationHelper
     end
   end
 
-  # 禁煙記録の期間をフォーマット
+  # 禁煙記録の期間をフォーマット（変更なし）
   def format_duration(from_time, to_time = Time.current)
     duration = to_time - from_time
     years, remaining = duration.divmod(1.year)
@@ -29,31 +29,26 @@ module ApplicationHelper
     parts.join(' ')
   end
 
-  # サイドバーのアクティブリンクを判定
-  def calculate_savings(seconds, daily_potential_savings)
-    (daily_potential_savings * seconds / 1.day).round(0)
-  end
+  # このメソッドは削除（QuitSmokingRecordモデルに移動したため）
+  # def calculate_savings(seconds, daily_potential_savings)
+  #   (daily_potential_savings * seconds / 1.day).round(0)
+  # end
 
+  # 変更されたtotal_savingsメソッド
   def total_savings
-    completed_savings = current_user.quit_smoking_records.completed.sum(:money_saved)
-    current_quit_attempt = current_user.quit_smoking_records.active.first
-    current_savings = if current_quit_attempt
-                        daily_savings = current_user.calculate_daily_potential_savings
-                        calculate_savings(current_quit_attempt.duration, daily_savings)
-                      else
-                        0
-                      end
-    completed_savings + current_savings
+    current_user.quit_smoking_records.sum(&:calculate_savings)
   rescue
     0
   end
 
+  # 変更なし
   def total_smoking_amount
     current_user.smoking_records.sum(:price_per_cigarette)
   rescue
     0
   end
 
+  # 変更なし
   def smoking_savings_difference
     total_savings - total_smoking_amount
   rescue

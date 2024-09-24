@@ -31,23 +31,23 @@
     </div>
 
     <!-- 既存のナビゲーション -->
-    <nav class="px-4 mt-2 flex-shrink-0 ml-2">
-      <%= link_to smoker_smoking_records_path, class: "hover:bg-gray-700 py-1.5 block" do %>
-        <div class="flex items-center space-x-2">
-          <%= image_tag 'icons-smoking.svg', alt: '喫煙管理アイコン', class: 'w-5 h-5' %>
-          <span class="text-sm font-medium">喫煙管理</span>
+    <nav class="px-4 mt-8 flex-shrink-0 ml-2">
+      <%= link_to smoker_smoking_records_path, class: "block py-1.5 relative group" do %>
+        <div class="flex items-center space-x-2 transition-transform duration-200 ease-in-out group-hover:translate-x-1">
+          <%= image_tag 'icons-smoking.svg', alt: '喫煙管理アイコン', class: 'w-5 h-5 transition-colors duration-200 ease-in-out group-hover:filter group-hover:brightness-125' %>
+          <span class="text-sm font-medium text-gray-300 transition-colors duration-200 ease-in-out group-hover:text-white">喫煙管理</span>
         </div>
       <% end %>
-      <%= link_to smoker_cigarettes_path, class: "hover:bg-gray-700 py-1.5 block mt-1" do %>
-        <div class="flex items-center space-x-2">
-          <%= image_tag 'icons-cigarettes-pack.svg', alt: 'タバコ登録アイコン', class: 'w-5 h-5' %>
-          <span class="text-sm font-medium">登録</span>
+      <%= link_to smoker_cigarettes_path, class: "block py-1.5 mt-2 relative group" do %>
+        <div class="flex items-center space-x-2 transition-transform duration-200 ease-in-out group-hover:translate-x-1">
+          <%= image_tag 'icons-cigarettes-pack.svg', alt: 'タバコ登録アイコン', class: 'w-5 h-5 transition-colors duration-200 ease-in-out group-hover:filter group-hover:brightness-125' %>
+          <span class="text-sm font-medium text-gray-300 transition-colors duration-200 ease-in-out group-hover:text-white">登録</span>
         </div>
       <% end %>
-      <%= link_to '#', class: "hover:bg-gray-700 py-1.5 block mt-1" do %>
-        <div class="flex items-center space-x-2">
-          <%= image_tag 'icons-chart.svg', alt: 'グラフアイコン', class: 'w-5 h-5' %>
-          <span class="text-sm font-medium">グラフ</span>
+      <%= link_to '#', class: "block py-1.5 mt-2 relative group" do %>
+        <div class="flex items-center space-x-2 transition-transform duration-200 ease-in-out group-hover:translate-x-1">
+          <%= image_tag 'icons-chart.svg', alt: 'グラフアイコン', class: 'w-5 h-5 transition-colors duration-200 ease-in-out group-hover:filter group-hover:brightness-125' %>
+          <span class="text-sm font-medium text-gray-300 transition-colors duration-200 ease-in-out group-hover:text-white">グラフ</span>
         </div>
       <% end %>
     </nav>
