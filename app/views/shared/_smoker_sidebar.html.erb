@@ -34,19 +34,19 @@
     <nav class="px-4 mt-8 flex-shrink-0 ml-2">
       <%= link_to smoker_smoking_records_path, class: "block py-1.5 relative group" do %>
         <div class="flex items-center space-x-2 transition-transform duration-200 ease-in-out group-hover:translate-x-1">
-          <%= image_tag 'icons-smoking.svg', alt: '喫煙管理アイコン', class: 'w-5 h-5 transition-colors duration-200 ease-in-out group-hover:filter group-hover:brightness-125' %>
+          <%= inline_svg 'icons-smoking.svg', class: 'w-5 h-5 text-gray-300 transition-colors duration-200 ease-in-out group-hover:text-white' %>
           <span class="text-sm font-medium text-gray-300 transition-colors duration-200 ease-in-out group-hover:text-white">喫煙管理</span>
         </div>
       <% end %>
       <%= link_to smoker_cigarettes_path, class: "block py-1.5 mt-2 relative group" do %>
         <div class="flex items-center space-x-2 transition-transform duration-200 ease-in-out group-hover:translate-x-1">
-          <%= image_tag 'icons-cigarettes-pack.svg', alt: 'タバコ登録アイコン', class: 'w-5 h-5 transition-colors duration-200 ease-in-out group-hover:filter group-hover:brightness-125' %>
+          <%= inline_svg 'icons-cigarettes-pack.svg', class: 'w-5 h-5 text-gray-300 transition-colors duration-200 ease-in-out group-hover:text-white' %>
           <span class="text-sm font-medium text-gray-300 transition-colors duration-200 ease-in-out group-hover:text-white">登録</span>
         </div>
       <% end %>
       <%= link_to '#', class: "block py-1.5 mt-2 relative group" do %>
         <div class="flex items-center space-x-2 transition-transform duration-200 ease-in-out group-hover:translate-x-1">
-          <%= image_tag 'icons-chart.svg', alt: 'グラフアイコン', class: 'w-5 h-5 transition-colors duration-200 ease-in-out group-hover:filter group-hover:brightness-125' %>
+          <%= inline_svg 'icons-chart.svg', class: 'w-5 h-5 text-gray-300 transition-colors duration-200 ease-in-out group-hover:text-white' %>
           <span class="text-sm font-medium text-gray-300 transition-colors duration-200 ease-in-out group-hover:text-white">グラフ</span>
         </div>
       <% end %>

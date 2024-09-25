@@ -3,6 +3,8 @@ class SmokingRecord < ApplicationRecord
   belongs_to :cigarette
 
   validates :smoked_at, presence: true
+  validates :price_per_cigarette, presence: true, numericality: { greater_than: 0 }
+  validates :brand_name, presence: true
 
   before_validation :set_price_per_cigarette
   before_validation :set_brand_name
