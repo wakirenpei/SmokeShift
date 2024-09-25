@@ -19,13 +19,13 @@ class Smoker::CigarettesController < ApplicationController
     end
   end
 
-  def edit
-  end
+  def edit; end
 
   def update
     if @cigarette.update(cigarette_params)
       redirect_to smoker_cigarettes_path, notice: 'タバコ情報が更新されました。'
     else
+      flash.now[:alert] = 'タバコ情報の更新に失敗しました。'
       render :edit, status: :unprocessable_entity
     end
   end

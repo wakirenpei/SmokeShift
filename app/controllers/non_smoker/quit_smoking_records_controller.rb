@@ -1,6 +1,5 @@
 class NonSmoker::QuitSmokingRecordsController < ApplicationController
   before_action :require_login
-  before_action :set_quit_smoking_record, only: [:update]
 
   def index
     @current_quit_attempt = current_user.quit_smoking_records.active.first
@@ -30,7 +29,8 @@ class NonSmoker::QuitSmokingRecordsController < ApplicationController
   end
 
   def update
-    if @quit_smoking_record.update(end_date: Time.current)
+    @quit_smoking_record = current_user.quit_smoking_records.active.first
+    if @quit_smoking_record&.update(end_date: Time.current)
       current_user.update(smoking_status: :smoker)
       redirect_to smoker_smoking_records_path, notice: "禁煙を終了します。お疲れ様でした！"
     else
@@ -44,10 +44,6 @@ class NonSmoker::QuitSmokingRecordsController < ApplicationController
   end
 
   private
-
-  def set_quit_smoking_record
-    @quit_smoking_record = current_user.quit_smoking_records.find(params[:id])
-  end
 
   def calculate_total_quit_seconds
     current_user.quit_smoking_records.sum(&:duration)
