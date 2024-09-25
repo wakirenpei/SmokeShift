@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_09_24_135504) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_25_112920) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -41,6 +41,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_24_135504) do
     t.datetime "smoked_at", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "brand_name", null: false
     t.index ["cigarette_id"], name: "index_smoking_records_on_cigarette_id"
     t.index ["user_id", "smoked_at"], name: "index_smoking_records_on_user_id_and_smoked_at"
     t.index ["user_id"], name: "index_smoking_records_on_user_id"
