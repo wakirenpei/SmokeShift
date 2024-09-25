@@ -33,4 +33,8 @@ class User < ApplicationRecord
     danger_hours = hours.max_by(3) { |_, records| records.count }
     danger_hours.map { |hour, records| [hour, records.count] }.sort
   end
+
+  def currently_quitting?
+    quit_smoking_records.active.exists?
+  end
 end

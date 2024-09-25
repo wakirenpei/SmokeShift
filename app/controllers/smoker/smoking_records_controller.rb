@@ -9,13 +9,17 @@ class Smoker::SmokingRecordsController < ApplicationController
   end
 
   def create
-    @smoking_record = current_user.smoking_records.build(smoking_record_params)
-    if @smoking_record.save
-      redirect_to smoker_smoking_records_path, notice: '喫煙記録が追加されました。'
+    if current_user.currently_quitting?
+      redirect_to smoker_smoking_records_path, alert: '禁煙中は喫煙記録を追加できません。禁煙を終了してから記録してください。'
     else
-      @new_smoking_record = @smoking_record
-      @smoking_records = current_user.smoking_records.today.order(smoked_at: :desc).page(params[:page]).per(10)
-      render :index, status: :unprocessable_entity
+      @smoking_record = current_user.smoking_records.build(smoking_record_params)
+      if @smoking_record.save
+        redirect_to smoker_smoking_records_path, notice: '喫煙記録が追加されました。'
+      else
+        @new_smoking_record = @smoking_record
+        @smoking_records = current_user.smoking_records.today.order(smoked_at: :desc).page(params[:page]).per(10)
+        render :index, status: :unprocessable_entity
+      end
     end
   end
 
