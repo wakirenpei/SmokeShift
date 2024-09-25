@@ -106,7 +106,7 @@
           <li class="bg-itemBackground p-3 rounded-lg shadow transition duration-300 hover:bg-base-100">
             <div class="grid grid-cols-12 items-center gap-2">
               <span class="text-base-content opacity-70 col-span-5 truncate"><%= log.smoked_at.strftime("%Y/%m/%d %H:%M") %></span>
-              <span class="font-medium text-base-content col-span-3 truncate"><%= log.cigarette.brand %></span>
+              <span class="font-medium text-base-content col-span-3 truncate"><%= log.brand_name %></span>
               <span class="text-accent col-span-3 pl-4"><%= number_to_currency(log.price_per_cigarette) %></span>
               <div class="col-span-1 flex justify-end">
                 <%= button_to smoker_smoking_record_path(log), method: :delete, data: { turbo_confirm: "本当にこの記録を削除しますか？" }, class: "btn btn-ghost btn-xs" do %>
