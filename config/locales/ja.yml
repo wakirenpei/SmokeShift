@@ -1,0 +1,26 @@
+ja:
+  activerecord:
+    models:
+      cigarette: タバコ
+      quit_smoking_record: 禁煙記録
+      smoking_record: 喫煙記録
+      user: ユーザー
+    attributes:
+      cigarette:
+        brand: ブランド
+        quantity_per_pack: 1箱あたりの本数
+        price_per_pack: 1箱あたりの価格
+        price_per_cigarette: 1本あたりの価格
+      quit_smoking_record:
+        start_date: 開始日
+        end_date: 終了日
+      smoking_record:
+        smoked_at: 喫煙日時
+        price_per_cigarette: 1本あたりの価格
+        brand_name: ブランド名
+      user:
+        name: 名前
+        email: メールアドレス
+        password: パスワード
+        password_confirmation: パスワード（確認用）
+        smoking_status: 喫煙状態
