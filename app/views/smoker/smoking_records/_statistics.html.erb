@@ -1,0 +1,23 @@
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+  <% [
+    { icon: 'icons-coin.svg', title: "総合計金額", value: number_to_currency(@total_amount) },
+    { icon: 'icons-coin.svg', title: "今日の合計金額", value: number_to_currency(@today_amount) },
+    { icon: 'icons-cigarettes-pack.svg', title: "総本数", value: "#{@total_count}" },
+    { icon: 'icons-cigarettes-pack.svg', title: "今日の本数", value: "#{@today_count}" }
+  ].each do |item| %>
+    <div class="bg-cardBackground p-4 rounded-lg shadow-lg transition duration-300 hover:shadow-xl flex items-center h-24">
+      <div class="flex items-center justify-between w-full">
+        <div class="flex items-center">
+          <%= inline_svg_tag item[:icon], class: "w-6 h-6 mr-2"%>
+          <span class="text-labelColor"><%= item[:title] %></span>
+        </div>
+        <div class="text-2xl font-bold text-white flex items-center">
+          <%= item[:value] %>
+          <% if item[:title].include?("本数") %>
+            <span class="text-labelColor text-sm ml-1">本</span>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
