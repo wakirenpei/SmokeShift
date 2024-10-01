@@ -1,0 +1,42 @@
+<div class="bg-cardBackground rounded-lg p-4 shadow-lg mb-6">
+  <div class="flex justify-between items-center mb-4">
+    <h2 class="text-xl font-bold flex items-center text-white">
+      <%= inline_svg_tag 'icons-calendar.svg', class: "w-5 h-5 mr-2" %>
+      喫煙カレンダー
+    </h2>
+    <div class="flex space-x-2">
+      <%= link_to t('simple_calendar.previous', default: '前月'), calendar.url_for_previous_view, class: 'btn btn-outline btn-success btn-sm' %>
+      <span class="text-white text-lg"><%= t('date.month_names')[start_date.month] %> <%= start_date.year %></span>
+      <%= link_to t('simple_calendar.next', default: '次月'), calendar.url_for_next_view, class: 'btn btn-outline btn-success btn-sm' %>
+    </div>
+  </div>
+
+  <table class="w-full border-collapse bg-darkBackground table-fixed">
+    <thead>
+      <tr>
+        <% date_range.slice(0, 7).each do |date| %>
+          <th class="text-center font-bold text-labelColor text-xs p-1 border border-borderColor2 w-1/7"><%= t('date.abbr_day_names')[date.wday] %></th>
+        <% end %>
+      </tr>
+    </thead>
+
+    <tbody>
+    <% date_range.each_slice(7) do |week| %>
+      <tr>
+        <% week.each do |date| %>
+          <%= content_tag :td, class: "border border-borderColor2 p-1 h-16 w-1/7 overflow-hidden #{date.month == start_date.month ? '' : 'opacity-30'}" do %>
+            <div class="h-full overflow-y-auto <%= date == Date.current ? 'bg-itemBackground' : '' %>">
+              <div class="text-xs font-bold <%= date == Date.current ? 'text-white' : 'text-labelColor' %>"><%= date.day %></div>
+              <% if defined?(Haml) && respond_to?(:block_is_haml?) && block_is_haml?(passed_block) %>
+                <% capture_haml(date, sorted_events.fetch(date, []), &passed_block) %>
+              <% else %>
+                <% passed_block.call date, sorted_events.fetch(date, []) %>
+              <% end %>
+            </div>
+          <% end %>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+  </table>
+</div>

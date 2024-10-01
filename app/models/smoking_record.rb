@@ -11,8 +11,6 @@ class SmokingRecord < ApplicationRecord
   before_validation :set_smoked_at
 
   scope :today, -> { where(smoked_at: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day) }
-  scope :in_date_range, ->(start_date, end_date) { where(smoked_at: start_date.beginning_of_day..end_date.end_of_day) }
-  scope :grouped_by_date, -> { group('DATE(smoked_at)') }
 
   def self.total_amount
     sum(:price_per_cigarette)
@@ -30,13 +28,8 @@ class SmokingRecord < ApplicationRecord
     today.count
   end
 
-  def self.calendar_data(start_date, end_date)
-    in_date_range(start_date, end_date)
-      .grouped_by_date
-      .select('DATE(smoked_at) as date, COUNT(*) as count, SUM(price_per_cigarette) as amount')
-      .each_with_object({}) do |record, hash|
-        hash[record.date.to_date] = { count: record.count, amount: record.amount }
-      end
+  def start_time
+    smoked_at
   end
 
   private
