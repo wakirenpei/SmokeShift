@@ -6,3 +6,6 @@ import { application } from "./application"
 
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
+
+import QuitSmokingTimerController from "./quit_smoking_timer_controller"
+application.register("quit-smoking-timer", QuitSmokingTimerController)

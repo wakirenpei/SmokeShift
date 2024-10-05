@@ -3,15 +3,12 @@ class NonSmoker::QuitSmokingRecordsController < ApplicationController
 
   def index
     @current_quit_attempt = current_user.quit_smoking_records.active.first
-    @daily_potential_savings = current_user.calculate_daily_potential_savings
+    @server_time = Time.current.to_i
 
     if @current_quit_attempt
-      @current_duration = @current_quit_attempt.duration
+      @current_duration = (@server_time - @current_quit_attempt.start_date.to_i)
       @current_savings = @current_quit_attempt.calculate_savings
     end
-
-    @total_quit_seconds = calculate_total_quit_seconds
-    @total_savings = calculate_total_savings
   end
 
   def create
@@ -41,15 +38,5 @@ class NonSmoker::QuitSmokingRecordsController < ApplicationController
   def logs
     @quit_smoking_records = current_user.quit_smoking_records.order(start_date: :desc).page(params[:page]).per(10)
     @completed_quit_attempts = @quit_smoking_records.completed
-  end
-
-  private
-
-  def calculate_total_quit_seconds
-    current_user.quit_smoking_records.sum(&:duration)
-  end
-
-  def calculate_total_savings
-    current_user.quit_smoking_records.sum(&:calculate_savings)
   end
 end
