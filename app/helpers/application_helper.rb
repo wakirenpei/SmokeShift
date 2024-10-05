@@ -29,11 +29,6 @@ module ApplicationHelper
     parts.join(' ')
   end
 
-  # このメソッドは削除（QuitSmokingRecordモデルに移動したため）
-  # def calculate_savings(seconds, daily_potential_savings)
-  #   (daily_potential_savings * seconds / 1.day).round(0)
-  # end
-
   # 変更されたtotal_savingsメソッド
   def total_savings
     current_user.quit_smoking_records.sum(&:calculate_savings)

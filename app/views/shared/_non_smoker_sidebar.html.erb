@@ -1,63 +1,70 @@
-<div class="flex flex-col text-white h-screen justify-between border-r border-borderColor fixed top-0 left-0 mt-12 bg-darkBackground z-10">
-  <div class="flex flex-col h-full overflow-hidden">
-    <div class="pt-4 flex-shrink-0">
-      <!-- 金額サマリー -->
-      <div class="px-4 mt-12">
-        <div class="stats stats-vertical w-full bg-cardBackground text-white shadow">
-          <div class="stat px-3 py-1">
-            <div class="stat-title text-xs text-gray-400">総喫煙金額</div>
-            <div class="stat-value text-error text-sm">
-              <%= number_to_currency(total_smoking_amount, unit: '¥', precision: 0) %>
+<div class="flex flex-col text-white h-screen justify-between border-r border-borderColor fixed top-0 left-0 mt-12 bg-darkBackground z-10"
+     data-controller="quit-smoking-timer"
+     data-quit-smoking-timer-start-date-value="<%= @current_quit_attempt&.start_date&.iso8601 %>"
+     data-quit-smoking-timer-daily-savings-value="<%= @daily_potential_savings %>"
+     data-quit-smoking-timer-total-quit-seconds-value="<%= @total_quit_seconds %>"
+     data-quit-smoking-timer-total-savings-value="<%= @total_savings %>">
+  <div class="flex flex-col text-white h-screen justify-between border-r border-borderColor fixed top-0 left-0 mt-12 bg-darkBackground z-10">
+    <div class="flex flex-col h-full overflow-hidden">
+      <div class="pt-4 flex-shrink-0">
+        <!-- 金額サマリー -->
+        <div class="px-4 mt-12">
+          <div class="stats stats-vertical w-full bg-cardBackground text-white shadow">
+            <div class="stat px-3 py-1">
+              <div class="stat-title text-xs text-gray-400">総喫煙金額</div>
+              <div class="stat-value text-error text-sm">
+                <%= number_to_currency(total_smoking_amount, unit: '¥', precision: 0) %>
+              </div>
             </div>
-          </div>
-          
-          <div class="stat px-3 py-1">
-            <div class="stat-title text-xs text-gray-400">総節約金額</div>
-            <div class="stat-value text-success text-sm">
-              <%= number_to_currency(total_savings, unit: '¥', precision: 0) %>
+
+            <div class="stat px-3 py-1">
+              <div class="stat-title text-xs text-gray-400">総節約金額</div>
+              <div class="stat-value text-success text-sm" data-quit-smoking-timer-target="sidebarTotalSavings">
+                <%= number_to_currency(@total_savings, unit: '¥', precision: 0) %>
+              </div>
             </div>
-          </div>
-          
-          <% difference = smoking_savings_difference %>
-          <div class="stat px-3 py-1">
-            <div class="stat-title text-xs text-gray-400">差額</div>
-            <div class="stat-value text-sm <%= difference >= 0 ? 'text-success' : 'text-error' %>">
-              <%= number_to_currency(difference.abs, unit: '¥', precision: 0) %> 
+
+            <% difference = smoking_savings_difference %>
+            <div class="stat px-3 py-1">
+              <div class="stat-title text-xs text-gray-400">差額</div>
+              <div class="stat-value text-sm <%= difference >= 0 ? 'text-success' : 'text-error' %>">
+                <%= number_to_currency(difference.abs, unit: '¥', precision: 0) %> 
+              </div>
+              <div class="stat-desc text-xs text-gray-300"><%= difference >= 0 ? '節約' : '損失' %></div>
             </div>
-            <div class="stat-desc text-xs text-gray-300"><%= difference >= 0 ? '節約' : '損失' %></div>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- ナビゲーション -->
-    <nav class="px-4 mt-8 flex-shrink-0 ml-2">
-      <%= link_to non_smoker_quit_smoking_records_path, class: "block py-1.5 relative group" do %>
-        <div class="flex items-center space-x-2 transition-transform duration-200 ease-in-out group-hover:translate-x-1">
-          <%= inline_svg_tag 'icons-non-smoker.svg', class: 'w-5 h-5 text-gray-300 transition-colors duration-200 ease-in-out group-hover:text-white' %>
-          <span class="text-sm font-medium text-gray-300 transition-colors duration-200 ease-in-out group-hover:text-white">禁煙管理</span>
-        </div>
-      <% end %>
-      <%= link_to logs_non_smoker_quit_smoking_records_path, class: "block py-1.5 mt-2 relative group" do %>
-        <div class="flex items-center space-x-2 transition-transform duration-200 ease-in-out group-hover:translate-x-1">
-          <%= inline_svg_tag 'icons-log.svg', class: 'w-5 h-5 text-gray-300 transition-colors duration-200 ease-in-out group-hover:text-white' %>
-          <span class="text-sm font-medium text-gray-300 transition-colors duration-200 ease-in-out group-hover:text-white">禁煙ログ</span>
-        </div>
-      <% end %>
-      <%= link_to '#', class: "block py-1.5 mt-2 relative group" do %>
-        <div class="flex items-center space-x-2 transition-transform duration-200 ease-in-out group-hover:translate-x-1">
-          <%= inline_svg_tag 'icons-coin.svg', class: 'w-5 h-5 text-gray-300 transition-colors duration-200 ease-in-out group-hover:text-white' %>
-          <span class="text-sm font-medium text-gray-300 transition-colors duration-200 ease-in-out group-hover:text-white">目標金額</span>
-        </div>
-      <% end %>
-    </nav>
+      <!-- ナビゲーション -->
+      <nav class="px-4 mt-8 flex-shrink-0 ml-2">
+        <%= link_to non_smoker_quit_smoking_records_path, class: "block py-1.5 relative group" do %>
+          <div class="flex items-center space-x-2 transition-transform duration-200 ease-in-out group-hover:translate-x-1">
+            <%= inline_svg_tag 'icons-non-smoker.svg', class: 'w-5 h-5 text-gray-300 transition-colors duration-200 ease-in-out group-hover:text-white' %>
+            <span class="text-sm font-medium text-gray-300 transition-colors duration-200 ease-in-out group-hover:text-white">禁煙管理</span>
+          </div>
+        <% end %>
+        <%= link_to logs_non_smoker_quit_smoking_records_path, class: "block py-1.5 mt-2 relative group" do %>
+          <div class="flex items-center space-x-2 transition-transform duration-200 ease-in-out group-hover:translate-x-1">
+            <%= inline_svg_tag 'icons-log.svg', class: 'w-5 h-5 text-gray-300 transition-colors duration-200 ease-in-out group-hover:text-white' %>
+            <span class="text-sm font-medium text-gray-300 transition-colors duration-200 ease-in-out group-hover:text-white">禁煙ログ</span>
+          </div>
+        <% end %>
+        <%= link_to '#', class: "block py-1.5 mt-2 relative group" do %>
+          <div class="flex items-center space-x-2 transition-transform duration-200 ease-in-out group-hover:translate-x-1">
+            <%= inline_svg_tag 'icons-coin.svg', class: 'w-5 h-5 text-gray-300 transition-colors duration-200 ease-in-out group-hover:text-white' %>
+            <span class="text-sm font-medium text-gray-300 transition-colors duration-200 ease-in-out group-hover:text-white">目標金額</span>
+          </div>
+        <% end %>
+      </nav>
 
-    <!-- フッターリンク -->
-    <div class="px-4 py-2 text-sm text-gray-400 flex-shrink-0 mb-16 mt-auto">
-      <div class="flex flex-col space-y-2">
-        <%= link_to "プライバシー<br>ポリシー".html_safe, privacy_policy_path, class: "hover:text-white" %>
-        <%= link_to "利用規約", terms_of_service_path, class: "hover:text-white" %>
-        <%= link_to "お問い合わせ", "https://docs.google.com/forms/d/e/1FAIpQLSeENQt250jrU_NooubSloxIX3aoY3rYd5TQROtyloqFJ6G7Sw/viewform", class: "hover:text-white truncate", target: :_blank, rel: "noopener noreferrer" %>
+      <!-- フッターリンク -->
+      <div class="px-4 py-2 text-sm text-gray-400 flex-shrink-0 mb-16 mt-auto">
+        <div class="flex flex-col space-y-2">
+          <%= link_to "プライバシー<br>ポリシー".html_safe, privacy_policy_path, class: "hover:text-white" %>
+          <%= link_to "利用規約", terms_of_service_path, class: "hover:text-white" %>
+          <%= link_to "お問い合わせ", "https://docs.google.com/forms/d/e/1FAIpQLSeENQt250jrU_NooubSloxIX3aoY3rYd5TQROtyloqFJ6G7Sw/viewform", class: "hover:text-white truncate", target: :_blank, rel: "noopener noreferrer" %>
+        </div>
       </div>
     </div>
   </div>
