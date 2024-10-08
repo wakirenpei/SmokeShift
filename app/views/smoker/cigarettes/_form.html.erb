@@ -1,21 +1,22 @@
-<%= form_with model: [:smoker, @cigarette], class: "space-y-4", local: true do |form| %>
+<%= form_with model: [:smoker, @cigarette], class: "space-y-4", data: { controller: "cigarette-form" } do |form| %>
   <div id="error_messages">
     <%= render 'shared/error_messages', object: @cigarette %>
   </div>
 
   <div>
     <%= form.label :brand, "銘柄", class: "block text-sm font-medium text-gray-300" %>
-    <%= form.text_field :brand, class: "mt-1 block w-full bg-customForm border-gray-600 rounded-md shadow-sm text-gray-100 focus:ring-blue-500 focus:border-blue-500 px-2 py-2" %>
+    <%= form.text_field :brand, class: "mt-1 block w-full bg-customForm border-gray-600 rounded-md shadow-sm text-gray-100 focus:ring-blue-500 focus:border-blue-500 px-2 py-2", data: { cigarette_form_target: "brand", action: "input->cigarette-form#search" } %>
+    <ul data-cigarette-form-target="results" class="mt-1 bg-customForm border border-gray-600 rounded-md shadow-sm"></ul>
   </div>
 
   <div>
     <%= form.label :price_per_pack, "1箱の値段", class: "block text-sm font-medium text-gray-300" %>
-    <%= form.number_field :price_per_pack, class: "mt-1 block w-full bg-customForm border-gray-600 rounded-md shadow-sm text-gray-100 focus:ring-blue-500 focus:border-blue-500 px-2 py-2" %>
+    <%= form.number_field :price_per_pack, class: "mt-1 block w-full bg-customForm border-gray-600 rounded-md shadow-sm text-gray-100 focus:ring-blue-500 focus:border-blue-500 px-2 py-2", data: { cigarette_form_target: "pricePerPack" } %>
   </div>
 
   <div>
     <%= form.label :quantity_per_pack, "1箱の本数", class: "block text-sm font-medium text-gray-300" %>
-    <%= form.number_field :quantity_per_pack, class: "mt-1 block w-full bg-customForm border-gray-600 rounded-md shadow-sm text-gray-100 focus:ring-blue-500 focus:border-blue-500 px-2 py-2" %>
+    <%= form.number_field :quantity_per_pack, class: "mt-1 block w-full bg-customForm border-gray-600 rounded-md shadow-sm text-gray-100 focus:ring-blue-500 focus:border-blue-500 px-2 py-2", data: { cigarette_form_target: "quantityPerPack" } %>
   </div>
 
   <div>

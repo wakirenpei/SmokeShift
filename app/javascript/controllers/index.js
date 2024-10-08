@@ -9,3 +9,6 @@ application.register("hello", HelloController)
 
 import QuitSmokingTimerController from "./quit_smoking_timer_controller"
 application.register("quit-smoking-timer", QuitSmokingTimerController)
+
+import CigaretteFormController from "./cigarette_form_controller"
+application.register("cigarette-form", CigaretteFormController)

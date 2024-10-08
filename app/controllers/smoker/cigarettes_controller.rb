@@ -30,6 +30,11 @@ class Smoker::CigarettesController < ApplicationController
     end
   end
 
+  def brands
+    @brands = CigaretteBrand.search_by_name(params[:query]).select_brand_details
+    render json: @brands
+  end
+
   private
 
   def set_cigarette
