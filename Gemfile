@@ -14,7 +14,14 @@ gem 'inline_svg'
 # ページネーション
 gem 'kaminari'
 
+# シンプルカレンダー
 gem 'simple_calendar', '~> 2.4'
+
+# グラフ
+gem 'chartkick'
+
+# グラフのデータをグループ化
+gem 'groupdate'
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.1.3", ">= 7.1.3.4"
