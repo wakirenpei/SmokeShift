@@ -13,6 +13,7 @@
     "@hotwired/turbo-rails": "^8.0.5",
     "autoprefixer": "^10.4.20",
     "chart.js": "^4.4.4",
+    "chartjs-plugin-datalabels": "^2.2.0",
     "chartkick": "^5.0.1",
     "daisyui": "^4.12.10",
     "postcss": "^8.4.41",
