@@ -12,11 +12,14 @@ Rails.application.routes.draw do
   resources :users, only: [:new, :create]
 
   namespace :smoker do
+    resources :graphs, only: [:index]
+
     resources :cigarettes, only: [:index, :create, :edit, :update] do
       collection do
         get :brands
       end
     end
+
     resources :smoking_records, only: [:index, :create, :destroy]
   end
 

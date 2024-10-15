@@ -24,7 +24,7 @@ module Myapp
     # config.time_zone = "Central Time (US & Canada)"
 
     config.time_zone = 'Tokyo'   # タイムゾーンを日本時間に設定
-    config.active_record.default_timezone = :local   # DBのタイムゾーンをローカルタイムに設定
+    config.active_record.default_timezone = :utc  # groupdateを使っているのでutcに設定
 
     # config.eager_load_paths << Rails.root.join("extras")
     config.generators do |g|

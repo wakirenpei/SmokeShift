@@ -1,2 +1,72 @@
-<h1>Smoker::Graphs#index</h1>
-<p>Find me in app/views/smoker/graphs/index.html.erb</p>
+<div class="container mx-auto px-4 py-8 pt-24 ml-32">
+  <h1 class="text-3xl font-bold mb-8 flex items-center">
+    <%= inline_svg_tag 'icons-chart.svg', class: 'w-8 h-8 mr-3' %>
+    喫煙グラフ
+  </h1>
+
+  <div class="space-y-8">
+    <div class="card bg-cardBackground shadow-xl border border-gray-700">
+      <div class="card-body p-4">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="card-title text-xl flex items-center">
+            <%= inline_svg_tag 'icons-calendar.svg', class: 'w-6 h-6 mr-2' %>
+            期間別喫煙本数
+          </h2>
+          <div class="btn-group space-x-2">
+            <%= link_to smoker_graphs_path(period: 'daily'), class: "px-4 py-2 bg-secondaryButton text-white rounded-md hover:bg-secondaryButtonHover transition duration-300 #{params[:period] == 'daily' ? 'btn-active' : ''}", data: { turbo_frame: 'period_chart' } do %>
+              <i class="fas fa-calendar-day mr-1"></i> 日別
+            <% end %>
+            <%= link_to smoker_graphs_path(period: 'weekly'), class: "px-4 py-2 bg-secondaryButton text-white rounded-md hover:bg-secondaryButtonHover transition duration-300 #{params[:period] == 'weekly' ? 'btn-active' : ''}", data: { turbo_frame: 'period_chart' } do %>
+              <i class="fas fa-calendar-week mr-1"></i> 週別
+            <% end %>
+            <%= link_to smoker_graphs_path(period: 'monthly'), class: "px-4 py-2 bg-secondaryButton text-white rounded-md hover:bg-secondaryButtonHover transition duration-300 #{params[:period] == 'monthly' ? 'btn-active' : ''}", data: { turbo_frame: 'period_chart' } do %>
+              <i class="fas fa-calendar-alt mr-1"></i> 月別
+            <% end %>
+          </div>
+        </div>
+        <div style="height: 400px;" class="bg-itemBackground rounded-lg p-4">
+          <%= turbo_frame_tag "period_chart" do %>
+            <%= render 'period_chart', period: params[:period] || 'daily' %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class="card bg-cardBackground shadow-xl border border-gray-700">
+      <div class="card-body p-4">
+        <h2 class="card-title text-xl mb-4 flex items-center">
+          <%= inline_svg_tag 'icons-clock.svg', class: 'w-6 h-6 mr-2' %>
+          時間帯別喫煙本数
+        </h2>
+        <div style="height: 400px;" class="bg-itemBackground rounded-lg p-4">
+          <% max_hourly_value = @hourly_smoking_data.values.max %>
+          <% chart_max = (max_hourly_value * 1.2).ceil %>
+          <%= column_chart @hourly_smoking_data, 
+              xtitle: '', 
+              ytitle: '', 
+              colors: ["#3b82f6"], 
+              height: "100%",
+              min: 0,
+              max: chart_max,
+              library: {
+                plugins: {
+                  datalabels: {
+                    anchor: 'end',
+                    align: 'top'
+                  }
+                },
+                scales: {
+                  y: {
+                    beginAtZero: true,
+                    ticks: {
+                      stepSize: 1
+                    }
+                  }
+                }
+              }
+          %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

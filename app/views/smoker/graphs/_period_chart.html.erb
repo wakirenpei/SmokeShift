@@ -1,0 +1,161 @@
+<% case @period %>
+<% when 'daily' %>
+  <% chart_max = (@daily_smoking_data.values.compact.max.to_f * 1.2).ceil %>
+  <h3 class="text-xl font-semibold mb-2">日別喫煙本数</h3>
+  <%= line_chart @daily_smoking_data, 
+      xtitle: '', 
+      ytitle: '', 
+      colors: ["#3b82f6"],
+      min: 0,
+      max: chart_max,
+      points: true,
+      curve: false,
+      library: {
+        layout: {
+          padding: {
+            top: 20
+          }
+        },
+        plugins: {
+          datalabels: {
+            anchor: 'end',
+            align: 'top',
+            formatter: ->(value) { value.to_i.to_s },
+            display: true
+          }
+        },
+        scales: {
+          x: {
+            type: 'time',
+            time: {
+              unit: 'day',
+              parser: 'yyyy-MM-dd',
+              tooltipFormat: 'yyyy/MM/dd',
+              displayFormats: {
+                day: 'M/d'
+              }
+            },
+            ticks: {
+              source: 'data',
+              autoSkip: false
+            }
+          },
+          y: {
+            beginAtZero: true,
+            ticks: {
+              stepSize: 1
+            }
+          }
+        }
+      },
+      dataset: { 
+        spanGaps: false 
+      }
+  %>
+<% when 'weekly' %>
+  <% chart_max = (@weekly_smoking_data.values.compact.max.to_f * 1.2).ceil %>
+  <h3 class="text-xl font-semibold mb-2">週別喫煙本数</h3>
+  <%= line_chart @weekly_smoking_data, 
+      xtitle: '', 
+      ytitle: '', 
+      colors: ["#3b82f6"],
+      min: 0,
+      max: chart_max,
+      points: true,
+      curve: false,
+      library: {
+        layout: {
+          padding: {
+            top: 20
+          }
+        },
+        plugins: {
+          datalabels: {
+            anchor: 'end',
+            align: 'top',
+            formatter: ->(value) { value.to_i.to_s },
+            display: true
+          }
+        },
+        scales: {
+          x: {
+            type: 'time',
+            time: {
+              unit: 'week',
+              parser: 'yyyy-MM-dd',
+              tooltipFormat: 'yyyy/MM/dd',
+              displayFormats: {
+                week: 'yyyy/MM/dd'
+              }
+            },
+            ticks: {
+              source: 'data',
+              autoSkip: false
+            }
+          },
+          y: {
+            beginAtZero: true,
+            ticks: {
+              stepSize: 1
+            }
+          }
+        }
+      },
+      dataset: { 
+        spanGaps: false 
+      }
+  %>
+<% when 'monthly' %>
+  <% chart_max = (@monthly_smoking_data.values.compact.max.to_f * 1.2).ceil %>
+  <h3 class="text-xl font-semibold mb-2">月別喫煙本数</h3>
+  <%= line_chart @monthly_smoking_data, 
+      xtitle: '', 
+      ytitle: '', 
+      colors: ["#3b82f6"],
+      min: 0,
+      max: chart_max,
+      points: true,
+      curve: false,
+      library: {
+        layout: {
+          padding: {
+            top: 20
+          }
+        },
+        plugins: {
+          datalabels: {
+            anchor: 'end',
+            align: 'top',
+            formatter: ->(value) { value.to_i.to_s },
+            display: true
+          }
+        },
+        scales: {
+          x: {
+            type: 'time',
+            time: {
+              unit: 'month',
+              parser: 'yyyy-MM-dd',
+              tooltipFormat: 'yyyy/MM',
+              displayFormats: {
+                month: 'yyyy/MM'
+              }
+            },
+            ticks: {
+              source: 'data',
+              autoSkip: false
+            }
+          },
+          y: {
+            beginAtZero: true,
+            ticks: {
+              stepSize: 1
+            }
+          }
+        }
+      },
+      dataset: { 
+        spanGaps: false 
+      }
+  %>
+<% end %>
