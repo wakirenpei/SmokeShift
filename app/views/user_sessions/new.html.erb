@@ -4,14 +4,25 @@
     <%= form_with model: @user, local: true do |form| %>
       <div class="mb-8">
         <%= form.label :email, "メールアドレス", class: 'block text-sm font-medium text-labelColor mb-2' %>
-        <%= form.email_field :email, required: true, class: "w-full h-10 text-white border border-borderColor2 rounded-lg bg-customForm px-2 py-2", placeholder: "メールアドレスを入力" %>
+        <%= form.email_field :email, required: true, class: "w-full h-10 text-white border border-borderColor2 rounded-lg bg-customForm px-2 py-6", placeholder: "メールアドレスを入力" %>
       </div>
       <div class="mb-12">
         <%= form.label :password, "パスワード", class: 'block text-sm font-medium text-labelColor mb-2' %>
-        <%= form.password_field :password, required: true, class: "w-full h-10 text-white border border-borderColor2 rounded-lg bg-customForm px-2 py-2", placeholder: "パスワードを入力" %>
+        <%= form.password_field :password, required: true, class: "w-full h-10 text-white border border-borderColor2 rounded-lg bg-customForm px-2 py-6", placeholder: "パスワードを入力" %>
+      </div>
+      <div class="flex justify-center mb-2">
+        <%= form.submit "ログイン", class: "btn btn-success w-1/2" %>
+      </div>
+      <div class="flex justify-center my-4">
+        <p>または</p>
       </div>
       <div class="flex justify-center">
-        <%= form.submit "ログインする", class: "btn btn-success" %>
+        <%= link_to auth_at_provider_path(:line) do %>
+          <%= image_tag "btn_login_base.png", 
+              alt: "LINEでログイン",
+              class: "h-12 w-auto"
+          %>
+        <% end %>
       </div>
     <% end %>
   </div>
