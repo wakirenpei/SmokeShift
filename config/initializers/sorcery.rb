@@ -220,12 +220,11 @@ Rails.application.config.sorcery.configure do |config|
 
   config.line.key = Rails.application.credentials.dig(:line, :channel_id)
   config.line.secret = Rails.application.credentials.dig(:line, :channel_secret)
-  config.line.callback_url = 'http://localhost:3000/oauth/callback?provider=line'
-  config.line.scope = 'profile openid email'
+  config.line.callback_url = "https://smokeshift.onrender.com/oauth/callback?provider=line"
+  config.line.scope = "profile"
+  config.line.user_info_mapping = {name: 'displayName', email: 'userId'}
   # config.line.bot_prompt = "normal"
-  config.line.user_info_mapping = {name: 'displayName', email: 'email'}
 
-  
   # For information about Discord API
   # https://discordapp.com/developers/docs/topics/oauth2
   # config.discord.key = "xxxxxx"
@@ -542,7 +541,7 @@ Rails.application.config.sorcery.configure do |config|
     # Class which holds the various external provider data for this user.
     # Default: `nil`
     #
-    user.authentications_class = "Authentication"
+    user.authentications_class = Authentication
 
     # User's identifier in the `authentications` class.
     # Default: `:user_id`
