@@ -10,7 +10,11 @@ class SavingsGoal < ApplicationRecord
   validates :target_amount, presence: true, numericality: { greater_than: 0 }
   validates :status, presence: true
   validates :achieved_at, presence: true, if: :achieved?
-  validates :user_id, uniqueness: { scope: :status, :deleted_at, conditions: -> { active_goals }, message: "既に進行形の目標が存在します" }, if: :active?
+  validates :user_id, uniqueness: { 
+  scope: [:status], 
+  conditions: -> { active_goals }, 
+  message: "既に進行形の目標が存在します" 
+}, if: :active?
   validate :achieved_at_should_be_after_start_date, if: -> { achieved? && achieved_at.present? }
 
   before_create :set_start_date
