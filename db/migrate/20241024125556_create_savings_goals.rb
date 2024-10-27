@@ -7,10 +7,9 @@ class CreateSavingsGoals < ActiveRecord::Migration[7.1]
       t.date :start_date, null: false
       t.datetime :achieved_at
       t.integer :status, null: false, default: 0
-      t.datetime :deleted_at
 
       t.timestamps
     end
-    add_index :savings_goals, [:user_id, :deleted_at, :status]
+    add_index :savings_goals, [:user_id, :status]
   end
 end

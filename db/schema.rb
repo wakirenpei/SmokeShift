@@ -59,11 +59,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_24_125556) do
     t.date "start_date", null: false
     t.datetime "achieved_at"
     t.integer "status", default: 0, null: false
-    t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["quit_smoking_record_id"], name: "index_savings_goals_on_quit_smoking_record_id"
-    t.index ["user_id", "deleted_at", "status"], name: "index_savings_goals_on_user_id_and_deleted_at_and_status"
+    t.index ["user_id", "status"], name: "index_savings_goals_on_user_id_and_status"
     t.index ["user_id"], name: "index_savings_goals_on_user_id"
   end
 
