@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_10_16_130042) do
+ActiveRecord::Schema[7.1].define(version: 2024_10_24_125556) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -52,6 +52,21 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_16_130042) do
     t.index ["user_id"], name: "index_quit_smoking_records_on_user_id"
   end
 
+  create_table "savings_goals", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "quit_smoking_record_id", null: false
+    t.integer "target_amount", null: false
+    t.date "start_date", null: false
+    t.datetime "achieved_at"
+    t.integer "status", default: 0, null: false
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["quit_smoking_record_id"], name: "index_savings_goals_on_quit_smoking_record_id"
+    t.index ["user_id", "deleted_at", "status"], name: "index_savings_goals_on_user_id_and_deleted_at_and_status"
+    t.index ["user_id"], name: "index_savings_goals_on_user_id"
+  end
+
   create_table "smoking_records", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "cigarette_id", null: false
@@ -78,6 +93,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_16_130042) do
 
   add_foreign_key "cigarettes", "users"
   add_foreign_key "quit_smoking_records", "users"
+  add_foreign_key "savings_goals", "quit_smoking_records"
+  add_foreign_key "savings_goals", "users"
   add_foreign_key "smoking_records", "cigarettes"
   add_foreign_key "smoking_records", "users"
 end
