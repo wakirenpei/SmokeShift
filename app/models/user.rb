@@ -6,6 +6,7 @@ class User < ApplicationRecord
   has_many :cigarettes, dependent: :destroy
   has_many :smoking_records, dependent: :destroy
   has_many :quit_smoking_records, dependent: :destroy
+  has_many :savings_goals, dependent: :destroy
 
   enum smoking_status: { smoker: 0, non_smoker: 1 }
 

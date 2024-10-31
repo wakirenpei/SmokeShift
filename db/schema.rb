@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_10_24_125556) do
+ActiveRecord::Schema[7.1].define(version: 2024_10_30_124459) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -56,7 +56,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_24_125556) do
     t.bigint "user_id", null: false
     t.bigint "quit_smoking_record_id", null: false
     t.integer "target_amount", null: false
-    t.date "start_date", null: false
+    t.datetime "start_date", null: false
     t.datetime "achieved_at"
     t.integer "status", default: 0, null: false
     t.datetime "created_at", null: false
