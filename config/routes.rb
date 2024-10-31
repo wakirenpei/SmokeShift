@@ -27,6 +27,7 @@ Rails.application.routes.draw do
     resources :quit_smoking_records, only: [:index, :create, :update] do
       get 'logs', on: :collection
     end
+    resources :savings_goals, only: [:index, :new, :create, :edit, :update, :destroy]
   end
 
   get 'login', to: 'user_sessions#new', as: :login

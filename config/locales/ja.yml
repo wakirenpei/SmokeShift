@@ -5,6 +5,7 @@ ja:
       quit_smoking_record: 禁煙記録
       smoking_record: 喫煙記録
       user: ユーザー
+      saving_goal: 目標金額
     attributes:
       cigarette:
         brand: ブランド
@@ -24,3 +25,7 @@ ja:
         password: パスワード
         password_confirmation: パスワード（確認用）
         smoking_status: 喫煙状態
+      saving_goal:
+        goal_amount: 目標金額
+        start_date: 開始日
+        end_date: 終了日
