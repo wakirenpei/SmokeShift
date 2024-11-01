@@ -73,17 +73,16 @@ gem "bootsnap", require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
-#gem 'rubocop-rails'
-#gem 'rubocop-rspec'
-
 group :development, :test do
   gem 'pry'
   gem 'pry-byebug'
   gem 'pry-rails'
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ]
-  #gem 'rspec-rails'
-  #gem 'factory_bot_rails'
+  gem 'rspec-rails'
+  gem 'factory_bot_rails'
+  gem 'rubocop-rails'
+  gem 'rubocop-rspec'
 end
 
 group :development do

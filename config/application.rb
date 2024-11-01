@@ -29,7 +29,10 @@ module Myapp
     # config.eager_load_paths << Rails.root.join("extras")
     config.generators do |g|
       g.helper false             # helper ファイルを作成しない
-      g.test_framework false     # test ファイルを作成しない
+      g.test_framework :rspec,
+        fixtures: false, # テストDBにレコードを作るfixtureの作成をスキップ(FactoryBotを使用するため)
+        view_specs: false, # ビューファイル用のスペックを作成しない
+        routing_specs: false # routes.rb用のスペックファイル作成しない
       g.skip_routes true         # ルーティングの記述を作成しない
     end
     config.autoload_paths += %W(#{config.root}/app/services)
