@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -10,6 +11,7 @@ Rails.application.routes.draw do
   get 'terms_of_service', to: 'static_pages#terms_of_service'
   resources :tops, only: [:index]
   resources :users, only: [:new, :create]
+  resources :password_resets, only: [:new, :create, :edit, :update]
 
   namespace :smoker do
     resources :graphs, only: [:index]
