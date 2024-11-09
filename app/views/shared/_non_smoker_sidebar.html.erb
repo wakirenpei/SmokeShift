@@ -1,7 +1,7 @@
 <div class="flex flex-col text-white h-screen justify-between border-r border-borderColor fixed top-0 left-0 mt-12 bg-darkBackground z-10"
      data-controller="quit-smoking-timer"
      data-quit-smoking-timer-start-date-value="<%= @current_quit_attempt&.start_date&.iso8601 %>"
-     data-quit-smoking-timer-daily-savings-value="<%= @daily_potential_savings %>"
+     data-quit-smoking-timer-daily-smoking-amount-value="<%= @current_quit_attempt&.daily_smoking_amount %>"
      data-quit-smoking-timer-total-quit-seconds-value="<%= @total_quit_seconds %>"
      data-quit-smoking-timer-total-savings-value="<%= @total_savings %>">
   <div class="flex flex-col text-white h-screen justify-between border-r border-borderColor fixed top-0 left-0 mt-12 bg-darkBackground z-10">

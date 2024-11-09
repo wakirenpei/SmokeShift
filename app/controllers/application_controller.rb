@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_common_variables
-    @daily_potential_savings = current_user.calculate_daily_potential_savings
+    @daily_potential_savings = current_user.quit_smoking_records.active.first&.calculate_savings || 0
     @total_quit_seconds = calculate_total_quit_seconds
     @total_savings = calculate_total_savings
     @total_amount = current_user.smoking_records.total_amount

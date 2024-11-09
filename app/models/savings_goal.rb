@@ -50,7 +50,7 @@ class SavingsGoal < ApplicationRecord
     return achieved_at if achieved?
     return Date.current if progress_rate >= 100
 
-    daily_savings = user.calculate_daily_potential_savings
+    daily_savings = quit_smoking_record&.daily_smoking_amount
     return nil if daily_savings.zero?
 
     remaining_days = (remaining_amount / daily_savings.to_f).ceil
