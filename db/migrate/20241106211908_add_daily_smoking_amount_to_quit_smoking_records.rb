@@ -1,5 +1,5 @@
 class AddDailySmokingAmountToQuitSmokingRecords < ActiveRecord::Migration[7.1]
   def change
-    add_column :quit_smoking_records, :daily_smoking_amount, :integer, null: false
+    add_column :quit_smoking_records, :daily_smoking_amount, :integer, null: false, default: 0
   end
 end
