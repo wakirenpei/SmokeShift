@@ -49,7 +49,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_06_211908) do
     t.datetime "end_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "daily_smoking_amount", null: false
+    t.integer "daily_smoking_amount", default: 0, null: false
     t.index ["user_id"], name: "index_quit_smoking_records_on_user_id"
   end
 
