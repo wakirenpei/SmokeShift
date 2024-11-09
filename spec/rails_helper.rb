@@ -1,3 +1,13 @@
+require 'simplecov'
+SimpleCov.start 'rails' do
+  # 全てのアプリケーションファイルを追跡
+  track_files 'app/**/*.rb'
+
+  # 必要に応じて、特定のファイルをグループに追加
+  add_group 'Models', 'app/models'
+  add_group 'Controllers', 'app/controllers'
+  add_group 'Helpers', 'app/helpers'
+end
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
 ENV['RAILS_ENV'] ||= 'test'
