@@ -4,7 +4,7 @@ export default class extends Controller {
   static targets = [ "currentDuration", "currentSavings", "totalDuration", "totalSavings", "sidebarTotalSavings", "indexCurrentSavings" ]
   static values = { 
     startDate: Number,
-    dailySavings: Number,
+    dailySmokingAmount: Number,
     totalQuitSeconds: Number,
     totalSavings: Number,
     serverTime: Number
@@ -54,7 +54,7 @@ export default class extends Controller {
   }
 
   calculateSavings(duration) {
-    return (this.dailySavingsValue / 86400) * duration
+    return (this.dailySmokingAmountValue / 86400) * duration
   }
 
   formatDuration(seconds) {

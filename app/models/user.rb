@@ -18,17 +18,6 @@ class User < ApplicationRecord
   validates :name, presence: true, length: { maximum: 10 }
   validates :email, presence: true, uniqueness: true
 
-  def calculate_daily_potential_savings
-    return 0 if smoking_records.empty?
-
-    # 喫煙した日ごとにグループ化して日数を数える
-    smoking_days = smoking_records.group('DATE(smoked_at)').count.size
-
-    # 総喫煙金額を喫煙日数で割る
-    total_spent = smoking_records.sum(:price_per_cigarette)
-    (total_spent.to_f / smoking_days).round(2)
-  end
-
   def analyze_danger_hours
     records = smoking_records
     hours = records.group_by { |r| r.smoked_at.hour }

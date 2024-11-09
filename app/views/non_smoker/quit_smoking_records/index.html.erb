@@ -6,11 +6,10 @@
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6" data-controller="quit-smoking-timer"
       data-quit-smoking-timer-start-date-value="<%= @current_quit_attempt&.start_date&.to_i %>"
-      data-quit-smoking-timer-daily-savings-value="<%= @daily_potential_savings %>"
+      data-quit-smoking-timer-daily-smoking-amount-value="<%= @current_quit_attempt&.daily_smoking_amount %>"
       data-quit-smoking-timer-total-quit-seconds-value="<%= @total_quit_seconds %>"
       data-quit-smoking-timer-total-savings-value="<%= @total_savings %>"
-      data-quit-smoking-timer-server-time-value="<%= @server_time.to_i %>"
-      data-quit-smoking-timer-quit-attempts-value="<%= @quit_attempts.to_json %>">
+      data-quit-smoking-timer-server-time-value="<%= @server_time.to_i %>">
       <!-- 現在の禁煙状況 -->
       <div class="bg-cardBackground rounded-lg p-6 shadow-lg lg:col-span-2">
         <h2 class="text-xl font-bold mb-4 text-white flex items-center">
@@ -59,7 +58,7 @@
             <%= inline_svg_tag 'icons-chart.svg', class: 'w-5 h-5 mr-2' %>
             1日の節約可能額
           </h3>
-          <p class="text-lg font-bold text-green-500"><%= number_to_currency(@daily_potential_savings, unit: '¥', precision: 0) %></p>
+          <p class="text-lg font-bold text-green-500"><%= number_to_currency(@current_quit_attempt&.daily_smoking_amount, unit: '¥', precision: 0) %></p>
         </div>
         <div class="bg-cardBackground p-4 rounded-lg shadow-lg">
           <h3 class="text-base font-semibold mb-2 text-white flex items-center">
