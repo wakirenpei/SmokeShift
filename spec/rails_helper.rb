@@ -1,4 +1,5 @@
 require 'simplecov'
+require 'shoulda-matchers'
 SimpleCov.start 'rails' do
   # 全てのアプリケーションファイルを追跡
   track_files 'app/**/*.rb'
@@ -76,4 +77,10 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
   config.include FactoryBot::Syntax::Methods
+end
+Shoulda::Matchers.configure do |config|
+  config.integrate do |with|
+    with.test_framework :rspec
+    with.library :rails
+  end
 end
