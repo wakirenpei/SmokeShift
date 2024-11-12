@@ -1,19 +1,17 @@
-require 'rails_helper'
-
-RSpec.describe "Users", type: :request do
-  describe 'registration' do
+RSpec.describe "ユーザー", type: :request do
+  describe '登録' do
     let(:valid_params) do
       {
         user: {
           email: 'test@example.com',
           password: 'password123',
           password_confirmation: 'password123',
-          name: 'Test User'
+          name: 'テストユーザー'
         }
       }
     end
 
-    it 'creates a new user with valid attributes' do
+    it '有効な属性で新規ユーザーが作成されること' do
       expect {
         post users_path, params: valid_params
       }.to change(User, :count).by(1)
