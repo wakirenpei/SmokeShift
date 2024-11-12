@@ -1,18 +1,14 @@
-# spec/requests/oauths_spec.rb
-require 'rails_helper'
+RSpec.describe "ユーザーセッション", type: :request do
+	describe 'ログイン' do
+		let!(:user) { create(:user, password: 'password123') }
 
-RSpec.describe "LINE認証", type: :request do
-  describe "認証フロー" do
-    context '新規ユーザーの場合' do
-      it 'ユーザーが作成されること' do
-        expect {
-          get oauth_callback_path, params: { 
-            provider: 'line', 
-            code: 'valid_authorization_code',
-            state: SecureRandom.hex(16)
-          }
-        }.to change(User, :count).by(1)
-      end
-    end
-  end
+		it '正しい認証情報でログインが成功すること' do
+			post login_path, params: { 
+				email: user.email, 
+				password: 'password123'
+			}
+			expect(response).to redirect_to(root_path)
+			expect(flash[:notice]).to eq 'ログインしました。'
+		end
+	end
 end

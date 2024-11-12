@@ -20,4 +20,17 @@ RSpec.describe User, type: :model do
       expect(authenticated_user).to eq(user)
     end
   end
+
+  describe 'タバコの制限' do
+    let(:user) { create(:user) }
+
+    it 'タバコの上限数を超えて登録できない' do
+      Cigarette::MAX_CIGARETTES_PER_USER.times do
+        create(:cigarette, user: user)
+      end
+      
+      new_cigarette = build(:cigarette, user: user)
+      expect(new_cigarette).to be_invalid
+    end
+  end
 end

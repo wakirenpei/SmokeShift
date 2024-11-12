@@ -1,10 +1,8 @@
-require 'rails_helper'
-
-RSpec.describe "UserSessions", type: :request do
-  describe 'login' do
+RSpec.describe "ユーザーセッション", type: :request do
+  describe 'ログイン' do
     let!(:user) { create(:user, password: 'password123') }
 
-    it 'logs in successfully with correct credentials' do
+    it '正しい資格情報で正常にログインできること' do
       post login_path, params: { 
         email: user.email, 
         password: 'password123'
