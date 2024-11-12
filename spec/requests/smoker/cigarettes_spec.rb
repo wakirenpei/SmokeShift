@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe 'Smoker::Cigarettes', type: :request do
   let(:user) { create(:user) }
   
