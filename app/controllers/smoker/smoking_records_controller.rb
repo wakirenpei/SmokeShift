@@ -18,9 +18,7 @@ class Smoker::SmokingRecordsController < ApplicationController
       if @new_smoking_record.save
         redirect_to smoker_smoking_records_path, notice: '喫煙記録が追加されました。'
       else
-        set_common_data
-        flash.now[:alert] = '喫煙記録の追加に失敗しました。'
-        render :index, status: :unprocessable_entity
+        redirect_to smoker_smoking_records_path, alert: '喫煙記録の追加に失敗しました。'
       end
     end
   end

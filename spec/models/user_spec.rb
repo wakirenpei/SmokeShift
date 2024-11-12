@@ -33,4 +33,18 @@ RSpec.describe User, type: :model do
       expect(new_cigarette).to be_invalid
     end
   end
+
+  describe '禁煙記録の管理' do
+    let(:user) { create(:user) }
+    let!(:quit_smoking_record) { create(:quit_smoking_record, user: user, start_date: Time.current) }
+
+    it '禁煙記録が存在する場合、currently_quitting?がtrueを返す' do
+      expect(user.currently_quitting?).to be true
+    end
+
+    it '禁煙記録が終了した場合、currently_quitting?がfalseを返す' do
+      quit_smoking_record.update(end_date: Time.current)
+      expect(user.currently_quitting?).to be false
+    end
+  end
 end

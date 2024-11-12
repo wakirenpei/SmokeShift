@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe 'タバコ管理', type: :system do
   let(:user) { create(:user) }
   
