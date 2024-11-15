@@ -20,7 +20,7 @@ RSpec.describe '喫煙記録管理', type: :request do
       expect {
         post smoker_smoking_records_path, params: invalid_params
       }.not_to change(SmokingRecord, :count)
-      expect(response.status).to eq(302)  # リダイレクトされることを確認
+      expect(response.status).to eq(302)
       expect(flash[:alert]).to eq '喫煙記録の追加に失敗しました。'
     end
 
