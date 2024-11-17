@@ -1,45 +1,61 @@
-<div class="ml-36 pt-24 bg-darkBackground min-h-screen p-6">
-  <%= month_calendar(events: @calendar_records, attribute: :smoked_at, start_date: @start_date) do |date, records| %>
-    <% if records.any? %>
-      <div class="text-xs text-customGreen"><%= records.count %>本</div>
-      <div class="text-xs text-yellow-500"><%= number_to_currency(records.sum(&:price_per_cigarette), unit: '¥', precision: 0) %></div>
+<div class="container mx-auto px-4 py-8 pt-24 ml-32">
+  <h1 class="text-3xl font-bold mb-8 flex items-center">
+    <i class="fas fa-history w-8 h-8 mr-3 text-labelColor opacity-50"></i>
+    喫煙記録
+  </h1>
+
+  <div class="space-y-8">
+    <!-- カレンダー -->
+    <%= month_calendar(events: @calendar_records, attribute: :smoked_at, start_date: @start_date) do |date, records| %>
+      <% if records.any? %>
+        <div class="text-xs text-customGreen"><%= records.count %>本</div>
+        <div class="text-xs text-yellow-500"><%= number_to_currency(records.sum(&:price_per_cigarette), unit: '¥', precision: 0) %></div>
+      <% end %>
     <% end %>
-  <% end %>
 
-  <!-- 喫煙記録フォーム -->
-  <div class="bg-cardBackground rounded-lg p-6 mb-6 shadow-lg">
-    <%= render 'smoking_record_form' %>
-  </div>
-
-  <!-- 統計情報 -->
-  <%= render 'statistics' %>
-
-  <!-- 喫煙記録ログ -->
-  <div class="bg-cardBackground rounded-lg p-6 shadow-lg">
-    <h2 class="text-2xl font-bold mb-4 flex items-center text-white">
-      <i class="fas fa-clipboard-list mr-2"></i>
-      喫煙記録ログ
-    </h2>
-    <div class="max-h-[calc(100vh-400px)] overflow-y-auto">
-      <ul class="space-y-3">
-        <% @paginated_records.each do |log| %>
-          <li class="bg-itemBackground p-3 rounded-lg shadow transition duration-300 hover:bg-base-100">
-            <div class="grid grid-cols-12 items-center gap-2">
-              <span class="text-white opacity-70 col-span-5 truncate"><%= log.smoked_at.strftime("%Y/%m/%d %H:%M") %></span>
-              <span class="font-medium text-white col-span-3 truncate"><%= log.brand_name %></span>
-              <span class="text-yellow-500 col-span-3 pl-4"><%= number_to_currency(log.price_per_cigarette) %></span>
-              <div class="col-span-1 flex justify-end">
-                <%= button_to smoker_smoking_record_path(log), method: :delete, data: { turbo_confirm: "本当にこの記録を削除しますか？" }, class: "btn btn-ghost btn-xs" do %>
-                  <i class="fas fa-trash-alt text-red-500"></i>
-                <% end %>
-              </div>
-            </div>
-          </li>
-        <% end %>
-      </ul>
+    <!-- 喫煙記録フォーム -->
+    <div class="card bg-cardBackground shadow-xl border border-gray-700">
+      <div class="card-body p-4">
+        <h2 class="card-title text-xl mb-4 flex items-center">
+          <i class="fas fa-plus w-6 h-6 mr-2 text-labelColor opacity-50"></i>
+          喫煙記録
+        </h2>
+        <%= render 'smoking_record_form' %>
+      </div>
     </div>
-    <div class="mt-4">
-      <%= paginate @paginated_records, window: 2 %>
+
+    <!-- 統計情報 -->
+    <%= render 'statistics' %>
+
+    <!-- 喫煙記録ログ -->
+    <div class="card bg-cardBackground shadow-xl border border-gray-700">
+      <div class="card-body p-4">
+        <h2 class="card-title text-xl mb-4 flex items-center">
+          <i class="fas fa-clipboard-list w-6 h-6 mr-2 text-labelColor opacity-50"></i>
+          喫煙記録ログ
+        </h2>
+        <div class="max-h-[calc(100vh-400px)] overflow-y-auto">
+          <ul class="space-y-3">
+            <% @paginated_records.each do |log| %>
+              <li class="bg-itemBackground p-3 rounded-lg">
+                <div class="grid grid-cols-12 items-center gap-2">
+                  <span class="text-labelColor opacity-70 col-span-5 truncate"><%= log.smoked_at.strftime("%Y/%m/%d %H:%M") %></span>
+                  <span class="font-medium text-labelColor col-span-3 truncate"><%= log.brand_name %></span>
+                  <span class="text-yellow-500 col-span-3 pl-4"><%= number_to_currency(log.price_per_cigarette) %></span>
+                  <div class="col-span-1 flex justify-end">
+                    <%= button_to smoker_smoking_record_path(log), method: :delete, data: { turbo_confirm: "本当にこの記録を削除しますか？" }, class: "btn btn-ghost btn-xs" do %>
+                      <i class="fas fa-trash-alt text-red-500"></i>
+                    <% end %>
+                  </div>
+                </div>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+        <div class="mt-4">
+          <%= paginate @paginated_records, window: 2 %>
+        </div>
+      </div>
     </div>
   </div>
 </div>

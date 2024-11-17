@@ -1,43 +1,70 @@
-<div class="ml-32 pl-8 pt-24 min-h-screen bg-darkBackground">
-  <div class="container mx-auto px-4">
-    <h1 class="text-4xl font-light text-labelColor mb-8">タバコ管理</h1>
-    
-    <div class="bg-cardBackground rounded-lg shadow-xl p-8">
-      <div class="flex flex-col md:flex-row gap-8">
-        <!-- 登録済みタバコ -->
-        <div class="w-full">
-          <h2 class="text-2xl font-light text-labelColor mb-6">登録済みタバコ</h2>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <% @cigarettes.each_with_index do |cigarette, index| %>
-              <div class="bg-itemBackground rounded-lg p-6 relative shadow-md transition duration-300 hover:shadow-lg hover:scale-105">
-                <div class="mb-4">
-                  <h3 class="text-2xl font-medium text-labelColor"><%= cigarette.brand %></h3>
-                </div>
-                <div class="space-y-2">
-                  <p class="flex items-center text-labelColor">
-                    <%= image_tag 'icon-price.svg', class: 'w-5 h-5 mr-2', alt: '価格' %>
-                    価格: ¥<%= cigarette.price_per_pack %> / <%= cigarette.quantity_per_pack %>本
-                  </p>
-                  <p class="flex items-center text-labelColor">
-                    <%= image_tag 'icon-price-cigaretees.svg', class: 'w-5 h-5 mr-2', alt: 'タバコ' %>
-                    1本あたり: ¥<%= cigarette.price_per_cigarette %>
-                  </p>
-                </div>
-                <div class="mt-6 flex justify-end space-x-3">
-                  <%= link_to '編集', edit_smoker_cigarette_path(cigarette), class: 'px-4 py-2 bg-secondaryButton text-white rounded-md hover:bg-secondaryButtonHover transition duration-300' %>
-                </div>
-              </div>
+<div class="container mx-auto px-4 py-8 pt-24 ml-32">
+  <!-- ヘッダーセクション -->
+  <h1 class="text-3xl font-bold mb-8 flex items-center">
+    <i class="fas fa-smoking w-8 h-8 mr-3 text-labelColor opacity-50"></i>
+    タバコ管理
+  </h1>
+  
+  <div class="space-y-8">
+    <!-- メインコンテンツ -->
+    <div class="card bg-cardBackground shadow-xl border border-gray-700">
+      <div class="card-body p-4">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="card-title text-xl flex items-center">
+            <i class="fas fa-list-ul w-6 h-6 mr-2 text-labelColor opacity-50"></i>
+            登録済みタバコ
+          </h2>
+          <div class="flex items-center gap-4">
+            <span class="badge badge-primary badge-lg"><%= @cigarettes.count %> / 2</span>
+            <% if @can_add_cigarette %>
+              <label for="new-cigarette-modal" class="btn btn-primary gap-2">
+                <i class="fas fa-plus"></i>
+                新しいタバコを追加
+              </label>
             <% end %>
           </div>
         </div>
-      </div>
 
-      <!-- 新規登録 -->
-      <div class="mt-12">
-        <% if @can_add_cigarette %>
-          <label for="new-cigarette-modal" class="inline-block w-full px-8 py-3 bg-customGreen text-white text-center font-medium rounded-md hover:bg-customGreenHover transition duration-300 shadow-md cursor-pointer">新しいタバコを追加</label>
-        <% else %>
-          <p class="text-labelColor text-center bg-itemBackground rounded-md p-4">登録可能な上限に達しました（最大2種類）</p>
+        <!-- タバコカードグリッド -->
+        <div class="grid grid-cols-2 gap-6">
+          <% @cigarettes.each_with_index do |cigarette, index| %>
+            <div class="bg-itemBackground rounded-lg p-6">
+              <div class="flex justify-between items-start mb-6">
+                <h3 class="text-xl font-medium text-labelColor"><%= cigarette.brand %></h3>
+                <%= link_to edit_smoker_cigarette_path(cigarette), class: 'btn btn-ghost btn-sm' do %>
+                  <i class="fas fa-edit text-labelColor opacity-50"></i>
+                <% end %>
+              </div>
+
+              <!-- 価格情報 -->
+              <div class="space-y-3 mt-6">
+                <div class="flex items-center gap-3">
+                  <i class="fas fa-box text-labelColor opacity-50 w-5"></i>
+                  <div>
+                    <p class="text-sm text-labelColor opacity-70">パック価格</p>
+                    <p class="text-lg text-labelColor">¥<%= cigarette.price_per_pack %> / <%= cigarette.quantity_per_pack %>本</p>
+                  </div>
+                </div>
+                <div class="flex items-center gap-3">
+                  <i class="fas fa-smoking text-labelColor opacity-50 w-5"></i>
+                  <div>
+                    <p class="text-sm text-labelColor opacity-70">1本あたり</p>
+                    <p class="text-lg text-labelColor">¥<%= cigarette.price_per_cigarette %></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+
+        <!-- 上限に達した場合のメッセージ -->
+        <% unless @can_add_cigarette %>
+          <div class="mt-8 bg-amber-500/20 border border-amber-500/30 text-amber-500 rounded-lg p-4">
+            <div class="flex items-center gap-2">
+              <i class="fas fa-exclamation-triangle"></i>
+              <span>登録可能な上限に達しました（最大2種類）</span>
+            </div>
+          </div>
         <% end %>
       </div>
     </div>
@@ -47,11 +74,17 @@
 <!-- 新規登録モーダル -->
 <input type="checkbox" id="new-cigarette-modal" class="modal-toggle" />
 <div class="modal">
-  <div class="modal-box bg-cardBackground text-labelColor">
-    <h3 class="font-light text-2xl mb-6">新しいタバコを登録</h3>
-    <%= render 'form', cigarette: @cigarette %>
-    <div class="modal-action mt-8">
-      <label for="new-cigarette-modal" class="btn btn-ghost bg-secondaryButton hover:bg-secondaryButtonHover text-white">閉じる</label>
+  <div class="modal-box bg-cardBackground w-11/12 max-w-5xl">
+    <div class="flex justify-between items-center mb-6">
+      <h3 class="text-xl font-bold text-labelColor flex items-center">
+        <i class="fas fa-plus w-6 h-6 mr-2 text-labelColor opacity-50"></i>
+        新しいタバコを登録
+      </h3>
+      <label for="new-cigarette-modal" class="btn btn-circle btn-ghost">
+        <i class="fas fa-times"></i>
+      </label>
     </div>
+    <%= render 'form', cigarette: @cigarette %>
   </div>
+  <label class="modal-backdrop" for="new-cigarette-modal">Close</label>
 </div>

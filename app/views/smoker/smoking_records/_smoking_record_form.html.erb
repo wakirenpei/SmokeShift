@@ -1,14 +1,14 @@
 <% if current_user.currently_quitting? %>
   <div class="bg-itemBackground p-4 mb-4" role="alert">
-    <p class="font-bold text-white">現在禁煙中です</p>
-    <p class="text-gray-300">喫煙記録を追加するには、まず禁煙を終了してください。</p>
+    <p class="text-xl font-bold text-labelColor">現在禁煙中です</p>
+    <p class="text-labelColor opacity-70">喫煙記録を追加するには、まず禁煙を終了してください。</p>
     <%= button_to "禁煙を終了する", non_smoker_quit_smoking_record_path(current_user.quit_smoking_records.active.first), 
                 method: :patch, 
                 class: "btn btn-primary mt-2",
                 data: { turbo_confirm: '本当に禁煙を終了しますか？' } %>
   </div>
 <% elsif @cigarettes.empty? %>
-  <p class="text-white mb-4">タバコが登録されていません。先にタバコを登録してください。</p>
+  <p class="text-labelColor mb-4">タバコが登録されていません。先にタバコを登録してください。</p>
   <%= link_to "タバコを登録する", smoker_cigarettes_path, class: "btn btn-primary" %>
 <% else %>
   <%= form_with model: [:smoker, @new_smoking_record], url: smoker_smoking_records_path, local: true do |f| %>
@@ -18,10 +18,10 @@
         <% @cigarettes.each_with_index do |cigarette, index| %>
           <div class="flex-1 relative">
             <%= f.radio_button :cigarette_id, cigarette.id, 
-                                class: "peer absolute inset-0 opacity-0 w-full h-full cursor-pointer", 
-                                id: "cigarette_#{cigarette.id}",
-                                checked: index == 0 %>
-            <%= f.label "cigarette_#{cigarette.id}", class: "flex flex-col items-center justify-center p-4 text-gray-200 bg-gray-700 rounded-lg peer-checked:ring-2 peer-checked:ring-blue-500 peer-checked:bg-blue-600 peer-checked:text-white hover:bg-gray-600 transition-all duration-300" do %>
+                              class: "peer absolute inset-0 opacity-0 w-full h-full cursor-pointer", 
+                              id: "cigarette_#{cigarette.id}",
+                              checked: index == 0 %>
+            <%= f.label "cigarette_#{cigarette.id}", class: "flex flex-col items-center justify-center p-4 text-labelColor bg-itemBackground rounded-lg peer-checked:ring-2 peer-checked:ring-blue-500 peer-checked:bg-blue-600 peer-checked:text-white hover:bg-opacity-80 transition-all duration-300" do %>
               <span class="text-lg font-semibold"><%= cigarette.brand %></span>
               <span class="text-sm opacity-70"><%= number_to_currency(cigarette.price_per_cigarette) %>/本</span>
             <% end %>
