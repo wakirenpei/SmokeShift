@@ -1,32 +1,67 @@
-<div class="pt-8 flex flex-col items-center justify-center">
+<div class="pt-16 flex flex-col items-center justify-center">
   <div class="w-full max-w-2xl mx-auto pt-20">
-    <h1 class="text-2xl font-bold text-white mb-10 text-left">新規会員登録</h1>
+    <h1 class="text-3xl font-bold tracking-tight text-white mb-10 text-left">
+      新規会員登録
+    </h1>
     <%= form_with model: @user, local: true do |form| %>
-    <%= render 'shared/error_messages', object: form.object %>
-      <div class="mb-4">
-        <%= form.label :name, "名前", class: 'block text-sm font-medium text-labelColor mb-2' %>
-        <%= form.text_field :name, required: true, class: "w-full h-10 text-white border border-borderColor2 rounded-lg bg-customForm px-2 py-6", placeholder: "名前を入力" %>
-      </div>
-      <div class="mb-4">
-        <%= form.label :email, "メールアドレス", class: 'block text-sm font-medium text-labelColor mb-2' %>
-        <%= form.email_field :email, required: true, class: "w-full h-10 text-white border border-borderColor2 rounded-lg bg-customForm px-2 py-6", placeholder: "メールアドレスを入力" %>
-      </div>
-      <div class="mb-4">
-        <%= form.label :password, "パスワード", class: 'block text-sm font-medium text-labelColor mb-2' %>
-        <%= form.password_field :password, required: true, class: "w-full h-10 text-white border border-borderColor2 rounded-lg bg-customForm px-2 py-6", placeholder: "8文字以上" %>
-      </div>
+      <%= render 'shared/error_messages', object: form.object %>
       <div class="mb-8">
-        <%= form.label :password_confirmation, "パスワード確認", class: 'block text-sm font-medium text-labelColor mb-2' %>
-        <%= form.password_field :password_confirmation, required: true, class: "w-full h-10 text-white border border-borderColor2 rounded-lg bg-customForm px-2 py-6", placeholder: "パスワード確認" %>
+        <%= form.label :name, "名前", class: 'block text-sm font-medium tracking-wide text-labelColor mb-2 uppercase' %>
+        <div class="relative">
+          <i class="fas fa-user absolute left-3 top-1/2 transform -translate-y-1/2 text-labelColor"></i>
+          <%= form.text_field :name, 
+              required: true, 
+              class: "w-full h-12 text-white border border-borderColor2 rounded-lg bg-customForm pl-10 pr-3 py-2 font-light tracking-wide", 
+              placeholder: "名前を入力" %>
+        </div>
       </div>
-      <div class="flex justify-center mb-2">
-        <%= form.submit "登録", class: "btn btn-primary w-1/2" %>
+
+      <div class="mb-8">
+        <%= form.label :email, "メールアドレス", class: 'block text-sm font-medium tracking-wide text-labelColor mb-2 uppercase' %>
+        <div class="relative">
+          <i class="fas fa-envelope absolute left-3 top-1/2 transform -translate-y-1/2 text-labelColor"></i>
+          <%= form.email_field :email, 
+              required: true, 
+              class: "w-full h-12 text-white border border-borderColor2 rounded-lg bg-customForm pl-10 pr-3 py-2 font-light tracking-wide", 
+              placeholder: "メールアドレスを入力" %>
+        </div>
       </div>
-      <div class="flex justify-center my-4">
-        <p>または</p>
-      </div>  
+
+      <div class="mb-8">
+        <%= form.label :password, "パスワード", class: 'block text-sm font-medium tracking-wide text-labelColor mb-2 uppercase' %>
+        <div class="relative">
+          <i class="fas fa-lock absolute left-3 top-1/2 transform -translate-y-1/2 text-labelColor"></i>
+          <%= form.password_field :password, 
+              required: true, 
+              class: "w-full h-12 text-white border border-borderColor2 rounded-lg bg-customForm pl-10 pr-3 py-2 font-light tracking-wide", 
+              placeholder: "8文字以上" %>
+        </div>
+      </div>
+
+      <div class="mb-8">
+        <%= form.label :password_confirmation, "パスワード確認", class: 'block text-sm font-medium tracking-wide text-labelColor mb-2 uppercase' %>
+        <div class="relative">
+          <i class="fas fa-lock absolute left-3 top-1/2 transform -translate-y-1/2 text-labelColor"></i>
+          <%= form.password_field :password_confirmation, 
+              required: true, 
+              class: "w-full h-12 text-white border border-borderColor2 rounded-lg bg-customForm pl-10 pr-3 py-2 font-light tracking-wide", 
+              placeholder: "パスワード確認" %>
+        </div>
+      </div>
+
+      <div class="flex justify-center mb-6">
+        <%= form.submit "登録", 
+          class: "btn btn-success w-1/2 h-12 text-base font-medium tracking-wide hover:bg-emerald-600 transition-all duration-200" %>
+      </div>
+
+      <div class="flex items-center justify-center my-6">
+        <div class="border-t border-borderColor2 flex-grow"></div>
+        <p class="mx-4 text-labelColor font-light tracking-widest uppercase text-sm">または</p>
+        <div class="border-t border-borderColor2 flex-grow"></div>
+      </div>
+
       <div class="flex justify-center">
-        <%= link_to auth_at_provider_path(:line) do %>
+        <%= link_to auth_at_provider_path(:line), class: "transition-transform duration-200 hover:scale-105" do %>
           <%= image_tag "btn_login_base.png", 
               alt: "LINEでログイン",
               class: "h-12 w-auto"

@@ -1,42 +1,50 @@
-<div class="ml-36 pt-16 bg-darkBackground">
-  <div class="container mx-auto px-4 py-8 max-w-6xl">
-    <h1 class="text-2xl font-bold mb-6 text-white flex items-center">
-      禁煙記録
-    </h1>
+<div class="container mx-auto px-4 py-8 pt-24 ml-32 bg-darkBackground">
+  <h1 class="text-3xl font-bold mb-8 flex items-center">
+    <%= inline_svg_tag 'icons-lightning.svg', class: 'w-8 h-8 mr-3 opacity-50' %>
+    禁煙記録
+  </h1>
 
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6" data-controller="quit-smoking-timer"
-      data-quit-smoking-timer-start-date-value="<%= @current_quit_attempt&.start_date&.to_i %>"
-      data-quit-smoking-timer-daily-smoking-amount-value="<%= @current_quit_attempt&.daily_smoking_amount %>"
-      data-quit-smoking-timer-total-quit-seconds-value="<%= @total_quit_seconds %>"
-      data-quit-smoking-timer-total-savings-value="<%= @total_savings %>"
-      data-quit-smoking-timer-server-time-value="<%= @server_time.to_i %>">
-      <!-- 現在の禁煙状況 -->
-      <div class="bg-cardBackground rounded-lg p-6 shadow-lg lg:col-span-2">
-        <h2 class="text-xl font-bold mb-4 text-white flex items-center">
-          <%= inline_svg_tag 'icons-lightning.svg', class: 'w-6 h-6 mr-2' %>
-          現在の禁煙状況
-        </h2>
-        <% if @current_quit_attempt %>
-          <p class="text-sm text-white mb-2">開始日時: <%= @current_quit_attempt.start_date.strftime('%Y年%m月%d日 %H:%M:%S') %></p>
-          <p class="text-sm text-white mb-2">禁煙期間: <span data-quit-smoking-timer-target="currentDuration"><%= @current_duration %></span></p>
-          <p class="text-sm text-white mb-4">今回の節約金額: <span data-quit-smoking-timer-target="currentSavings"><%= number_to_currency(@current_savings, unit: '¥', precision: 0) %></span></p>
-          <%= button_to '禁煙を終了', 
-              non_smoker_quit_smoking_record_path(@current_quit_attempt), 
-              method: :patch, 
-              class: 'btn btn-primary', 
-              data: { turbo_confirm: '本当に禁煙を終了しますか？' } %>
-        <% else %>
-          <div class="bg-cardBackground rounded-lg p-6 shadow-lg mb-6">
-            <h2 class="text-xl font-bold mb-4 text-white">現在禁煙中ではありません</h2>
-            <%= button_to '禁煙を開始', non_smoker_quit_smoking_records_path, method: :post, class: 'bg-green-500 hover:bg-green-600 text-black font-bold py-2 px-4 rounded text-sm' %>
-          </div>
-        <% end %>
+  <div class="space-y-8" data-controller="quit-smoking-timer"
+    data-quit-smoking-timer-start-date-value="<%= @current_quit_attempt&.start_date&.to_i %>"
+    data-quit-smoking-timer-daily-smoking-amount-value="<%= @current_quit_attempt&.daily_smoking_amount %>"
+    data-quit-smoking-timer-total-quit-seconds-value="<%= @total_quit_seconds %>"
+    data-quit-smoking-timer-total-savings-value="<%= @total_savings %>"
+    data-quit-smoking-timer-server-time-value="<%= @server_time.to_i %>">
+
+    <!-- 現在の禁煙状況 -->
+    <div class="max-w-3xl">
+      <div class="card bg-cardBackground shadow-xl border border-gray-700">
+        <div class="card-body p-4">
+          <h2 class="card-title text-xl flex items-center">
+            <%= inline_svg_tag 'icons-lightning.svg', class: 'w-6 h-6 mr-2' %>
+            現在の禁煙状況
+          </h2>
+          <% if @current_quit_attempt %>
+            <p class="text-sm text-white mb-2">開始日時: <%= @current_quit_attempt.start_date.strftime('%Y年%m月%d日 %H:%M:%S') %></p>
+            <p class="text-sm text-white mb-2">禁煙期間: <span data-quit-smoking-timer-target="currentDuration"><%= @current_duration %></span></p>
+            <p class="text-sm text-white mb-4">今回の節約金額: <span data-quit-smoking-timer-target="currentSavings"><%= number_to_currency(@current_savings, unit: '¥', precision: 0) %></span></p>
+            <%= button_to '禁煙を終了', 
+                non_smoker_quit_smoking_record_path(@current_quit_attempt), 
+                method: :patch, 
+                class: 'btn btn-primary', 
+                data: { turbo_confirm: '本当に禁煙を終了しますか？' } %>
+          <% else %>
+            <div class="mb-6">
+              <h2 class="text-xl mb-4 text-white">現在禁煙中ではありません</h2>
+              <%= button_to '禁煙を開始', non_smoker_quit_smoking_records_path, 
+                  method: :post, 
+                  class: 'bg-green-500 hover:bg-green-600 text-black font-bold py-2 px-4 rounded text-sm' %>
+            </div>
+          <% end %>
+        </div>
       </div>
+    </div>
 
-      <!-- 禁煙統計 -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 lg:col-span-3 gap-6">
-        <div class="bg-cardBackground p-4 rounded-lg shadow-lg">
-          <h3 class="text-base font-semibold mb-2 text-white flex items-center">
+    <!-- 禁煙統計 -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div class="card bg-cardBackground shadow-xl border border-gray-700">
+        <div class="card-body p-4">
+          <h3 class="card-title text-base flex items-center">
             <%= inline_svg_tag 'icons-clock.svg', class: 'w-5 h-5 mr-2' %>
             総禁煙時間
           </h3>
@@ -44,8 +52,10 @@
             <%= format_duration(@total_quit_seconds) %>
           </p>
         </div>
-        <div class="bg-cardBackground p-4 rounded-lg shadow-lg">
-          <h3 class="text-base font-semibold mb-2 text-white flex items-center">
+      </div>
+      <div class="card bg-cardBackground shadow-xl border border-gray-700">
+        <div class="card-body p-4">
+          <h3 class="card-title text-base flex items-center">
             <%= inline_svg_tag 'icons-coin.svg', class: 'w-5 h-5 mr-2' %>
             総節約金額
           </h3>
@@ -53,15 +63,21 @@
             <%= number_to_currency(@total_savings, unit: '¥', precision: 0) %>
           </p>
         </div>
-        <div class="bg-cardBackground p-4 rounded-lg shadow-lg">
-          <h3 class="text-base font-semibold mb-2 text-white flex items-center">
+      </div>
+      <div class="card bg-cardBackground shadow-xl border border-gray-700">
+        <div class="card-body p-4">
+          <h3 class="card-title text-base flex items-center">
             <%= inline_svg_tag 'icons-chart.svg', class: 'w-5 h-5 mr-2' %>
             1日の節約可能額
           </h3>
-          <p class="text-lg font-bold text-green-500"><%= number_to_currency(@current_quit_attempt&.daily_smoking_amount, unit: '¥', precision: 0) %></p>
+          <p class="text-lg font-bold text-green-500">
+            <%= number_to_currency(@current_quit_attempt&.daily_smoking_amount, unit: '¥', precision: 0) %>
+          </p>
         </div>
-        <div class="bg-cardBackground p-4 rounded-lg shadow-lg">
-          <h3 class="text-base font-semibold mb-2 text-white flex items-center">
+      </div>
+      <div class="card bg-cardBackground shadow-xl border border-gray-700">
+        <div class="card-body p-4">
+          <h3 class="card-title text-base flex items-center">
             <%= inline_svg_tag 'icons-coin.svg', class: 'w-5 h-5 mr-2' %>
             今回の禁煙の節約金額
           </h3>
@@ -70,10 +86,12 @@
           </p>
         </div>
       </div>
+    </div>
 
-      <!-- 喫煙が多い時間帯 -->
-      <div class="bg-cardBackground rounded-lg p-6 shadow-lg lg:col-span-3">
-        <h3 class="text-lg font-semibold mb-4 text-white flex items-center">
+    <!-- 喫煙が多い時間帯 -->
+    <div class="card bg-cardBackground shadow-xl border border-gray-700">
+      <div class="card-body p-4">
+        <h3 class="card-title text-xl flex items-center">
           <%= inline_svg_tag 'icons-warning.svg', class: 'w-6 h-6 mr-2' %>
           喫煙が多い時間帯
         </h3>

@@ -1,69 +1,75 @@
-<!-- app/views/non_smoker/savings_goals/index.html.erb -->
-<div class="ml-32 pl-8 pt-16 min-h-screen bg-darkBackground">
-  <div class="container mx-auto px-4">
-    <h1 class="text-4xl font-light text-labelColor mb-8">目標金額一覧</h1>
+<div class="container mx-auto px-4 py-8 pt-24 ml-32 bg-darkBackground">
+  <h1 class="text-3xl font-bold mb-8 flex items-center">
+    <i class="fas fa-coins w-8 h-8 mr-3 opacity-50"></i>
+    目標金額
+  </h1>
 
-    <!-- アクティブな目標 -->
-    <div class="bg-cardBackground rounded-lg shadow-xl p-4 sm:p-6 lg:p-8 mb-8">
-      <div class="mb-12">
-        <h2 class="text-2xl font-semibold mb-4">現在の目標</h2>
+  <!-- アクティブな目標 -->
+  <div class="space-y-8">
+    <!-- 現在の目標 -->
+    <div class="card bg-cardBackground shadow-xl border border-gray-700">
+      <div class="card-body p-4">
+        <h2 class="card-title text-xl flex items-center">
+          <i class="fas fa-bullseye w-6 h-6 mr-2"></i>
+          現在の目標
+        </h2>
         
-        <!-- 現在の節約金額を常に表示 -->
-        <div class="bg-cardBackground shadow-md rounded-lg p-4 sm:p-6 mb-6">
+        <!-- 現在の節約金額 -->
+        <div class="bg-itemBackground rounded-lg p-4 my-4">
           <div class="flex items-center gap-3 mb-4">
-            <i class="fa-solid fa-piggy-bank text-2xl text-emerald-500"></i>
-            <h3 class="text-xl font-semibold">現在の節約金額: <%= number_to_currency(@current_savings) %></h3>
+            <i class="fas fa-piggy-bank text-2xl text-green-500"></i>
+            <h3 class="text-xl font-semibold text-white">現在の節約金額: <%= number_to_currency(@current_savings) %></h3>
           </div>
           
-          <div class="bg-emerald-50 text-emerald-800 rounded-lg p-4">
+          <div class="bg-itemBackground text-gray-300 rounded-lg p-4">
             <p class="text-sm">
-              <i class="fa-solid fa-circle-info mr-2"></i>
+              <i class="fas fa-circle-info mr-2"></i>
               この金額を超える目標金額を設定することをお勧めします
             </p>
           </div>
         </div>
 
         <% if @active_goal %>
-          <div class="bg-cardBackground shadow-md rounded-lg p-4 sm:p-6">
-            <h3 class="text-xl font-semibold mb-2">目標金額: <%= number_to_currency(@active_goal.target_amount) %></h3>
+          <div class="bg-itemBackground rounded-lg p-4">
+            <h3 class="text-xl font-semibold mb-2 text-white">目標金額: <%= number_to_currency(@active_goal.target_amount) %></h3>
             <div class="mb-4">
-              <div class="flex justify-between mb-1">
+              <div class="flex justify-between mb-1 text-gray-300">
                 <span>進捗率</span>
                 <span><%= @progress_data[:progress_rate] %>%</span>
               </div>
               <progress class="progress progress-primary w-full" value="<%= @progress_data[:progress_rate] %>" max="100"></progress>
             </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4">
-              <div class="stat bg-darkBackground">
-                <div class="stat-title text-gray-400">現在の貯金額</div>
-                <div class="stat-value text-primary text-sm sm:text-base lg:text-lg"><%= number_to_currency(@progress_data[:progress_amount]) %></div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div class="bg-itemBackground p-4 rounded-lg">
+                <div class="text-gray-400 text-sm">現在の貯金額</div>
+                <div class="text-primary text-lg font-bold"><%= number_to_currency(@progress_data[:progress_amount]) %></div>
               </div>
-              <div class="stat bg-darkBackground">
-                <div class="stat-title text-gray-400">残り金額</div>
-                <div class="stat-value text-secondary text-sm sm:text-base lg:text-lg"><%= number_to_currency(@progress_data[:remaining_amount]) %></div>
+              <div class="bg-itemBackground p-4 rounded-lg">
+                <div class="text-gray-400 text-sm">残り金額</div>
+                <div class="text-secondary text-lg font-bold"><%= number_to_currency(@progress_data[:remaining_amount]) %></div>
               </div>
-              <div class="stat bg-darkBackground">
-                <div class="stat-title text-gray-400">予想達成日</div>
-                <div class="stat-value text-accent text-sm sm:text-base lg:text-lg"><%= @progress_data[:estimated_achievement_date].strftime("%Y年%m月%d日") %></div>
+              <div class="bg-itemBackground p-4 rounded-lg">
+                <div class="text-gray-400 text-sm">予想達成日</div>
+                <div class="text-accent text-lg font-bold"><%= @progress_data[:estimated_achievement_date].strftime("%Y年%m月%d日") %></div>
               </div>
-              <div class="stat bg-darkBackground">
-                <div class="stat-title text-gray-400">残り日数</div>
-                <div class="stat-value text-info text-sm sm:text-base lg:text-lg"><%= (@progress_data[:estimated_achievement_date].to_date - Date.current).to_i %>日</div>
+              <div class="bg-itemBackground p-4 rounded-lg">
+                <div class="text-gray-400 text-sm">残り日数</div>
+                <div class="text-info text-lg font-bold"><%= (@progress_data[:estimated_achievement_date].to_date - Date.current).to_i %>日</div>
               </div>
             </div>
             <div class="mt-6 flex justify-end space-x-2">
-              <label for="edit-goal-modal-<%= @active_goal.id %>" class="btn btn-primary btn-sm sm:btn-md px-2 sm:px-4 py-1 sm:py-2">
+              <label for="edit-goal-modal-<%= @active_goal.id %>" class="btn btn-primary btn-sm">
                 編集
               </label>
               <%= button_to "中断", non_smoker_savings_goal_path(@active_goal), 
                   method: :delete, 
-                  class: "btn btn-error btn-sm sm:btn-md px-2 sm:px-4 py-1 sm:py-2", 
+                  class: "btn btn-error btn-sm", 
                   data: { turbo_confirm: "本当に中断しますか？" } %>
             </div>
           </div>
         <% else %>
           <div class="text-center">
-            <label for="new-goal-modal" class="btn btn-primary px-4 py-2 bg-primaryButton text-white rounded hover:bg-primaryButtonHover transition duration-300">
+            <label for="new-goal-modal" class="btn btn-primary">
               新しい目標を設定する
             </label>
           </div>
@@ -72,84 +78,89 @@
     </div>
 
     <!-- 達成済みの目標リスト -->
-    <div class="bg-cardBackground rounded-lg shadow-xl p-8">
-      <h2 class="text-2xl font-semibold mb-4">達成済みの目標</h2>
-      <% if @achieved_goals.any? %>
-        <div class="space-y-4">
-          <% @achieved_goals.each do |goal| %>
-            <div class="bg-cardBackground shadow-md rounded-lg p-6 relative overflow-hidden">
-              <div class="absolute top-0 right-0 w-20 h-20">
-                <div class="absolute transform rotate-45 bg-emerald-600 text-white font-semibold py-1 right-[-35px] top-[32px] w-[170px] text-center">
-                  <i class="fa-solid fa-trophy mr-1"></i>達成
+    <div class="card bg-cardBackground shadow-xl border border-gray-700">
+      <div class="card-body p-4">
+        <h2 class="card-title text-xl flex items-center">
+          <i class="fas fa-trophy w-6 h-6 mr-2"></i>
+          達成済みの目標
+        </h2>
+        
+        <% if @achieved_goals.any? %>
+          <div class="space-y-4">
+            <% @achieved_goals.each do |goal| %>
+              <div class="bg-itemBackground rounded-lg p-4 relative overflow-hidden border-b border-gray-700">
+                <div class="absolute top-0 right-0 w-20 h-20">
+                  <div class="absolute transform rotate-45 bg-green-600 text-white font-semibold py-1 right-[-35px] top-[32px] w-[170px] text-center">
+                    <i class="fas fa-trophy mr-1"></i>達成
+                  </div>
+                </div>
+
+                <div class="pr-8">
+                  <div class="flex items-center gap-3 mb-4">
+                    <i class="fas fa-piggy-bank text-2xl text-green-500"></i>
+                    <h3 class="text-xl font-semibold text-white">目標金額: <%= number_to_currency(goal.target_amount) %></h3>
+                  </div>
+
+                  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4 text-gray-300">
+                    <div class="flex items-center gap-2">
+                      <i class="fas fa-flag-checkered text-green-400"></i>
+                      <span>達成日: <%= goal.achieved_at.strftime("%Y年%m月%d日 %H時%M分") %></span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <i class="fas fa-hourglass-start text-blue-400"></i>
+                      <span>開始日: <%= goal.start_date.strftime("%Y年%m月%d日 %H時%M分") %></span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <i class="fas fa-clock text-purple-400"></i>
+                      <span>達成期間: <%= DurationFormatter.format(goal.achievement_duration) %></span>
+                    </div>
+                  </div>
+
+                  <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-itemBackground rounded-lg p-4 flex items-center gap-3">
+                      <div class="rounded-full bg-green-500/10 p-3">
+                        <i class="fas fa-sack-dollar text-green-500"></i>
+                      </div>
+                      <div>
+                        <p class="text-sm text-gray-400">目標の規模</p>
+                        <p class="font-semibold text-white">
+                          <% case 
+                            when goal.target_amount >= 100000 %>
+                            <span class="text-green-500">大きな目標を達成</span>
+                          <% when goal.target_amount >= 50000 %>
+                            <span class="text-blue-500">中規模な目標を達成</span>
+                          <% else %>
+                            <span class="text-purple-500">目標を達成</span>
+                          <% end %>
+                        </p>
+                      </div>
+                    </div>
+                    <div class="bg-itemBackground rounded-lg p-4 flex items-center gap-3">
+                      <div class="rounded-full bg-blue-500/10 p-3">
+                        <i class="fas fa-chart-line text-blue-500"></i>
+                      </div>
+                      <div>
+                        <p class="text-sm text-gray-400">貯金の成果</p>
+                        <p class="font-semibold text-white">
+                          <%= number_to_currency(goal.target_amount) %>の節約に成功
+                        </p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-
-              <div class="pr-8">
-                <div class="flex items-center gap-3 mb-4">
-                  <i class="fa-solid fa-piggy-bank text-2xl text-emerald-500"></i>
-                  <h3 class="text-xl font-semibold">目標金額: <%= number_to_currency(goal.target_amount) %></h3>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-                  <div class="flex items-center gap-2">
-                    <i class="fa-solid fa-flag-checkered text-emerald-400"></i>
-                    <span>達成日: <%= goal.achieved_at.strftime("%Y年%m月%d日 %H時%M分") %></span>
-                  </div>
-                  <div class="flex items-center gap-2">
-                    <i class="fa-solid fa-hourglass-start text-blue-400"></i>
-                    <span>開始日: <%= goal.start_date.strftime("%Y年%m月%d日 %H時%M分") %></span>
-                  </div>
-                  <div class="flex items-center gap-2">
-                    <i class="fa-solid fa-clock text-purple-400"></i>
-                    <span>達成期間: <%= DurationFormatter.format(goal.achievement_duration) %></span>
-                  </div>
-                </div>
-
-                <div class="mt-6 p-4 bg-darkBackground rounded-lg grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div class="flex items-center gap-3">
-                    <div class="rounded-full bg-emerald-500/10 p-3">
-                      <i class="fa-solid fa-sack-dollar text-emerald-500"></i>
-                    </div>
-                    <div>
-                      <p class="text-sm text-gray-400">目標の規模</p>
-                      <p class="font-semibold">
-                        <% case 
-                          when goal.target_amount >= 100000 %>
-                          <span class="text-emerald-500">大きな目標を達成</span>
-                        <% when goal.target_amount >= 50000 %>
-                          <span class="text-blue-500">中規模な目標を達成</span>
-                        <% else %>
-                          <span class="text-purple-500">目標を達成</span>
-                        <% end %>
-                      </p>
-                    </div>
-                  </div>
-                  <div class="flex items-center gap-3">
-                    <div class="rounded-full bg-blue-500/10 p-3">
-                      <i class="fa-solid fa-chart-line text-blue-500"></i>
-                    </div>
-                    <div>
-                      <p class="text-sm text-gray-400">貯金の成果</p>
-                      <p class="font-semibold">
-                        <%= number_to_currency(goal.target_amount) %>
-                        の節約に成功
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          <% end %>
-        </div>
-        <div class="mt-6">
-          <%= paginate @achieved_goals, window: 2 %>
-        </div>
-      <% else %>
-        <div class="text-center py-8">
-          <i class="fa-solid fa-folder-open text-4xl text-gray-400 mb-3"></i>
-          <p class="text-gray-400">達成済みの目標はありません。</p>
-        </div>
-      <% end %>
+            <% end %>
+          </div>
+          <div class="mt-6">
+            <%= paginate @achieved_goals %>
+          </div>
+        <% else %>
+          <div class="text-center py-8 text-gray-300">
+            <i class="fas fa-folder-open text-4xl mb-3"></i>
+            <p>達成済みの目標はありません。</p>
+          </div>
+        <% end %>
+      </div>
     </div>
   </div>
 
@@ -157,16 +168,19 @@
   <input type="checkbox" id="new-goal-modal" class="modal-toggle" <%= 'checked' if @savings_goal&.errors&.any? %> />
   <div class="modal">
     <div class="modal-box bg-cardBackground">
-      <h3 class="font-bold text-lg mb-4">目標金額の設定</h3>
+      <h3 class="font-bold text-xl text-white mb-4 flex items-center">
+        <i class="fas fa-target w-6 h-6 mr-2"></i>
+        目標金額の設定
+      </h3>
       
       <!-- 現在の節約額を表示 -->
-      <div class="bg-cardBackground shadow-md rounded-lg p-4 mb-6">
+      <div class="bg-itemBackground rounded-lg p-4 mb-6">
         <div class="flex items-center gap-3 mb-2">
-          <i class="fa-solid fa-piggy-bank text-xl text-emerald-500"></i>
-          <h4 class="text-lg font-semibold">現在の節約額: <%= number_to_currency(@current_savings) %></h4>
+          <i class="fas fa-piggy-bank text-xl text-green-500"></i>
+          <h4 class="text-lg font-semibold text-white">現在の節約額: <%= number_to_currency(@current_savings) %></h4>
         </div>
-        <p class="text-sm text-gray-500">
-          <i class="fa-solid fa-circle-info mr-1"></i>
+        <p class="text-sm text-gray-400">
+          <i class="fas fa-circle-info mr-1"></i>
           この金額を超える目標金額を設定してください
         </p>
       </div>
@@ -175,7 +189,7 @@
         <% if @savings_goal&.errors&.any? %>
           <div class="alert alert-error shadow-lg mb-4">
             <div>
-              <i class="fa-solid fa-circle-exclamation"></i>
+              <i class="fas fa-exclamation-circle"></i>
               <ul class="list-disc list-inside">
                 <% @savings_goal.errors.full_messages.each do |message| %>
                   <li><%= message %></li>
@@ -186,11 +200,11 @@
         <% end %>
 
         <div class="form-control">
-          <%= f.label :target_amount, "目標金額", class: "label" %>
+          <%= f.label :target_amount, "目標金額", class: "label text-white" %>
           <div class="relative">
             <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">¥</span>
             <%= f.number_field :target_amount, 
-                          class: "input input-bordered w-full pl-8 #{@savings_goal&.errors&.include?(:target_amount) ? 'input-error' : ''}", 
+                          class: "input input-bordered w-full pl-8 bg-itemBackground text-white #{@savings_goal&.errors&.include?(:target_amount) ? 'input-error' : ''}", 
                           required: true, 
                           min: 1,
                           placeholder: "目標金額を入力してください" %>
@@ -198,8 +212,8 @@
         </div>
 
         <div class="modal-action">
-          <%= f.submit "設定", class: "btn btn-primary px-4 py-2 bg-primaryButton text-white rounded hover:bg-primaryButtonHover transition duration-300" %>
-          <label for="new-goal-modal" class="btn btn-secondary px-4 py-2 bg-secondaryButton text-white rounded hover:bg-secondaryButtonHover transition duration-300">
+          <%= f.submit "設定", class: "btn btn-primary" %>
+          <label for="new-goal-modal" class="btn btn-secondary">
             キャンセル
           </label>
         </div>
@@ -213,16 +227,19 @@
     <input type="checkbox" id="edit-goal-modal-<%= @active_goal.id %>" class="modal-toggle" <%= 'checked' if @active_goal.errors.any? %> />
     <div class="modal">
       <div class="modal-box bg-cardBackground">
-        <h3 class="font-bold text-lg mb-4">目標金額の編集</h3>
+        <h3 class="font-bold text-xl text-white mb-4 flex items-center">
+          <i class="fas fa-edit w-6 h-6 mr-2"></i>
+          目標金額の編集
+        </h3>
         
         <!-- 現在の節約額を表示 -->
-        <div class="bg-cardBackground shadow-md rounded-lg p-4 mb-6">
+        <div class="bg-itemBackground rounded-lg p-4 mb-6">
           <div class="flex items-center gap-3 mb-2">
-            <i class="fa-solid fa-piggy-bank text-xl text-emerald-500"></i>
-            <h4 class="text-lg font-semibold">現在の節約額: <%= number_to_currency(@current_savings) %></h4>
+            <i class="fas fa-piggy-bank text-xl text-green-500"></i>
+            <h4 class="text-lg font-semibold text-white">現在の節約額: <%= number_to_currency(@current_savings) %></h4>
           </div>
-          <p class="text-sm text-gray-500">
-            <i class="fa-solid fa-circle-info mr-1"></i>
+          <p class="text-sm text-gray-400">
+            <i class="fas fa-circle-info mr-1"></i>
             この金額を超える目標金額を設定してください
           </p>
         </div>
@@ -231,7 +248,7 @@
           <% if @active_goal.errors.any? %>
             <div class="alert alert-error shadow-lg mb-4">
               <div>
-                <i class="fa-solid fa-circle-exclamation"></i>
+                <i class="fas fa-exclamation-circle"></i>
                 <ul class="list-disc list-inside">
                   <% @active_goal.errors.full_messages.each do |message| %>
                     <li><%= message %></li>
@@ -242,21 +259,18 @@
           <% end %>
 
           <div class="form-control">
-            <%= f.label :target_amount, "目標金額", class: "label" %>
+            <%= f.label :target_amount, "目標金額", class: "label text-white" %>
             <div class="relative">
               <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">¥</span>
               <%= f.number_field :target_amount, 
-                            class: "input input-bordered w-full pl-8 #{@active_goal.errors.include?(:target_amount) ? 'input-error' : ''}", 
+                            class: "input input-bordered w-full pl-8 bg-itemBackground text-white #{@active_goal.errors.include?(:target_amount) ? 'input-error' : ''}", 
                             required: true, 
                             min: 1 %>
             </div>
-          </div>
 
           <div class="modal-action">
-            <%= f.submit "更新", 
-                      class: "btn btn-primary px-4 py-2 bg-primaryButton text-white rounded hover:bg-primaryButtonHover transition duration-300" %>
-            <label for="edit-goal-modal-<%= @active_goal.id %>" 
-                   class="btn btn-secondary px-4 py-2 bg-secondaryButton text-white rounded hover:bg-secondaryButtonHover transition duration-300">
+            <%= f.submit "更新", class: "btn btn-primary" %>
+            <label for="edit-goal-modal-<%= @active_goal.id %>" class="btn btn-secondary">
               キャンセル
             </label>
           </div>
@@ -265,5 +279,4 @@
       <label class="modal-backdrop" for="edit-goal-modal-<%= @active_goal.id %>">Close</label>
     </div>
   <% end %>
-
 </div>
