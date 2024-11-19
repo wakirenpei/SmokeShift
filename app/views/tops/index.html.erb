@@ -1,37 +1,163 @@
-<div class="p-8 ml-40 pt-24">
-  <h1 class="text-2xl font-bold mb-6 text-green-400">SmokeShift - 喫煙・禁煙 管理アプリ</h1>
-  <h2 class="text-4xl font-bold mb-12 text-white leading-tight">
-    いつかの禁煙に備えて、喫煙の記録をつけませんか？
-  </h2>
-  <div class="mt-24">
-    <ul class="space-y-10 max-w-3xl">
-      <li class="flex items-start space-x-4">
-        <div class="bg-green-500 p-3 rounded-full">
-          <%= inline_svg_tag 'icons-log.svg', class: "h-8 w-8 text-white", viewBox: "0,0,256,256" %>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <!-- ... other head elements ... -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+    }
+    h1, h2, h3, .btn {
+      font-family: 'Poppins', 'Noto Sans JP', sans-serif;
+    }
+  </style>
+</head>
+<body>
+  <div class="min-h-screen pt-16 ml-32 text-gray-200">
+    <!-- ヒーローセクション -->
+    <div class="hero min-h-[50vh]">
+      <div class="hero-content text-center">
+        <div class="max-w-4xl mx-auto">
+          <h1 class="text-6xl font-bold mb-8 bg-customGreen bg-clip-text text-transparent tracking-tight">
+            SmokeShift
+          </h1>
+          <p class="text-2xl mb-8 text-gray-300 font-light">今からでも、いつかからでも。あなたのデータがあなたの選択を支える</p>
+          <p class="text-lg mb-6 text-gray-400 leading-relaxed">
+            記録を始めるなら、今日から。禁煙を始めるなら、あなたの決めたタイミングで。<br>
+            実際の喫煙データがあるからこそ、その時の自分に合った禁煙プランを。
+          </p>
+          <%= link_to "はじめる", new_user_path, class: "btn btn-primary btn-lg text-lg font-semibold tracking-wide" %>
         </div>
+      </div>
+    </div>
+
+    <!-- 主要機能セクション -->
+    <div class="py-12">
+      <div class="w-full px-8">
+        <h2 class="text-4xl font-bold text-center mb-12 text-gray-100">主な機能</h2>
+        
+        <!-- 喫煙記録機能 -->
+        <div class="card bg-cardBackground shadow-xl mb-12">
+          <div class="card-body">
+            <h3 class="card-title text-2xl mb-4 text-blue-400 font-semibold">
+              <i class="fas fa-smoking mr-2"></i>
+              正確な喫煙記録
+            </h3>
+            <div class="flex justify-center">
+              <%= image_tag '4a61d76dbdb2d8266731ad5f454bd27b.png', alt: '喫煙記録画面', class: 'w-full max-w-2xl rounded-lg shadow-lg' %>
+            </div>
+            <p class="mt-4 text-center text-gray-300 text-lg">一本一本の記録が、いつかの禁煙の強い味方に。時間帯や頻度など、あなたの喫煙習慣を正確に把握できます。</p>
+          </div>
+        </div>
+
+        <!-- 統計情報 -->
+        <div class="card bg-cardBackground shadow-xl mb-12">
+          <div class="card-body">
+            <h3 class="card-title text-2xl mb-4 text-teal-400 font-semibold">
+              <i class="fas fa-chart-line mr-2"></i>
+              詳細な統計分析
+            </h3>
+            <div class="flex justify-center">
+              <%= image_tag 'statistics.png', alt: '統計情報画面', class: 'w-full max-w-2xl rounded-lg shadow-lg' %>
+            </div>
+            <p class="mt-4 text-center text-gray-300 text-lg">実際の喫煙本数、時間帯別の傾向、支出額を数値化。禁煙を決意した時の判断材料として活用できます。</p>
+          </div>
+        </div>
+
+        <!-- 禁煙モード機能 -->
+        <div class="card bg-cardBackground shadow-xl">
+          <div class="card-body">
+            <h3 class="card-title text-2xl mb-4 text-purple-400 font-semibold">
+              <i class="fas fa-ban mr-2"></i>
+              データに基づく禁煙サポート
+            </h3>
+            <div class="flex justify-center">
+              <%= image_tag '2f14296c050997dacfec08eb43755545.png', alt: '禁煙モード画面', class: 'w-full max-w-2xl rounded-lg shadow-lg mb-4' %>
+            </div>
+            <p class="mt-4 text-center text-gray-300 text-lg">あなたの判断で、好きなタイミングで禁煙モードを開始。短期の節約目的でも、完全な禁煙でも、蓄積したデータを活かせます。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 使い方セクション -->
+    <div class="py-20 bg-darkBackground">
+      <div class="w-full px-8">
+        <h2 class="text-4xl font-bold text-center mb-12 text-gray-100">使い方</h2>
+        
+        <!-- 喫煙記録モード -->
+        <div class="mb-16">
+          <h3 class="text-3xl font-bold text-center mb-8 text-gray-200">記録モード - データの蓄積</h3>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="card bg-cardBackground shadow-xl">
+              <div class="card-body">
+                <div class="text-4xl text-blue-400 mb-4"><i class="fas fa-plus-circle"></i></div>
+                <h3 class="card-title text-xl text-gray-100 font-semibold">1. 銘柄登録</h3>
+                <p class="text-gray-300 text-lg">普段吸うタバコの情報を登録。正確な消費額を把握できます。</p>
+              </div>
+            </div>
+
+            <div class="card bg-cardBackground shadow-xl">
+              <div class="card-body">
+                <div class="text-4xl text-teal-400 mb-4"><i class="fas fa-smoking"></i></div>
+                <h3 class="card-title text-xl text-gray-100 font-semibold">2. 喫煙記録</h3>
+                <p class="text-gray-300 text-lg">日々の喫煙を記録。将来の判断材料として活用できます。</p>
+              </div>
+            </div>
+
+            <div class="card bg-cardBackground shadow-xl">
+              <div class="card-body">
+                <div class="text-4xl text-purple-400 mb-4"><i class="fas fa-chart-bar"></i></div>
+                <h3 class="card-title text-xl text-gray-100 font-semibold">3. 傾向把握</h3>
+                <p class="text-gray-300 text-lg">時間帯や状況など、自分の喫煙パターンを理解します。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 禁煙モード -->
         <div>
-          <h3 class="text-2xl font-semibold text-white mb-2">簡単な喫煙記録</h3>
-          <p class="text-gray-300 text-lg">ボタンを押すだけで、瞬時に喫煙を記録できます。</p>
+          <h3 class="text-3xl font-bold text-center mb-8 text-gray-200">禁煙モード - あなたのタイミングで</h3>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="card bg-cardBackground shadow-xl">
+              <div class="card-body">
+                <div class="text-4xl text-green-400 mb-4"><i class="fas fa-calendar-alt"></i></div>
+                <h3 class="card-title text-xl text-gray-100 font-semibold">1. 開始タイミング</h3>
+                <p class="text-gray-300 text-lg">短期・長期、タイミングはあなたが決めます。</p>
+              </div>
+            </div>
+
+            <div class="card bg-cardBackground shadow-xl">
+              <div class="card-body">
+                <div class="text-4xl text-green-400 mb-4"><i class="fas fa-piggy-bank"></i></div>
+                <h3 class="card-title text-xl text-gray-100 font-semibold">2. 効果確認</h3>
+                <p class="text-gray-300 text-lg">実データに基づく正確な節約額を確認できます。</p>
+              </div>
+            </div>
+
+            <div class="card bg-cardBackground shadow-xl">
+              <div class="card-body">
+                <div class="text-4xl text-green-400 mb-4"><i class="fas fa-redo"></i></div>
+                <h3 class="card-title text-xl text-gray-100 font-semibold">3. 柔軟な再開</h3>
+                <p class="text-gray-300 text-lg">一時停止や再開も自由。あなたのペースで進められます。</p>
+              </div>
+            </div>
+          </div>
         </div>
-      </li>
-      <li class="flex items-start space-x-4">
-        <div class="bg-blue-500 p-3 rounded-full">
-          <%= inline_svg_tag 'icons-chart.svg', class: "h-8 w-8 text-white", viewBox: "0,0,256,256" %>
-        </div>
-        <div>
-          <h3 class="text-2xl font-semibold text-white mb-2">データに基づく禁煙管理</h3>
-          <p class="text-gray-300 text-lg">あなたの喫煙パターンを分析し、効果的な禁煙計画を立てられます。</p>
-        </div>
-      </li>
-      <li class="flex items-start space-x-4">
-        <div class="bg-purple-500 p-3 rounded-full">
-          <%= inline_svg_tag 'icons-charenge.svg', class: "h-8 w-8 text-white", viewBox: "0 0 24 24" %>
-        </div>
-        <div>
-          <h3 class="text-2xl font-semibold text-white mb-2">何度でもやり直せる禁煙サポート</h3>
-          <p class="text-gray-300 text-lg">失敗してもあきらめない。何度でも再チャレンジして禁煙を記録できます。</p>
-        </div>
-      </li>
-    </ul>
+      </div>
+    </div>
+
+    <!-- CTAセクション -->
+    <div class="py-20">
+      <div class="w-full px-8 text-center">
+        <h2 class="text-4xl font-bold mb-8 text-gray-100">まずは記録からはじめましょう</h2>
+        <p class="mb-8 text-xl text-gray-300 leading-relaxed">
+          今は記録するだけでOK。<br>
+          禁煙を決意したその時のために、あなたの大切なデータを蓄積していきます。
+        </p>
+        <%= link_to "アカウントを作成", new_user_path, class: "btn btn-primary btn-lg text-lg font-semibold tracking-wide" %>
+      </div>
+    </div>
   </div>
-</div>
+</body>
+</html>
