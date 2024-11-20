@@ -16,7 +16,7 @@ module ApplicationHelper
       charset: 'utf-8',
       description: '実際の喫煙データがあるからこそ、その時の自分に合った禁煙プランを。短期の節約目的から完全な禁煙まで、あなたのペースで',
       keywords: '禁煙,禁煙アプリ,禁煙サポート,節約,喫煙記録',
-      canonical: `https://smokeshift.onrender.com`,
+      canonical: request.original_url,
       separator: '|',
       og:{
         site_name: :site,
@@ -24,7 +24,7 @@ module ApplicationHelper
         description: :description,
         type: 'website',
         url: request.original_url,
-        image: 'https://smokeshift.onrender.com',
+        image: request.original_url,
         local: 'ja-JP'
       },
       twitter: {
