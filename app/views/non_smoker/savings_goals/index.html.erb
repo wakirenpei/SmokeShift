@@ -104,15 +104,15 @@
                   <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4 text-gray-300">
                     <div class="flex items-center gap-2">
                       <i class="fas fa-flag-checkered text-green-400"></i>
-                      <span>達成日: <%= goal.achieved_at.strftime("%Y年%m月%d日 %H時%M分") %></span>
+                      <span>達成日: <%= l goal.achieved_at, format: :short if goal.achieved_at %></span>
                     </div>
                     <div class="flex items-center gap-2">
                       <i class="fas fa-hourglass-start text-blue-400"></i>
-                      <span>開始日: <%= goal.start_date.strftime("%Y年%m月%d日 %H時%M分") %></span>
+                      <span>開始日: <%= l goal.created_at, format: :short %></span>
                     </div>
                     <div class="flex items-center gap-2">
                       <i class="fas fa-clock text-purple-400"></i>
-                      <span>達成期間: <%= DurationFormatter.format(goal.achievement_duration) %></span>
+                      <span>達成期間: <%= format_duration(goal.created_at, goal.achieved_at) %></span>
                     </div>
                   </div>
 
@@ -267,6 +267,7 @@
                             required: true, 
                             min: 1 %>
             </div>
+          </div>
 
           <div class="modal-action">
             <%= f.submit "更新", class: "btn btn-primary" %>

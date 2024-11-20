@@ -31,6 +31,9 @@ gem 'omniauth-rails_csrf_protection'
 # 定数としてメールアドレスを管理
 gem 'config'
 
+# 制定OGP
+gem "meta-tags"
+
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.1.3", ">= 7.1.3.4"
 

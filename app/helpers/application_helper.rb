@@ -8,6 +8,33 @@ module ApplicationHelper
     end
   end
 
+  def default_meta_tags
+    {
+      site: 'Smoke Shift',
+      title: '喫煙、禁煙の記録を行うサービス',
+      reverse: true,
+      charset: 'utf-8',
+      description: '実際の喫煙データがあるからこそ、その時の自分に合った禁煙プランを。短期の節約目的から完全な禁煙まで、あなたのペースで',
+      keywords: '禁煙,禁煙アプリ,禁煙サポート,節約,喫煙記録',
+      canonical: `https://smokeshift.onrender.com`,
+      separator: '|',
+      og:{
+        site_name: :site,
+        title: :title,
+        description: :description,
+        type: 'website',
+        url: request.original_url,
+        image: 'https://smokeshift.onrender.com',
+        local: 'ja-JP'
+      },
+      twitter: {
+        card: 'summary_large_image',
+        site: '@obvyamdrss',
+        image: image_url('ogp.png')
+      }
+    }
+  end
+
   # 禁煙記録の期間をフォーマット
   def format_duration(input, end_time = nil)
     seconds = case
