@@ -27,7 +27,10 @@ class NonSmoker::QuitSmokingRecordsController < ApplicationController
 
   def update
     @quit_smoking_record = current_user.quit_smoking_records.active.first
+    
     if @quit_smoking_record&.update(end_date: Time.current)
+      # 関連する目標を中断
+      @quit_smoking_record.savings_goals.active_goals.each(&:discontinue!)
       current_user.update(smoking_status: :smoker)
       redirect_to smoker_smoking_records_path, notice: "禁煙を終了します。お疲れ様でした！"
     else
