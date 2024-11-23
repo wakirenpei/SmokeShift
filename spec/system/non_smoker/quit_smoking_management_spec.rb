@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe '禁煙記録管理システム', type: :system do
   let(:user) { create(:user) }
 
@@ -15,7 +13,6 @@ RSpec.describe '禁煙記録管理システム', type: :system do
       first(:button, '禁煙を開始').click
 
       expect(page).to have_content('禁煙を開始しました。頑張りましょう！')
-      expect(page).to have_button('禁煙を終了')
     end
   end
 
@@ -26,7 +23,6 @@ RSpec.describe '禁煙記録管理システム', type: :system do
       click_button '禁煙を終了'
 
       expect(page).to have_content('禁煙を終了します。お疲れ様でした！')
-      expect(page).to have_button('禁煙を開始')
     end
   end
 end

@@ -16,7 +16,7 @@ RSpec.describe User, type: :model do
   describe '認証' do
     it '正しい認証情報で認証できること' do
       user = create(:user, password: 'password123')
-      authenticated_user = User.authenticate(user.email, 'password123')
+      authenticated_user = described_class.authenticate(user.email, 'password123')
       expect(authenticated_user).to eq(user)
     end
   end
@@ -28,7 +28,7 @@ RSpec.describe User, type: :model do
       Cigarette::MAX_CIGARETTES_PER_USER.times do
         create(:cigarette, user: user)
       end
-      
+
       new_cigarette = build(:cigarette, user: user)
       expect(new_cigarette).to be_invalid
     end

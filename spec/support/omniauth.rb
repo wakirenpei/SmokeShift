@@ -1,25 +1,40 @@
-# spec/support/oauth_helper.rb
 module OAuthHelper
   def mock_oauth2_flow
-    # 最初にアクセストークンをモック
-    access_token = double(OAuth2::AccessToken)
-    user_response = double('Response', 
-      body: {
+    access_token = mock_access_token
+    auth_code = mock_auth_code(access_token)
+    mock_oauth2_client(auth_code)
+  end
+
+  private
+
+  def mock_access_token
+    # アクセストークンのモックを作成
+    instance_double(OAuth2::AccessToken).tap do |access_token|
+      user_response = Struct.new(:body).new({
         userId: '12345',
         displayName: 'test_user'
-      }.to_json
-    )
-    allow(access_token).to receive(:get).and_return(user_response)
+      }.to_json)
 
-    # auth_codeストラテジーをモック
-    auth_code = double(OAuth2::Strategy::AuthCode)
-    allow(auth_code).to receive(:get_token).and_return(access_token)
-    allow(auth_code).to receive(:authorize_url).and_return('http://example.com/auth')
+      allow(access_token).to receive(:get).and_return(user_response)
+    end
+  end
 
-    # OAuth2クライアントをモック
-    oauth2_client = double(OAuth2::Client)
-    allow(oauth2_client).to receive(:auth_code).and_return(auth_code)
-    allow(OAuth2::Client).to receive(:new).and_return(oauth2_client)
+  def mock_auth_code(access_token)
+    # AuthCodeストラテジーのモックを作成
+    instance_double(OAuth2::Strategy::AuthCode).tap do |auth_code|
+      allow(auth_code).to receive_messages(
+        get_token: access_token,
+        authorize_url: 'http://example.com/auth'
+      )
+    end
+  end
+
+  def mock_oauth2_client(auth_code)
+    # OAuth2クライアントのモックを作成
+    instance_double(OAuth2::Client).tap do |oauth2_client|
+      allow(oauth2_client).to receive(:auth_code).and_return(auth_code)
+      allow(OAuth2::Client).to receive(:new).and_return(oauth2_client)
+    end
   end
 end
 

@@ -14,7 +14,7 @@ RSpec.describe SmokingRecord, type: :model do
   describe '集計メソッド' do
     let(:user) { create(:user) }
     let(:cigarette) { create(:cigarette, user: user, price_per_pack: 500, quantity_per_pack: 20) }
-    
+
     before do
       create(:smoking_record, user: user, cigarette: cigarette)
       create(:smoking_record, user: user, cigarette: cigarette)

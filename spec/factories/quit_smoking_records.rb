@@ -9,10 +9,10 @@ FactoryBot.define do
 
     trait :with_smoking_records do
       after(:build) do |record|
-        create(:smoking_record, user: record.user, price_per_cigarette: 25, 
-                smoked_at: 3.days.ago)
-        create(:smoking_record, user: record.user, price_per_cigarette: 25, 
-                smoked_at: 4.days.ago)
+        create(:smoking_record, user: record.user, price_per_cigarette: 25,
+                                smoked_at: 3.days.ago)
+        create(:smoking_record, user: record.user, price_per_cigarette: 25,
+                                smoked_at: 4.days.ago)
       end
     end
   end

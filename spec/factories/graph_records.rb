@@ -4,6 +4,6 @@ FactoryBot.define do
     association :cigarette
     smoked_at { Time.current }
     price_per_cigarette { 25 }
-    brand_name { "テストブランド" }
+    brand_name { 'テストブランド' }
   end
 end

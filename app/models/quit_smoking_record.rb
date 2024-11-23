@@ -31,29 +31,34 @@ class QuitSmokingRecord < ApplicationRecord
   private
 
   def set_daily_smoking_amount
-    # 全期間の喫煙記録から日数を計算
-    smoking_days = user.smoking_records
-                      .group('DATE(smoked_at)').count.size
+    smoking_days = calculate_smoking_days
+    return self.daily_smoking_amount = 0 if smoking_days.zero?
+
+    total_spent = calculate_total_spent
+    self.daily_smoking_amount = calculate_average_daily_spent(total_spent, smoking_days)
+  end
+
+  def calculate_smoking_days
+    smoking_days = user.smoking_records.group('DATE(smoked_at)').count.size
     Rails.logger.info "Calculated smoking_days: #{smoking_days}"
-  
-    if smoking_days.zero?
-      Rails.logger.info "No smoking days found, setting daily_smoking_amount to 0"
-      return self.daily_smoking_amount = 0
-    end
-  
-    # 全期間の総喫煙金額を計算
+    smoking_days
+  end
+
+  def calculate_total_spent
     total_spent = user.smoking_records.sum(:price_per_cigarette)
     Rails.logger.info "Total spent: #{total_spent}"
-    
-    # 1日あたりの平均金額を計算して保存
+    total_spent
+  end
+
+  def calculate_average_daily_spent(total_spent, smoking_days)
     amount = (total_spent.to_f / smoking_days).round
     Rails.logger.info "Calculated daily_smoking_amount: #{amount}"
-    self.daily_smoking_amount = amount
+    amount
   end
 
   def end_date_after_start_date
-    if end_date.present? && end_date <= start_date
-      errors.add(:end_date, "must be after the start date")
-    end
+    return unless end_date.present? && end_date <= start_date
+
+    errors.add(:end_date, 'must be after the start date')
   end
 end

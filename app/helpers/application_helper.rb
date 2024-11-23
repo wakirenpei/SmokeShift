@@ -1,13 +1,9 @@
 module ApplicationHelper
   def flash_background_color(type)
-    case type.to_sym
-    when :notice then 'bg-customForm'
-    when :alert then 'bg-red-500'
-    when :error then 'bg-red-500'
-    else 'bg-customForm'
-    end
+    type.to_sym == :notice ? 'bg-customForm' : 'bg-red-500'
   end
 
+  # rubocop:disable Metrics/MethodLength
   def default_meta_tags
     {
       site: 'Smoke Shift',
@@ -18,7 +14,7 @@ module ApplicationHelper
       keywords: '禁煙,禁煙アプリ,禁煙サポート,節約,喫煙記録',
       canonical: request.original_url,
       separator: '|',
-      og:{
+      og: {
         site_name: :site,
         title: :title,
         description: :description,
@@ -34,23 +30,49 @@ module ApplicationHelper
       }
     }
   end
+  # rubocop:enable Metrics/MethodLength
 
   # 禁煙記録の期間をフォーマット
   def format_duration(input, end_time = nil)
-    seconds = case
-              when end_time.present?
-                # 履歴表示用（2つの時間）
-                (end_time - input).to_i
-              when input.is_a?(Integer)
-                # 秒数直接指定（総禁煙時間用）
-                input
-              else
-                # 現在までの経過時間
-                (Time.current - input).to_i
-              end
+    seconds = calculate_seconds(input, end_time)
+    return '0秒' if seconds <= 0
 
-    return "0秒" if seconds <= 0
+    parts = build_duration_parts(seconds)
+    parts.join(' ')
+  end
 
+  def total_savings
+    current_user.quit_smoking_records.sum(&:calculate_savings)
+  rescue StandardError
+    0
+  end
+
+  def total_smoking_amount
+    current_user.smoking_records.sum(:price_per_cigarette)
+  rescue StandardError
+    0
+  end
+
+  def smoking_savings_difference
+    total_savings - total_smoking_amount
+  rescue StandardError
+    0
+  end
+
+  private
+
+  def calculate_seconds(input, end_time)
+    if end_time.present?
+      (end_time - input).to_i
+    elsif input.is_a?(Integer)
+      input
+    else
+      (Time.current - input).to_i
+    end
+  end
+
+  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+  def build_duration_parts(seconds)
     years, remaining = seconds.divmod(1.year)
     months, remaining = remaining.divmod(1.month)
     days, remaining = remaining.divmod(1.day)
@@ -58,31 +80,13 @@ module ApplicationHelper
     minutes, seconds = remaining.divmod(1.minute)
 
     parts = []
-    parts << "#{years}年" if years > 0
-    parts << "#{months}ヶ月" if months > 0
-    parts << "#{days}日" if days > 0
-    parts << "#{hours}時間" if hours > 0
-    parts << "#{minutes}分" if minutes > 0
+    parts << "#{years}年" if years.positive?
+    parts << "#{months}ヶ月" if months.positive?
+    parts << "#{days}日" if days.positive?
+    parts << "#{hours}時間" if hours.positive?
+    parts << "#{minutes}分" if minutes.positive?
     parts << "#{seconds.to_i}秒"
-
-    parts.join(' ')
+    parts
   end
-
-  def total_savings
-    current_user.quit_smoking_records.sum(&:calculate_savings)
-  rescue
-    0
-  end
-
-  def total_smoking_amount
-    current_user.smoking_records.sum(:price_per_cigarette)
-  rescue
-    0
-  end
-
-  def smoking_savings_difference
-    total_savings - total_smoking_amount
-  rescue
-    0
-  end
+  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 end

@@ -1,11 +1,13 @@
 class Smoker::CigarettesController < ApplicationController
-  before_action :set_cigarette, only: [:edit, :update]
+  before_action :set_cigarette, only: %i[edit update]
 
   def index
     @cigarettes = current_user.cigarettes.order(created_at: :desc)
     @cigarette = current_user.cigarettes.build
     @can_add_cigarette = current_user.cigarettes.count < Cigarette::MAX_CIGARETTES_PER_USER
   end
+
+  def edit; end
 
   def create
     @cigarette = current_user.cigarettes.build(cigarette_params)
@@ -18,8 +20,6 @@ class Smoker::CigarettesController < ApplicationController
       ], status: :unprocessable_entity
     end
   end
-
-  def edit; end
 
   def update
     if @cigarette.update(cigarette_params)

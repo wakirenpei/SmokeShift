@@ -1,0 +1,46 @@
+require:
+  - rubocop-rails
+  - rubocop-rspec
+
+AllCops:
+  # 結果のsuggest部分を非表示にする
+  SuggestExtensions: false
+  # 最新のルールを適用する
+  NewCops: enable
+  # 何のルールに引っかかったか表示する
+  DisplayCopNames: true
+  # rubocopの対象外ファイル
+  Exclude:
+    - 'db/**/*'
+    - 'bin/**/*' 
+    - 'config/**/*'
+    - 'vendor/**/*'
+
+# スタイル関連の設定  
+Style/ClassAndModuleChildren:
+  Enabled: false  # コンパクトなモジュール定義を許可
+
+Style/Documentation:
+  Enabled: false  # クラスのドキュメントコメントチェックを無効化
+
+Style/FrozenStringLiteralComment:
+  Enabled: false  # マジックコメントの要求を無効化
+
+Rails/I18nLocaleTexts:
+  Enabled: false
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'  # テストファイルのブロック長制限を除外
+
+RSpec/ContextWording:
+  Enabled: false  # Contextの日本語化を許可
+
+RSpec/ExampleWording:
+  Enabled: false  # テスト名の日本語化を許可
+
+RSpec/DescribedClass:
+  Enabled: true   # described_classの使用チェックは維持
+
+RSpec/ExampleLength:
+  Enabled: false # テストの長さチェックを無効化

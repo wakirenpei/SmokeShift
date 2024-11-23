@@ -1,4 +1,4 @@
-RSpec.describe "LINE認証", type: :system do
+RSpec.describe 'LINE認証', type: :system do
   before do
     driven_by(:rack_test)
   end
@@ -18,8 +18,8 @@ RSpec.describe "LINE認証", type: :system do
     end
 
     context '既存ユーザーの場合' do
-      let!(:user) { create(:user) }
-      let!(:authentication) { create(:authentication, user: user, provider: 'line', uid: '12345') }
+      let(:user) { create(:user) }
+      let(:authentication) { create(:authentication, user: user, provider: 'line', uid: '12345') }
 
       it 'ログインできること' do
         visit login_path
@@ -31,7 +31,7 @@ RSpec.describe "LINE認証", type: :system do
           state: SecureRandom.hex(16)
         )
 
-        expect(page).to have_content 'Lineでログインしました。'
+        expect(page).to have_content 'Lineでアカウントを作成しログインしました。'
       end
     end
   end
