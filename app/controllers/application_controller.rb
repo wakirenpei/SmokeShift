@@ -13,13 +13,17 @@ class ApplicationController < ActionController::Base
   end
 
   def set_common_variables
-    @daily_potential_savings = current_user.quit_smoking_records.active.first&.calculate_savings || 0
+    @daily_potential_savings = calculate_daily_potential_savings
     @total_quit_seconds = calculate_total_quit_seconds
     @total_savings = calculate_total_savings
-    @total_amount = current_user.smoking_records.total_amount
-    @today_amount = current_user.smoking_records.today_amount
-    @total_count = current_user.smoking_records.total_count
-    @today_count = current_user.smoking_records.today_count
+    @total_amount = calculate_total_amount
+    @today_amount = calculate_today_amount
+    @total_count = calculate_total_count
+    @today_count = calculate_today_count
+  end
+
+  def calculate_daily_potential_savings
+    current_user.quit_smoking_records.active.first&.calculate_savings || 0
   end
 
   def calculate_total_quit_seconds
@@ -31,5 +35,21 @@ class ApplicationController < ActionController::Base
 
   def calculate_total_savings
     current_user.quit_smoking_records.sum(&:calculate_savings)
+  end
+
+  def calculate_total_amount
+    current_user.smoking_records.total_amount
+  end
+
+  def calculate_today_amount
+    current_user.smoking_records.today_amount
+  end
+
+  def calculate_total_count
+    current_user.smoking_records.total_count
+  end
+
+  def calculate_today_count
+    current_user.smoking_records.today_count
   end
 end

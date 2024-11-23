@@ -1,9 +1,11 @@
 class PasswordResetsController < ApplicationController
   skip_before_action :require_login
-  before_action :set_token_user_from_params, only: [:edit, :update]
-  before_action :check_user_exists, only: [:edit, :update]
+  before_action :set_token_user_from_params, only: %i[edit update]
+  before_action :check_user_exists, only: %i[edit update]
 
   def new; end
+
+  def edit; end
 
   def create
     @user = User.find_by(email: params[:email])
@@ -17,8 +19,6 @@ class PasswordResetsController < ApplicationController
 
     redirect_to login_path, notice: 'パスワードリセットのメールを送信しました'
   end
-
-  def edit; end
 
   def update
     @user.assign_attributes(password_params)

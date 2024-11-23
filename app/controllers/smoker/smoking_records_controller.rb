@@ -1,12 +1,13 @@
 class Smoker::SmokingRecordsController < ApplicationController
   before_action :require_login
-  before_action :set_common_data, only: [:index, :create]
+  before_action :set_common_data, only: %i[index create]
 
   def index
     @new_smoking_record = SmokingRecord.new
-    @start_date = params[:start_date] ? Date.parse(params[:start_date]) : Date.today.beginning_of_month
-    @end_date = @start_date.end_of_month
-    @calendar_records = current_user.smoking_records.where(smoked_at: @start_date.beginning_of_month.beginning_of_day..@end_date.end_of_day)
+    set_date_range
+    @calendar_records = current_user.smoking_records.where(
+      smoked_at: @start_date.beginning_of_month.beginning_of_day..@end_date.end_of_day
+    )
     @paginated_records = current_user.smoking_records.today.order(smoked_at: :desc).page(params[:page]).per(10)
   end
 
@@ -48,5 +49,11 @@ class Smoker::SmokingRecordsController < ApplicationController
   # 喫煙記録のパラメータ設定
   def smoking_record_params
     params.require(:smoking_record).permit(:cigarette_id)
+  end
+
+  # 日付範囲の設定
+  def set_date_range
+    @start_date = params[:start_date] ? Date.parse(params[:start_date]) : Time.zone.today.beginning_of_month
+    @end_date = @start_date.end_of_month
   end
 end
