@@ -58,6 +58,9 @@ jobs:
       - name: Install dependencies
         run: bundle install
 
+      - name: Wait for DB to be ready
+        run: sleep 20
+
       - name: Prepare database
         env:
           RAILS_ENV: test
