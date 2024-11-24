@@ -19,7 +19,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.2.3
+          ruby-version: 3.2.3 # 使用しているRubyのバージョンに合わせる
           bundler-cache: true
 
       - name: Install dependencies
@@ -64,7 +64,7 @@ jobs:
       - name: Prepare database
         env:
           RAILS_ENV: test
-          DATABASE_URL: "postgresql://postgres:password@localhost:5432/myapp_test"
+          DATABASE_URL: "postgresql://postgres:password@db:5432/myapp_test"
         run: |
           bin/rails db:create
           bin/rails db:schema:load
@@ -72,4 +72,5 @@ jobs:
       - name: Run RSpec tests
         env:
           RAILS_ENV: test
+          DATABASE_URL: "postgresql://postgres:password@db:5432/myapp_test"
         run: bundle exec rspec
