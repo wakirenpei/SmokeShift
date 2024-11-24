@@ -12,24 +12,19 @@ on:
 jobs:
   rubocop:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
+      - uses: actions/checkout@v2
+      - uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.2.3
           bundler-cache: true
-
-      - name: Install dependencies
-        run: bundle install
-
       - name: Run RuboCop
         run: bundle exec rubocop
 
   rspec:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     services:
       postgres:
         image: postgres:13.4-alpine
@@ -46,27 +41,37 @@ jobs:
           --health-retries 5
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
+      - uses: actions/checkout@v2
+      
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.2.3
           bundler-cache: true
 
-      - name: Install dependencies
-        run: bundle install
+      - name: Cache node modules
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
-      - name: Prepare database
+      - name: Install dependencies
+        run: |
+          bundle install
+          yarn install
+
+      - name: Precompile assets
         env:
           RAILS_ENV: test
           DATABASE_URL: "postgresql://postgres:password@localhost:5432/myapp_test"
         run: |
-          bin/rails db:create
-          bin/rails db:schema:load
+          bundle exec rails assets:precompile
+          bundle exec rails db:create
+          bundle exec rails db:schema:load
 
-      - name: Run RSpec tests
+      - name: Run tests
         env:
           RAILS_ENV: test
           DATABASE_URL: "postgresql://postgres:password@localhost:5432/myapp_test"
