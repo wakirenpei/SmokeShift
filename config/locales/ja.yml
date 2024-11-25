@@ -25,7 +25,7 @@ ja:
         password: パスワード
         password_confirmation: パスワード（確認用）
         smoking_status: 喫煙状態
-      saving_goal:
+      savings_goal:
         target_amount: 目標金額
         start_date: 開始日
         end_date: 終了日
