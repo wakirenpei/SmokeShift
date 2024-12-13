@@ -36,9 +36,7 @@ class OauthsController < ApplicationController
   end
 
   def create_user_from_provider(provider)
-    create_from(provider) do |user|
-      user.email = "line_#{user.email}@example.com" if provider == 'line'
-    end
+    create_from(provider)
   rescue StandardError => e
     Rails.logger.error "Login error: #{e.message}"
     nil
