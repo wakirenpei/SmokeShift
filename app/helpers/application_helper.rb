@@ -32,6 +32,21 @@ module ApplicationHelper
   end
   # rubocop:enable Metrics/MethodLength
 
+  # topページのボタン遷移
+  def start_button_path
+    def start_button_path
+      if logged_in?
+        if current_user.smoking_status == "smoker"
+          smoker_smoking_records_path
+        else
+          non_smoker_quit_smoking_records_path # 修正: ネームスペースを追加
+        end
+      else
+        new_user_path
+      end
+    end
+  end
+
   # 禁煙記録の期間をフォーマット
   def format_duration(input, end_time = nil)
     seconds = calculate_seconds(input, end_time)

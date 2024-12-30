@@ -26,7 +26,7 @@
             記録を始めるなら、今日から。禁煙を始めるなら、あなたの決めたタイミングで。<br>
             実際の喫煙データがあるからこそ、その時の自分に合った禁煙プランを。
           </p>
-          <%= link_to "はじめる", new_user_path, class: "btn btn-primary btn-lg text-lg font-semibold tracking-wide" %>
+          <%= link_to "はじめる", start_button_path, class: "btn btn-primary btn-lg text-lg font-semibold tracking-wide" %>
         </div>
       </div>
     </div>
@@ -155,7 +155,16 @@
           今は記録するだけでOK。<br>
           禁煙を決意したその時のために、あなたの大切なデータを蓄積していきます。
         </p>
-        <%= link_to "アカウントを作成", new_user_path, class: "btn btn-primary btn-lg text-lg font-semibold tracking-wide" %>
+        <% if logged_in? %>
+          <p class="text-gray-300 text-lg mb-4">
+            既にログインしています。記録画面や統計情報を確認しましょう。
+          </p>
+        <% else %>
+          <p class="text-gray-300 text-lg mb-4">
+            アカウントを作成して禁煙記録を始めましょう。
+          </p>
+          <%= link_to "アカウントを作成", new_user_path, class: "btn btn-primary btn-lg text-lg font-semibold tracking-wide" %>
+        <% end %>
       </div>
     </div>
   </div>
