@@ -1,7 +1,7 @@
 <% case @period %>
 <% when 'daily' %>
   <% chart_max = (@daily_smoking_data.values.compact.max.to_f * 1.2).ceil %>
-  <h3 class="text-xl font-semibold mb-2">日別喫煙本数</h3>
+  <h3 class="text-xl font-semibold mb-2 text-gray-400">日別喫煙本数</h3>
   <%= line_chart @daily_smoking_data, 
       xtitle: '', 
       ytitle: '', 
@@ -43,8 +43,8 @@
           y: {
             beginAtZero: true,
             ticks: {
-  count: 1
-}
+              count: 1
+            }
           }
         }
       },
@@ -54,7 +54,7 @@
   %>
 <% when 'weekly' %>
   <% chart_max = (@weekly_smoking_data.values.compact.max.to_f * 1.2).ceil %>
-  <h3 class="text-xl font-semibold mb-2">週別喫煙本数</h3>
+  <h3 class="text-xl font-semibold mb-2 text-gray-400">週別喫煙本数</h3>
   <%= line_chart @weekly_smoking_data, 
       xtitle: '', 
       ytitle: '', 
@@ -96,8 +96,8 @@
           y: {
             beginAtZero: true,
             ticks: {
-  count: 1
-}
+              count: 1
+            }
           }
         }
       },
@@ -107,7 +107,7 @@
   %>
 <% when 'monthly' %>
   <% chart_max = (@monthly_smoking_data.values.compact.max.to_f * 1.2).ceil %>
-  <h3 class="text-xl font-semibold mb-2">月別喫煙本数</h3>
+  <h3 class="text-xl font-semibold mb-2 text-gray-400">月別喫煙本数</h3>
   <%= line_chart @monthly_smoking_data, 
       xtitle: '', 
       ytitle: '', 
@@ -149,8 +149,8 @@
           y: {
             beginAtZero: true,
             ticks: {
-  count: 1
-}
+              count: 1
+            }
           }
         }
       },

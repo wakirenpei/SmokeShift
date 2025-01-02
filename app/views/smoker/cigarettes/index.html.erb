@@ -2,7 +2,7 @@
   <!-- ヘッダーセクション -->
   <h1 class="text-3xl font-bold mb-8 flex items-center">
     <i class="fas fa-smoking w-8 h-8 mr-3 text-labelColor opacity-50"></i>
-    タバコ管理
+    <span class = "text-gray-400 hover:text-white transition-colors duration-200">タバコ管理</span>
   </h1>
   
   <div class="space-y-8">
@@ -12,7 +12,7 @@
         <div class="flex justify-between items-center mb-4">
           <h2 class="card-title text-xl flex items-center">
             <i class="fas fa-list-ul w-6 h-6 mr-2 text-labelColor opacity-50"></i>
-            登録済みタバコ
+            <span class = "text-gray-400 hover:text-white transition-colors duration-200">登録済みタバコ</span>
           </h2>
           <div class="flex items-center gap-4">
             <span class="badge badge-primary badge-lg"><%= @cigarettes.count %> / 2</span>
